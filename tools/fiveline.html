@@ -114,6 +114,19 @@ function linreg(cl){
   const sig=Math.sqrt(ssres/n);
   return {a,b,sig,r2:sstot>0?1-ssres/sstot:0,cv:mean>0?sig/mean:0,mean,n};
 }
+function detectSplits(rows){
+  const out=[];
+  for(let i=1;i<rows.length;i++){
+    const prev=rows[i-1].close,op=rows[i].open;
+    if(!(prev>0&&op>0))continue;
+    const ratio=prev/op;
+    for(const k of [2,3,4,5,10,20]){
+      if(Math.abs(ratio-k)/k<0.02){out.push({date:rows[i].date,v:1/k});break;}
+      if(Math.abs(1/ratio-k)/k<0.02){out.push({date:rows[i].date,v:k});break;}
+    }
+  }
+  return out;
+}
 function adjustTW(rows,divs){
   const byDate={}; rows.forEach(r=>{byDate[r.date]=r.close;});
   const dates=Object.keys(byDate).sort();
@@ -123,6 +136,7 @@ function adjustTW(rows,divs){
     if(d.CashExDividendTradingDate&&+d.CashEarningsDistribution>0)acts.push({date:d.CashExDividendTradingDate,type:'c',v:+d.CashEarningsDistribution});
     if(d.StockExDividendTradingDate&&+d.StockEarningsDistribution>0)acts.push({date:d.StockExDividendTradingDate,type:'s',v:+d.StockEarningsDistribution});
   });
+  detectSplits(rows).forEach(s=>acts.push({date:s.date,type:'split',v:s.v}));
   acts.sort((x,y)=>x.date<y.date?1:x.date>y.date?-1:0);
   let factor=1,ai=0;
   const out=new Array(rows.length);
@@ -132,6 +146,7 @@ function adjustTW(rows,divs){
       const ac=acts[ai],c=refClose(ac.date);
       if(ac.type==='c'&&c>ac.v)factor*=(c-ac.v)/c;
       else if(ac.type==='s')factor*=1/(1+ac.v/10);
+      else if(ac.type==='split')factor*=ac.v;
       ai++;
     }
     out[i]={date:r.date,open:r.open*factor,high:r.high*factor,low:r.low*factor,close:r.close*factor};
@@ -186,8 +201,14 @@ async function fquery(){
       const j=await (await fetch('https://api.finmindtrade.com/api/v4/data?dataset=USStockPrice&data_id='+code+'&start_date='+s0)).json();
       const rows=(j.data||[]).filter(r=>r.date<=endD&&+r.Adj_Close>0&&+r.Close>0);
       if(!rows.length)throw 0;
-      series=rows.map(r=>{const f=+r.Adj_Close/+r.Close;
-        return {date:r.date,open:+r.Open*f,high:+r.High*f,low:+r.Low*f,close:+r.Adj_Close};});
+      const usSplits=detectSplits(rows.map(r=>({date:r.date,open:+r.Open,close:+r.Close})))
+        .sort((a,b)=>a.date<b.date?1:-1);
+      let usF=1,usI=0;series=[];
+      for(let i=rows.length-1;i>=0;i--){const r=rows[i];
+        while(usI<usSplits.length&&usSplits[usI].date>r.date){usF*=usSplits[usI].v;usI++;}
+        const f=+r.Adj_Close/+r.Close*usF;
+        series.push({date:r.date,open:+r.Open*f,high:+r.High*f,low:+r.Low*f,close:+r.Adj_Close*usF});}
+      series.reverse();
       try{const ji=await (await fetch('https://api.finmindtrade.com/api/v4/data?dataset=USStockInfo&data_id='+code)).json();
         if(ji.data&&ji.data[0]&&ji.data[0].stock_name)name=code+' '+ji.data[0].stock_name;}catch(e){}
     }else{
@@ -329,7 +350,7 @@ document.getElementById('f_code').addEventListener('keydown',e=>{if(e.key==='Ent
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-07 收盤 ｜ 本頁建置 2026-10-08 07:35</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-07 收盤 ｜ 本頁建置 2026-10-08 07:43</div>
 </div></footer>
 </body>
 </html>
