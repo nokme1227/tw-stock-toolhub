@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>回測檢驗｜台股研究工具站</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>台股研究工具站</h1>
+<p>台股基本面研究工具 · 總覽＋工具目錄</p>
+</div></header>
+<div class="wrap">
+
+<nav class="back"><a href="../index.html">← 回工具總覽</a></nav>
+<div class="card">
+<h2 style="margin-top:0">回測檢驗：六大指標選股</h2>
+<p class="meta" id="bt_rule"></p>
+<div class="filters" id="bt_stats"></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">淨值曲線（等權月再平衡 vs 加權指數）</h3>
+<canvas id="ch_bt" height="110"></canvas>
+</div>
+<div class="card">
+<h3 style="margin-top:0">年度報酬</h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th class="l">年度</th><th>策略</th><th>加權指數</th><th>超額</th></tr></thead>
+<tbody id="bt_annual"></tbody>
+</table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">⚠️ 限制聲明（先讀這個再看曲線）</h3>
+<p class="meta" id="bt_disc"></p>
+<p class="meta">這是描述性回測，不是獲利保證。過去表現不代表未來。</p>
+</div>
+<script src="../assets/chart.js"></script>
+<script>
+function pct(x){return x==null?'—':(x>=0?'+':'')+(x*100).toFixed(1)+'%';}
+fetch('../assets/data/backtest.json').then(r=>r.json()).then(j=>{
+  document.getElementById('bt_rule').textContent=
+    '規則：'+j.rule+'｜期間：'+j.period+'｜共 '+j.stats.months+' 個月';
+  const s=j.stats;
+  const stat=(l,v)=>'<div><label>'+l+'</label><div style="font-size:1.3em"><b>'+v+'</b></div></div>';
+  document.getElementById('bt_stats').innerHTML=
+    stat('策略總報酬',pct(s.strat_total))+stat('大盤總報酬',pct(s.bench_total))
+    +stat('策略最大回撤',pct(s.strat_maxdd))+stat('大盤最大回撤',pct(s.bench_maxdd));
+  const labels=j.monthly.map(m=>m.m);
+  new Chart(document.getElementById('ch_bt'),{type:'line',
+    data:{labels:labels,datasets:[
+      {label:'策略淨值',data:j.monthly.map(m=>m.cum),borderColor:'#e0533d',pointRadius:0,tension:0.1},
+      {label:'加權指數',data:j.bench_monthly.map(m=>m.cum),borderColor:'#2b7cd3',pointRadius:0,tension:0.1}]},
+    options:{responsive:true,interaction:{mode:'index',intersect:false}}});
+  document.getElementById('bt_annual').innerHTML=j.annual.map(a=>
+    '<tr><td class="l num">'+a.y+'</td><td class="num">'+pct(a.strat)+'</td>'
+    +'<td class="num">'+pct(a.bench)+'</td>'
+    +'<td class="num"><b>'+pct(a.strat-a.bench)+'</b></td></tr>').join('');
+  document.getElementById('bt_disc').textContent=j.disclaimer;
+}).catch(()=>{document.getElementById('bt_rule').textContent='回測資料載入失敗。';});
+</script>
+</div>
+<footer class="site"><div class="wrap">
+<div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-06 收盤 ｜ 本頁建置 2026-10-07 16:17</div>
+</div></footer>
+</body>
+</html>
