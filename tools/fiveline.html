@@ -26,9 +26,23 @@
 <p class="meta" id="f_msg"></p>
 </div>
 <div class="card">
-<h3 style="margin-top:0">五線譜 <span id="f_badges"></span></h3>
-<div id="f_chartwrap"><canvas id="ch_fl"></canvas></div>
+<h3 style="margin-top:0">樂活五線譜 <span id="f_badges"></span></h3>
+<div class="zoom"><button data-z="in" data-c="ch_fl">＋</button><button data-z="out" data-c="ch_fl">－</button><button data-z="reset" data-c="ch_fl">⟳</button></div>
+<div class="chartwrap"><canvas id="ch_fl"></canvas></div>
 <p class="meta" id="f_axis"></p>
+</div>
+<div class="card">
+<h3 style="margin-top:0">樂活通道 <span id="f_ch_badges"></span></h3>
+<div class="zoom"><button data-z="in" data-c="ch_ch">＋</button><button data-z="out" data-c="ch_ch">－</button><button data-z="reset" data-c="ch_ch">⟳</button></div>
+<div class="chartwrap"><canvas id="ch_ch"></canvas></div>
+<p class="meta" id="f_ch_axis"></p>
+</div>
+<div class="card">
+<h3 style="margin-top:0">其他指標</h3>
+<div id="f_ipills"><button type="button" data-i="MA" class="on">MA</button><button type="button" data-i="RSI">RSI</button><button type="button" data-i="MACD">MACD</button><button type="button" data-i="KD">KD</button></div>
+<div class="zoom"><button data-z="in" data-c="ch_ind">＋</button><button data-z="out" data-c="ch_ind">－</button><button data-z="reset" data-c="ch_ind">⟳</button></div>
+<div class="chartwrap"><canvas id="ch_ind"></canvas></div>
+<p class="meta">MA：收盤價與 5/10/20/60/120 日均線；RSI(14)、MACD(12,26,9)、KD(9,3) 以同期還原 OHLC 計算。</p>
 </div>
 <div class="card">
 <h3 style="margin-top:0">情緒判讀</h3>
@@ -41,20 +55,23 @@
 </div>
 <div class="card">
 <h3 style="margin-top:0">方法與限制</h3>
-<p class="meta">中間線＝期間還原收盤價的線性迴歸趨勢線（OLS）；σ＝迴歸殘差標準差；五線為趨勢線 ±1σ、±2σ 的平行線，未來一年以虛線延伸。台股以 FinMind 除權息資料做還原（向後還原法）；美股直接採用還原收盤價。R² 衡量趨勢線擬合度（&gt;0.7 參考價值高，&lt;0.5 低）；CV＝σ ÷ 期間平均價。理論基礎：常態分佈（約 95% 價格落在 ±2σ 內）與均值回歸。</p>
-<p class="meta">限制：僅供位階參考，不構成投資建議。回測日期僅改變計算基準日。</p>
+<p class="meta">五線譜：中間線＝期間還原收盤價的線性迴歸趨勢線（OLS）；σ＝迴歸殘差標準差；五線為趨勢線 ±1σ、±2σ 平行線，未來一年虛線延伸。樂活通道：MA20 ± 2σ（σ 取自五線譜長期殘差）。R² 衡量趨勢線擬合度（&gt;0.7 參考價值高，&lt;0.5 低）；CV＝σ ÷ 期間平均價。理論基礎：常態分佈（約 95% 價格落在 ±2σ 內）與均值回歸。</p>
+<p class="meta">資料：台股 FinMind（以除權息資料做向後還原）、美股 FinMind 還原收盤價。限制：僅供位階參考，不構成投資建議。</p>
 </div>
 <style>
-#f_pills{display:flex;gap:8px;flex-wrap:wrap}
-#f_pills button{flex:1;min-width:60px;padding:10px 4px;border:1px solid var(--line);border-radius:20px;background:#fff;font-size:15px;cursor:pointer;color:var(--ink)}
-#f_pills button.on{background:#111827;color:#fff;border-color:#111827}
-#f_chartwrap{position:relative;height:320px}
-#f_badges .emo{display:inline-block;border-radius:12px;padding:2px 12px;margin:2px;font-size:.82em;font-weight:700}
-@media(max-width:640px){#f_chartwrap{height:280px}}
+#f_pills,#f_ipills{display:flex;gap:8px;flex-wrap:wrap}
+#f_pills button,#f_ipills button{flex:1;min-width:60px;padding:10px 4px;border:1px solid var(--line);border-radius:20px;background:#fff;font-size:15px;cursor:pointer;color:var(--ink)}
+#f_pills button.on,#f_ipills button.on{background:#111827;color:#fff;border-color:#111827}
+.chartwrap{position:relative;height:320px;margin-top:8px}
+.zoom{display:flex;gap:8px;margin:4px 0}
+.zoom button{width:44px;height:36px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:16px;cursor:pointer;color:var(--ink)}
+#f_badges .emo,#f_ch_badges .emo{display:inline-block;border-radius:12px;padding:2px 12px;margin:2px;font-size:.82em;font-weight:700}
+@media(max-width:640px){.chartwrap{height:280px}}
 </style>
 <script src="../assets/chart.js"></script>
 <script>
-let flChart=null, selY=3.5, NAMES={};
+let selY=3.5, NAMES={}, FL_DATA=null, indType='MA';
+const CHARTS={}, ZOOMS={};
 const EMO_L={'p2':'極度貪婪','p1':'貪婪','m0':'趨勢線','m1':'恐懼','m2':'極度恐懼'};
 const EMO_C={'p2':'#e0533d','p1':'#f0a35e','m0':'#555555','m1':'#7fb069','m2':'#2b7cd3'};
 const EMO_TXT={'極度貪婪':'#e0533d','貪婪':'#f0a35e','中性':'#6b7280','恐懼':'#7fb069','極度恐懼':'#2b7cd3'};
@@ -68,17 +85,37 @@ document.querySelectorAll('#f_pills button').forEach(b=>b.addEventListener('clic
   selY=v==='custom'?(parseFloat(cust.value)||2):parseFloat(v);
 }));
 document.getElementById('f_custom').addEventListener('input',e=>{selY=parseFloat(e.target.value)||2;});
+document.querySelectorAll('#f_ipills button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#f_ipills button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); indType=b.dataset.i; renderInd();
+}));
+document.querySelectorAll('.zoom button').forEach(b=>b.addEventListener('click',()=>zoomGo(b.dataset.c,b.dataset.z)));
+function zoomGo(id,dir){
+  const z=ZOOMS[id],ch=CHARTS[id]; if(!z||!ch)return;
+  if(dir==='reset'){z.min=0;z.max=z.n-1;}
+  else{
+    const span=z.max-z.min;
+    if(dir==='in'&&span<=30)return;
+    const ns=dir==='in'?span*0.7:span*1.43,cx=(z.min+z.max)/2;
+    let a=Math.round(cx-ns/2),b=Math.round(cx+ns/2);
+    if(a<0){b-=a;a=0;} if(b>z.n-1){a-=b-(z.n-1);b=z.n-1;}
+    a=Math.max(0,a);b=Math.min(z.n-1,b);
+    if(b-a<20)return;
+    z.min=a;z.max=b;
+  }
+  ch.options.scales.x.min=z.min;ch.options.scales.x.max=z.max;ch.update();
+}
 function linreg(cl){
   const n=cl.length; let sx=0,sy=0,sxx=0,sxy=0;
   for(let i=0;i<n;i++){sx+=i;sy+=cl[i];sxx+=i*i;sxy+=i*cl[i];}
-  const den=n*sxx-sx*sx, b=den?(n*sxy-sx*sy)/den:0, a=(sy-b*sx)/n, mean=sy/n;
+  const den=n*sxx-sx*sx,b=den?(n*sxy-sx*sy)/den:0,a=(sy-b*sx)/n,mean=sy/n;
   let ssres=0,sstot=0;
   for(let i=0;i<n;i++){const r=cl[i]-(a+b*i);ssres+=r*r;const d=cl[i]-mean;sstot+=d*d;}
   const sig=Math.sqrt(ssres/n);
   return {a,b,sig,r2:sstot>0?1-ssres/sstot:0,cv:mean>0?sig/mean:0,mean,n};
 }
-function adjustTW(prices,divs){
-  const byDate={}; prices.forEach(p=>{byDate[p.date]=p.close;});
+function adjustTW(rows,divs){
+  const byDate={}; rows.forEach(r=>{byDate[r.date]=r.close;});
   const dates=Object.keys(byDate).sort();
   function refClose(t){for(let i=dates.length-1;i>=0;i--){if(dates[i]<t)return byDate[dates[i]];}return 0;}
   const acts=[];
@@ -88,44 +125,76 @@ function adjustTW(prices,divs){
   });
   acts.sort((x,y)=>x.date<y.date?1:x.date>y.date?-1:0);
   let factor=1,ai=0;
-  const out=new Array(prices.length);
-  for(let i=prices.length-1;i>=0;i--){
-    const p=prices[i];
-    while(ai<acts.length&&acts[ai].date>p.date){
+  const out=new Array(rows.length);
+  for(let i=rows.length-1;i>=0;i--){
+    const r=rows[i];
+    while(ai<acts.length&&acts[ai].date>r.date){
       const ac=acts[ai],c=refClose(ac.date);
       if(ac.type==='c'&&c>ac.v)factor*=(c-ac.v)/c;
       else if(ac.type==='s')factor*=1/(1+ac.v/10);
       ai++;
     }
-    out[i]={date:p.date,close:p.close*factor};
+    out[i]={date:r.date,open:r.open*factor,high:r.high*factor,low:r.low*factor,close:r.close*factor};
   }
   return out;
+}
+function emaArr(v,p){const k=2/(p+1);let e=v[0];const o=[e];for(let i=1;i<v.length;i++){e=v[i]*k+e*(1-k);o.push(e);}return o;}
+function smaArr(v,p){const o=new Array(v.length).fill(null);let s=0;for(let i=0;i<v.length;i++){s+=v[i];if(i>=p)s-=v[i-p];if(i>=p-1)o[i]=s/p;}return o;}
+function rsiArr(c,p){
+  p=p||14;const o=new Array(c.length).fill(null);
+  if(c.length<=p)return o;
+  let g=0,l=0;
+  for(let i=1;i<=p;i++){const d=c[i]-c[i-1];if(d>0)g+=d;else l-=d;}
+  g/=p;l/=p;o[p]=l===0?100:100-100/(1+g/l);
+  for(let i=p+1;i<c.length;i++){const d=c[i]-c[i-1],gg=d>0?d:0,ll=d<0?-d:0;
+    g=(g*(p-1)+gg)/p;l=(l*(p-1)+ll)/p;o[i]=l===0?100:100-100/(1+g/l);}
+  return o;
+}
+function macdArr(c){
+  const e12=emaArr(c,12),e26=emaArr(c,26);
+  const dif=e12.map((v,i)=>v-e26[i]),dea=emaArr(dif,9);
+  return {dif:dif,dea:dea,hist:dif.map((v,i)=>v-dea[i])};
+}
+function kdArr(h,l,c){
+  const k=new Array(c.length).fill(null),d=new Array(c.length).fill(null);
+  let pk=50,pd=50;
+  for(let i=0;i<c.length;i++){
+    if(i>=8){
+      let hh=-1e18,ll=1e18;
+      for(let j=i-8;j<=i;j++){if(h[j]>hh)hh=h[j];if(l[j]<ll)ll=l[j];}
+      const rsv=hh===ll?50:(c[i]-ll)/(hh-ll)*100;
+      pk=pk*2/3+rsv/3;pd=pd*2/3+pk/3;k[i]=pk;d[i]=pd;
+    }
+  }
+  return {k:k,d:d};
 }
 async function fquery(){
   const raw=document.getElementById('f_code').value.trim();
   const msg=document.getElementById('f_msg');
   const endD=document.getElementById('f_end').value||new Date().toISOString().slice(0,10);
-  const us=/^[A-Za-z]{1,6}$/.test(raw), tw=/^\d{4}$/.test(raw);
+  const us=/^[A-Za-z]{1,6}$/.test(raw),tw=/^\d{4}$/.test(raw);
   if(!us&&!tw){msg.textContent='請輸入 4 位台股代號（如 2330）或美股代號（如 SPY）。';return;}
   const code=us?raw.toUpperCase():raw;
   const years=Math.min(Math.max(selY,0.25),10);
   msg.textContent='查詢中…';
-  const needY=Math.max(years,3.5), d0=new Date(endD);
+  const needY=Math.max(years,3.5),d0=new Date(endD);
   d0.setFullYear(d0.getFullYear()-Math.ceil(needY)-1);
   const s0=d0.toISOString().slice(0,10);
   try{
     let series,name=code;
     if(us){
       const j=await (await fetch('https://api.finmindtrade.com/api/v4/data?dataset=USStockPrice&data_id='+code+'&start_date='+s0)).json();
-      const rows=(j.data||[]).filter(r=>r.date<=endD&&+r.Adj_Close>0);
+      const rows=(j.data||[]).filter(r=>r.date<=endD&&+r.Adj_Close>0&&+r.Close>0);
       if(!rows.length)throw 0;
-      series=rows.map(r=>({date:r.date,close:+r.Adj_Close}));
+      series=rows.map(r=>{const f=+r.Adj_Close/+r.Close;
+        return {date:r.date,open:+r.Open*f,high:+r.High*f,low:+r.Low*f,close:+r.Adj_Close};});
       try{const ji=await (await fetch('https://api.finmindtrade.com/api/v4/data?dataset=USStockInfo&data_id='+code)).json();
         if(ji.data&&ji.data[0]&&ji.data[0].stock_name)name=code+' '+ji.data[0].stock_name;}catch(e){}
     }else{
       const pj=await (await fetch('https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id='+code+'&start_date='+s0)).json();
       const dj=await (await fetch('https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockDividend&data_id='+code+'&start_date='+s0)).json();
-      const px=(pj.data||[]).filter(r=>r.date<=endD&&+r.close>0).map(r=>({date:r.date,close:+r.close}));
+      const px=(pj.data||[]).filter(r=>r.date<=endD&&+r.close>0)
+        .map(r=>({date:r.date,open:+r.open,high:+r.max,low:+r.min,close:+r.close}));
       if(!px.length)throw 0;
       const dvs=(dj.data||[]).filter(d=>(d.CashExDividendTradingDate&&d.CashExDividendTradingDate<=endD)||(d.StockExDividendTradingDate&&d.StockExDividendTradingDate<=endD));
       series=adjustTW(px,dvs);
@@ -133,20 +202,28 @@ async function fquery(){
     }
     const per=[0.5,1.5,3.5];
     if(per.indexOf(years)<0)per.push(years);
-    const res={};
+    const regs={};
     per.forEach(y=>{
       const t=new Date(endD);t.setFullYear(t.getFullYear()-y);
       const s=t.toISOString().slice(0,10);
       const c=series.filter(p=>p.date>=s);
-      if(c.length>=60){const cl=c.map(p=>p.close);res[y]=Object.assign({cl:cl,dates:c.map(p=>p.date)},linreg(cl));}
+      if(c.length>=60)regs[y]={rows:c,reg:linreg(c.map(p=>p.close))};
     });
-    if(!res[years]){msg.textContent='該區間資料不足（至少需要 60 個交易日）。';return;}
-    renderFL(name,res,years,endD);
-    msg.textContent=name+'｜基準日 '+endD+'｜'+years+' 年（'+res[years].n+' 個交易日）';
+    if(!regs[years]){msg.textContent='該區間資料不足（至少需要 60 個交易日）。';return;}
+    const R=regs[years];
+    FL_DATA={dates:R.rows.map(p=>p.date),cl:R.rows.map(p=>p.close),
+      hi:R.rows.map(p=>p.high),lo:R.rows.map(p=>p.low),reg:R.reg,regs:regs,years:years,endD:endD};
+    renderFL(name);renderCh();renderInd();
+    msg.textContent=name+'｜基準日 '+endD+'｜'+years+' 年（'+R.reg.n+' 個交易日）';
   }catch(e){msg.textContent='查無資料或查詢失敗，請檢查代號。';}
 }
-function renderFL(name,res,years,endD){
-  const R=res[years],n=R.n,mx=n-1,dates=R.dates,cl=R.cl;
+function baseOpts(){
+  return {responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:10}}}},
+    scales:{x:{ticks:{autoSkip:true,maxTicksLimit:8,font:{size:10}}},y:{ticks:{font:{size:10}}}}};
+}
+function renderFL(name){
+  const S=FL_DATA,R=S.reg,n=R.n,mx=n-1,dates=S.dates,cl=S.cl;
   const FUT=250,N=n+FUT;
   const band=k=>{const o=new Array(N);for(let i=0;i<N;i++)o[i]=R.a+R.b*i+k*R.sig;return o;};
   const bands={p2:band(2),p1:band(1),m0:band(0),m1:band(-1),m2:band(-2)};
@@ -160,12 +237,9 @@ function renderFL(name,res,years,endD){
     ds.push({label:EMO_L[k]+sl,data:bands[k],borderColor:EMO_C[k],
       borderWidth:k==='m0'?2.2:1.3,pointRadius:0,tension:0,segment:{borderDash:dash}});
   });
-  if(flChart)flChart.destroy();
-  flChart=new Chart(document.getElementById('ch_fl'),{type:'line',
-    data:{labels:labels,datasets:ds},
-    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-      plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:10}}}},
-      scales:{x:{ticks:{autoSkip:true,maxTicksLimit:8,font:{size:10}}},y:{ticks:{font:{size:10}}}}}});
+  if(CHARTS.ch_fl)CHARTS.ch_fl.destroy();
+  CHARTS.ch_fl=new Chart(document.getElementById('ch_fl'),{type:'line',data:{labels:labels,datasets:ds},options:baseOpts()});
+  ZOOMS.ch_fl={min:0,max:N-1,n:N};
   const last=cl[mx],bv={p2:bands.p2[mx],p1:bands.p1[mx],m0:bands.m0[mx],m1:bands.m1[mx],m2:bands.m2[mx]};
   const ZT=[['高於 +2σ','極度貪婪','超漲，考慮獲利了結'],['+1σ ～ +2σ','貪婪','偏貴，不宜追高'],
     ['趨勢線 ～ +1σ','中性','中性偏強'],['−1σ ～ 趨勢線','中性','中性偏弱'],
@@ -173,8 +247,7 @@ function renderFL(name,res,years,endD){
   let zr;
   if(last>bv.p2)zr=0;else if(last>bv.p1)zr=1;else if(last>bv.m0)zr=2;
   else if(last>bv.m1)zr=3;else if(last>bv.m2)zr=4;else zr=5;
-  const emo=ZT[zr][1],inChan=last<=bv.p2&&last>=bv.m2;
-  const emoC=EMO_TXT[emo];
+  const emo=ZT[zr][1],inChan=last<=bv.p2&&last>=bv.m2,emoC=EMO_TXT[emo];
   document.getElementById('f_badges').innerHTML=
     '<span class="emo" style="background:'+emoC+'1a;color:'+emoC+';border:1px solid '+emoC+'">市場情緒：'+emo+'</span>'
     +'<span class="emo" style="background:'+(inChan?'#dcfce7':'#fee2e2')+';color:'+(inChan?'#166534':'#b91c1c')+'">樂活通道：'+(inChan?'通道內':'通道外')+'</span>';
@@ -187,12 +260,68 @@ function renderFL(name,res,years,endD){
     +stat('趨勢線斜率',(R.b>=0?'+':'')+R.b.toFixed(3)+'/日');
   document.getElementById('f_zone_tbl').innerHTML=ZT.map((z,i)=>
     '<tr'+(i===zr?' style="background:#fdf6e3"':'')+'><td class="l">'+z[0]+'</td><td class="l">'+z[1]+'</td><td class="l">'+z[2]+'</td></tr>').join('');
-  const po=[0.5,1.5,3.5].filter(y=>y!==years&&res[y]).map(y=>{
-    const q=res[y],m=q.n-1,l=q.cl[m];
+  const po=[0.5,1.5,3.5].filter(y=>y!==S.years&&S.regs[y]).map(y=>{
+    const q=S.regs[y].reg,m=q.n-1,l=S.regs[y].rows[m].close;
     const hi=q.a+q.b*m+2*q.sig,lo=q.a+q.b*m-2*q.sig,h1=q.a+q.b*m+q.sig,l1=q.a+q.b*m-q.sig;
     return y+'年：'+(l>hi?'極度貪婪':l>h1?'貪婪':l>l1?'中性':l>lo?'恐懼':'極度恐懼');
   }).join('　');
   document.getElementById('f_periods').textContent='其他週期情緒：'+(po||'—');
+}
+function renderCh(){
+  const S=FL_DATA;if(!S)return;
+  const dates=S.dates,cl=S.cl,n=cl.length,R=S.reg,mx=n-1;
+  const ma20=smaArr(cl,20);
+  const up=ma20.map(v=>v==null?null:v+2*R.sig),dn=ma20.map(v=>v==null?null:v-2*R.sig);
+  const last=cl[mx],mu=up[mx],md=dn[mx],mm=ma20[mx];
+  if(CHARTS.ch_ch)CHARTS.ch_ch.destroy();
+  CHARTS.ch_ch=new Chart(document.getElementById('ch_ch'),{type:'line',
+    data:{labels:dates,datasets:[
+      {label:'還原收盤價',data:cl,borderColor:'#111111',borderWidth:1.4,pointRadius:0,tension:0},
+      {label:'上線（MA20+2σ）',data:up,borderColor:'#e0533d',borderWidth:1.3,pointRadius:0,tension:0.2},
+      {label:'MA20',data:ma20,borderColor:'#6b7280',borderWidth:1.6,pointRadius:0,tension:0.2},
+      {label:'下線（MA20−2σ）',data:dn,borderColor:'#2b7cd3',borderWidth:1.3,pointRadius:0,tension:0.2}]},
+    options:baseOpts()});
+  ZOOMS.ch_ch={min:0,max:n-1,n:n};
+  const st=last>mu?'突破上線（強勢）':last<md?'跌破下線（弱勢）':'通道內';
+  const c=last>mu?'#e0533d':last<md?'#2b7cd3':'#166534';
+  document.getElementById('f_ch_badges').innerHTML=
+    '<span class="emo" style="background:'+c+'1a;color:'+c+';border:1px solid '+c+'">'+st+'</span>';
+  document.getElementById('f_ch_axis').textContent=
+    '通道當前值：上線 '+mu.toFixed(1)+'／MA20 '+mm.toFixed(1)+'／下線 '+md.toFixed(1)+'（σ 取自五線譜長期殘差）';
+}
+function renderInd(){
+  const S=FL_DATA;if(!S)return;
+  const dates=S.dates,cl=S.cl,n=cl.length;
+  let ds,ycfg={ticks:{font:{size:10}}};
+  if(indType==='MA'){
+    ds=[{label:'還原收盤價',data:cl,borderColor:'#111111',borderWidth:1.4,pointRadius:0,tension:0},
+      {label:'MA5',data:smaArr(cl,5),borderColor:'#f0a35e',borderWidth:1,pointRadius:0,tension:0},
+      {label:'MA10',data:smaArr(cl,10),borderColor:'#e0533d',borderWidth:1,pointRadius:0,tension:0},
+      {label:'MA20',data:smaArr(cl,20),borderColor:'#2b7cd3',borderWidth:1.2,pointRadius:0,tension:0},
+      {label:'MA60',data:smaArr(cl,60),borderColor:'#7c3aed',borderWidth:1.2,pointRadius:0,tension:0},
+      {label:'MA120',data:smaArr(cl,120),borderColor:'#0d9488',borderWidth:1.2,pointRadius:0,tension:0}];
+  }else if(indType==='RSI'){
+    ds=[{label:'RSI(14)',data:rsiArr(cl,14),borderColor:'#7c3aed',borderWidth:1.6,pointRadius:0,tension:0.1},
+      {label:'70',data:new Array(n).fill(70),borderColor:'#e0533d',borderWidth:1,borderDash:[5,4],pointRadius:0},
+      {label:'30',data:new Array(n).fill(30),borderColor:'#2b7cd3',borderWidth:1,borderDash:[5,4],pointRadius:0}];
+    ycfg.min=0;ycfg.max=100;
+  }else if(indType==='MACD'){
+    const m=macdArr(cl);
+    ds=[{label:'DIF',data:m.dif,borderColor:'#2b7cd3',borderWidth:1.4,pointRadius:0,tension:0.1},
+      {label:'DEA',data:m.dea,borderColor:'#f0a35e',borderWidth:1.4,pointRadius:0,tension:0.1},
+      {label:'柱',data:m.hist,backgroundColor:'#9ca3af',type:'bar'}];
+  }else{
+    const k=kdArr(S.hi,S.lo,cl);
+    ds=[{label:'K(9,3)',data:k.k,borderColor:'#2b7cd3',borderWidth:1.4,pointRadius:0,tension:0.1},
+      {label:'D(9,3)',data:k.d,borderColor:'#f0a35e',borderWidth:1.4,pointRadius:0,tension:0.1},
+      {label:'80',data:new Array(n).fill(80),borderColor:'#e0533d',borderWidth:1,borderDash:[5,4],pointRadius:0},
+      {label:'20',data:new Array(n).fill(20),borderColor:'#2b7cd3',borderWidth:1,borderDash:[5,4],pointRadius:0}];
+    ycfg.min=0;ycfg.max=100;
+  }
+  const o=baseOpts();o.scales.y=ycfg;
+  if(CHARTS.ch_ind)CHARTS.ch_ind.destroy();
+  CHARTS.ch_ind=new Chart(document.getElementById('ch_ind'),{type:'line',data:{labels:dates,datasets:ds},options:o});
+  ZOOMS.ch_ind={min:0,max:n-1,n:n};
 }
 document.getElementById('f_go').addEventListener('click',fquery);
 document.getElementById('f_code').addEventListener('keydown',e=>{if(e.key==='Enter')fquery();});
@@ -200,7 +329,7 @@ document.getElementById('f_code').addEventListener('keydown',e=>{if(e.key==='Ent
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-07 收盤 ｜ 本頁建置 2026-10-08 07:15</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-07 收盤 ｜ 本頁建置 2026-10-08 07:35</div>
 </div></footer>
 </body>
 </html>
