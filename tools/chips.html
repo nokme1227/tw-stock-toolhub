@@ -16,7 +16,7 @@
 <nav class="back"><a href="../index.html">← 回工具總覽</a></nav>
 <div class="card">
 <h2 style="margin-top:0">籌碼工具：法人買賣超＋融資融券</h2>
-<p class="meta">法人買賣超來自 FinMind（上市＋上櫃，查詢時即時抓取近 60 日）；融資融券為上市每日快照（以站上最新收盤日為準）。單位：張。</p>
+<p class="meta">法人買賣超來自 FinMind（上市＋上櫃，查詢時即時抓取近 60 日）；融資融券為上市每日快照（以站上最新收盤日為準）。自營商＝自行買賣＋避險合計；外資含外資自營商。單位：張。</p>
 <div class="filters">
 <div><label>股票代號</label><input id="q_code" type="text" inputmode="numeric" maxlength="4" placeholder="如 2330"></div>
 <div><label>&nbsp;</label><button class="btn" id="q_go" type="button">查詢</button></div>
@@ -41,8 +41,9 @@
 </div>
 <script src="../assets/chart.js"></script>
 <script>
-const NAME_ZH={'Foreign_Investor':'外資','Investment_Trust':'投信','Dealer':'自營商'};
-const COLORS={'Foreign_Investor':'#e0533d','Investment_Trust':'#2b7cd3','Dealer':'#7a9e43'};
+const GRP={'Foreign_Investor':'外資','Foreign_Dealer_Self':'外資','Investment_Trust':'投信','Dealer_self':'自營商','Dealer_Hedging':'自營商'};
+const NAME_ZH={'外資':'外資','投信':'投信','自營商':'自營商'};
+const COLORS={'外資':'#e0533d','投信':'#2b7cd3','自營商':'#7a9e43'};
 let NAMES={}, MARGIN=null, chart=null;
 fetch('../assets/data/huang6_latest.json').then(r=>r.json()).then(j=>{
   j.stocks.forEach(s=>{NAMES[s.code]=s.name;});
@@ -61,14 +62,14 @@ function query(){
   if(MARGIN&&MARGIN.stocks&&MARGIN.stocks[code]){
     const f=MARGIN.fields, v=MARGIN.stocks[code], o={};
     f.forEach((k,i)=>{o[k]=v[i];});
-    const zr=o.short_balance? (o.margin_balance/o.short_balance):null;
+    const zr=o.margin_balance? (o.short_balance/o.margin_balance):null;
     mb.innerHTML='<table><thead><tr><th class="l">項目</th><th>張數</th></tr></thead><tbody>'
       +'<tr><td class="l">融資今日餘額</td><td class="num">'+o.margin_balance.toLocaleString()+'</td></tr>'
       +'<tr><td class="l">融券今日餘額</td><td class="num">'+o.short_balance.toLocaleString()+'</td></tr>'
       +'<tr><td class="l">券資比</td><td class="num">'+(zr==null?'—':(zr*100).toFixed(1)+'%')+'</td></tr>'
       +'<tr><td class="l">融資買進／賣出（今日）</td><td class="num">'+o.margin_buy.toLocaleString()+'／'+o.margin_sell.toLocaleString()+'</td></tr>'
       +'<tr><td class="l">融券買進／賣出（今日）</td><td class="num">'+o.short_buy.toLocaleString()+'／'+o.short_sell.toLocaleString()+'</td></tr>'
-      +'</tbody></table><p class="meta">快照日期：'+MARGIN.asof+'（僅上市；上櫃無融資券資料）</p>';
+      +'</tbody></table><p class="meta">快照交易日：'+MARGIN.asof+'（取自站上最新收盤日；僅上市有融資券資料）</p>';
   }else{
     mb.innerHTML='<p class="meta">查無融資融券資料（可能為上櫃股票，僅上市有融資券快照）。</p>';
   }
@@ -81,11 +82,12 @@ function query(){
       if(!rows.length){msg.textContent='FinMind 查無 '+code+' 法人資料。';return;}
       const byDate={};
       rows.forEach(r=>{
+        const g=GRP[r.name]||r.name;
         const day=byDate[r.date]||(byDate[r.date]={});
-        day[r.name]=((day[r.name]||0)+(r.buy-r.sell)/1000);
+        day[g]=((day[g]||0)+(r.buy-r.sell)/1000);
       });
       const dates=Object.keys(byDate).sort().slice(-60);
-      const kinds=['Foreign_Investor','Investment_Trust','Dealer'].filter(k=>rows.some(r=>r.name===k));
+      const kinds=['外資','投信','自營商'].filter(k=>rows.some(r=>(GRP[r.name]||r.name)===k));
       const ds=kinds.map(k=>({
         label:NAME_ZH[k]||k, backgroundColor:COLORS[k]||'#999',
         data:dates.map(dt=>Math.round((byDate[dt][k]||0)))
@@ -97,8 +99,8 @@ function query(){
       const sum=(k,n)=>dates.slice(-n).reduce((a,dt)=>a+(byDate[dt][k]||0),0);
       msg.textContent='資料筆數 '+rows.length+'（'+dates[0]+' ~ '+dates[dates.length-1]+'）';
       document.getElementById('inst_sum').textContent=
-        '外資近5日累計 '+kfmt(sum('Foreign_Investor',5))+' 張｜近20日 '+kfmt(sum('Foreign_Investor',20))+' 張；'
-        +'投信近5日 '+kfmt(sum('Investment_Trust',5))+' 張｜三大法人近20日合計 '
+        '外資近5日累計 '+kfmt(sum('外資',5))+' 張｜近20日 '+kfmt(sum('外資',20))+' 張；'
+        +'投信近5日 '+kfmt(sum('投信',5))+' 張｜三大法人近20日合計 '
         +kfmt(kinds.reduce((a,k)=>a+sum(k,20),0))+' 張。';
       document.getElementById('inst_head').innerHTML='<th class="l">日期</th>'
         +kinds.map(k=>'<th>'+(NAME_ZH[k]||k)+'</th>').join('')+'<th>合計</th>';
@@ -116,7 +118,7 @@ document.getElementById('q_code').addEventListener('keydown',e=>{if(e.key==='Ent
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-06 收盤 ｜ 本頁建置 2026-10-07 15:48</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-07 收盤 ｜ 本頁建置 2026-10-07 21:07</div>
 </div></footer>
 </body>
 </html>

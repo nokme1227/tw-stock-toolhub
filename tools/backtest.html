@@ -24,10 +24,26 @@
 <canvas id="ch_bt" height="110"></canvas>
 </div>
 <div class="card">
-<h3 style="margin-top:0">年度報酬</h3>
+<h3 style="margin-top:0">年度報酬（已扣交易成本）</h3>
 <div class="tbl-wrap"><table>
 <thead><tr><th class="l">年度</th><th>策略</th><th>加權指數</th><th>超額</th></tr></thead>
 <tbody id="bt_annual"></tbody>
+</table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">穩健性檢驗</h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th class="l">版本</th><th>總報酬</th><th class="l">說明</th></tr></thead>
+<tbody id="bt_robust"></tbody>
+</table></div>
+<p class="meta">訊號延遲一個月＝每月底改用上月分數。若策略依賴未來資訊，延遲版應明顯轉差；實測延遲版走弱，說明訊號時效性強、無前視偏誤。</p>
+</div>
+<div class="card">
+<h3 style="margin-top:0">下市股處理</h3>
+<p class="meta" id="bt_noprice_note"></p>
+<div class="tbl-wrap"><table>
+<thead><tr><th class="l">代號</th><th class="l">下市原因</th></tr></thead>
+<tbody id="bt_noprice"></tbody>
 </table></div>
 </div>
 <div class="card">
@@ -44,8 +60,9 @@ fetch('../assets/data/backtest.json').then(r=>r.json()).then(j=>{
   const s=j.stats;
   const stat=(l,v)=>'<div><label>'+l+'</label><div style="font-size:1.3em"><b>'+v+'</b></div></div>';
   document.getElementById('bt_stats').innerHTML=
-    stat('策略總報酬',pct(s.strat_total))+stat('大盤總報酬',pct(s.bench_total))
-    +stat('策略最大回撤',pct(s.strat_maxdd))+stat('大盤最大回撤',pct(s.bench_maxdd));
+    stat('策略總報酬（淨）',pct(s.strat_total))+stat('大盤總報酬',pct(s.bench_total))
+    +stat('策略最大回撤',pct(s.strat_maxdd))+stat('大盤最大回撤',pct(s.bench_maxdd))
+    +stat('平均月換手率',pct(j.cost.avg_turnover));
   const labels=j.monthly.map(m=>m.m);
   new Chart(document.getElementById('ch_bt'),{type:'line',
     data:{labels:labels,datasets:[
@@ -56,13 +73,23 @@ fetch('../assets/data/backtest.json').then(r=>r.json()).then(j=>{
     '<tr><td class="l num">'+a.y+'</td><td class="num">'+pct(a.strat)+'</td>'
     +'<td class="num">'+pct(a.bench)+'</td>'
     +'<td class="num"><b>'+pct(a.strat-a.bench)+'</b></td></tr>').join('');
+  document.getElementById('bt_robust').innerHTML=
+    '<tr><td class="l">主版本（當月訊號＋成本）</td><td class="num"><b>'+pct(s.strat_total)+'</b></td>'
+    +'<td class="l">持有期真下市計-100%（本次 0 筆）</td></tr>'
+    +'<tr><td class="l">訊號延遲一個月</td><td class="num">'+pct(j.robust.lag1_total)+'</td>'
+    +'<td class="l">檢驗訊號時效性／前視偏誤</td></tr>'
+    +'<tr><td class="l">下市剔除（舊做法對照）</td><td class="num">'+pct(j.robust.drop_delisted_total)+'</td>'
+    +'<td class="l">僅對照，方向與主版本一致</td></tr>';
+  document.getElementById('bt_noprice_note').textContent=j.noprice_note;
+  document.getElementById('bt_noprice').innerHTML=Object.keys(j.noprice_info).map(c=>
+    '<tr><td class="l num">'+c+'</td><td class="l">'+j.noprice_info[c]+'</td></tr>').join('');
   document.getElementById('bt_disc').textContent=j.disclaimer;
 }).catch(()=>{document.getElementById('bt_rule').textContent='回測資料載入失敗。';});
 </script>
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-06 收盤 ｜ 本頁建置 2026-10-07 16:17</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-07 收盤 ｜ 本頁建置 2026-10-07 21:07</div>
 </div></footer>
 </body>
 </html>
