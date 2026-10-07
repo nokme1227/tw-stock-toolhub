@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>六大指標篩選器｜台股研究工具站</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/auth.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>台股研究工具站</h1>
+<p>台股基本面研究工具 · 總覽＋工具目錄</p>
+</div></header>
+<div class="wrap">
+
+<nav class="back"><a href="../index.html">← 回工具總覽</a></nav>
+<div class="card">
+<h2 style="margin-top:0">六大指標篩選器</h2>
+<p class="meta">黃國華財報六大指標：<b>營</b>＝月營收年增率・<b>益</b>＝營益率・<b>獲</b>＝近四季累積EPS・
+<b>Ｅ</b>＝稅後淨利年增率・<b>存</b>＝存貨周轉率・<b>自</b>＝自由現金流量。子分 4=AA・3=A・2=BB・1=B・0=C，—＝無資料（不納入平均）。</p>
+<div class="filters">
+<div><label>總分下限</label><input id="f_min" type="number" min="0" max="4" step="0.01" value="0"></div>
+<div><label>總分上限</label><input id="f_max" type="number" min="0" max="4" step="0.01" value="4"></div>
+<div><label>趨勢</label><select id="f_trend"><option value="">全部</option><option>Up</option><option>Dn</option></select></div>
+<div><label>代號／名稱搜尋</label><input id="f_q" type="text" placeholder="如 2330 或 台積電"></div>
+</div>
+<div class="filters">
+<div><label>營 最低分</label><input id="f_營" type="number" min="0" max="4" step="1" placeholder="—"></div>
+<div><label>益 最低分</label><input id="f_益" type="number" min="0" max="4" step="1" placeholder="—"></div>
+<div><label>獲 最低分</label><input id="f_獲" type="number" min="0" max="4" step="1" placeholder="—"></div>
+<div><label>Ｅ 最低分</label><input id="f_Ｅ" type="number" min="0" max="4" step="1" placeholder="—"></div>
+<div><label>存 最低分</label><input id="f_存" type="number" min="0" max="4" step="1" placeholder="—"></div>
+<div><label>自 最低分</label><input id="f_自" type="number" min="0" max="4" step="1" placeholder="—"></div>
+</div>
+<p class="meta" id="count"></p>
+</div>
+<div class="tbl-wrap"><table id="tbl">
+<thead><tr><th class="l">代號</th><th class="l">名稱</th><th>總分</th><th class="l">趨勢</th>
+<th class="l">六子項（營益獲Ｅ存自）</th><th class="l">估價區間</th></tr></thead>
+<tbody id="rows"></tbody>
+</table></div>
+<script>
+let DATA=[];
+const SUBS=['營','益','獲','Ｅ','存','自'];
+function subBadge(v){return v==null?'<span class="sub na">—</span>':'<span class="sub">'+v+'</span>';}
+function trendBadge(t){return t==='Up'?'<span class="badge b-up">Up</span>':t==='Dn'?'<span class="badge b-dn">Dn</span>':(t||'—');}
+function apply(){
+  const mn=parseFloat(document.getElementById('f_min').value||'0');
+  const mx=parseFloat(document.getElementById('f_max').value||'4');
+  const tr=document.getElementById('f_trend').value;
+  const q=document.getElementById('f_q').value.trim();
+  const mins={};SUBS.forEach(k=>{const v=document.getElementById('f_'+k).value;if(v!=='')mins[k]=parseFloat(v);});
+  const rows=DATA.filter(s=>{
+    if(s.total<mn||s.total>mx)return false;
+    if(tr&&s.trend!==tr)return false;
+    if(q&&!(s.code.includes(q)||s.name.includes(q)))return false;
+    for(const k of SUBS){if(k in mins&&(s.sub[k]==null||s.sub[k]<mins[k]))return false;}
+    return true;
+  });
+  document.getElementById('count').textContent='符合 '+rows.length+' 檔（共 '+DATA.length+' 檔）';
+  document.getElementById('rows').innerHTML=rows.map(s=>{
+    const est=(s.est_low!=null&&s.est_high!=null)?s.est_low.toFixed(2)+'–'+s.est_high.toFixed(2):'—';
+    return '<tr><td class="l num">'+s.code+'</td><td class="l">'+s.name+'</td>'+
+    '<td class="num"><b>'+s.total.toFixed(2)+'</b></td><td class="l">'+trendBadge(s.trend)+(s.arrow?' '+s.arrow:'')+'</td>'+
+    '<td class="l">'+SUBS.map(k=>subBadge(s.sub[k])).join('')+'</td>'+
+    '<td class="l num">'+est+'</td></tr>';
+  }).join('');
+}
+['f_min','f_max','f_trend','f_q','f_營','f_益','f_獲','f_Ｅ','f_存','f_自'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',apply);
+});
+fetch('../assets/data/huang6_latest.json').then(r=>r.json()).then(j=>{DATA=j.stocks;apply();});
+</script>
+</div>
+<footer class="site"><div class="wrap">
+<div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-02 收盤 ｜ 本頁建置 2026-10-06 00:31</div>
+</div></footer>
+</body>
+</html>
