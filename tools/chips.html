@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>籌碼工具｜台股研究工具站</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>台股研究工具站</h1>
+<p>台股基本面研究工具 · 總覽＋工具目錄</p>
+</div></header>
+<div class="wrap">
+
+<nav class="back"><a href="../index.html">← 回工具總覽</a></nav>
+<div class="card">
+<h2 style="margin-top:0">籌碼工具：法人買賣超＋融資融券</h2>
+<p class="meta">法人買賣超來自 FinMind（上市＋上櫃，查詢時即時抓取近 60 日）；融資融券為上市每日快照（以站上最新收盤日為準）。單位：張。</p>
+<div class="filters">
+<div><label>股票代號</label><input id="q_code" type="text" inputmode="numeric" maxlength="4" placeholder="如 2330"></div>
+<div><label>&nbsp;</label><button class="btn" id="q_go" type="button">查詢</button></div>
+</div>
+<p class="meta" id="q_msg"></p>
+</div>
+<div class="card">
+<h3 style="margin-top:0" id="inst_title">法人買賣超（近 60 日）</h3>
+<canvas id="ch_inst" height="110"></canvas>
+<p class="meta" id="inst_sum"></p>
+</div>
+<div class="card">
+<h3 style="margin-top:0">融資融券（上市快照）</h3>
+<div id="margin_box"><p class="meta">輸入代號後顯示。</p></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">法人每日明細（近 10 日）</h3>
+<div class="tbl-wrap"><table>
+<thead><tr id="inst_head"><th class="l">日期</th><th>外資</th><th>投信</th><th>自營商</th><th>合計</th></tr></thead>
+<tbody id="inst_rows"><tr><td class="l" colspan="5">—</td></tr></tbody>
+</table></div>
+</div>
+<script src="../assets/chart.js"></script>
+<script>
+const NAME_ZH={'Foreign_Investor':'外資','Investment_Trust':'投信','Dealer':'自營商'};
+const COLORS={'Foreign_Investor':'#e0533d','Investment_Trust':'#2b7cd3','Dealer':'#7a9e43'};
+let NAMES={}, MARGIN=null, chart=null;
+fetch('../assets/data/huang6_latest.json').then(r=>r.json()).then(j=>{
+  j.stocks.forEach(s=>{NAMES[s.code]=s.name;});
+}).catch(()=>{});
+fetch('../assets/data/margin_latest.json').then(r=>r.json()).then(j=>{MARGIN=j;}).catch(()=>{});
+function kfmt(x){return x==null?'—':(x>=0?'+':'')+Math.round(x).toLocaleString();}
+function query(){
+  const code=document.getElementById('q_code').value.trim();
+  const msg=document.getElementById('q_msg');
+  if(!/^\d{4}$/.test(code)){msg.textContent='請輸入 4 位數字代號。';return;}
+  msg.textContent='查詢中…';
+  document.getElementById('inst_title').textContent=
+    '法人買賣超（近 60 日）— '+code+(NAMES[code]?' '+NAMES[code]:'');
+  // 融資融券快照
+  const mb=document.getElementById('margin_box');
+  if(MARGIN&&MARGIN.stocks&&MARGIN.stocks[code]){
+    const f=MARGIN.fields, v=MARGIN.stocks[code], o={};
+    f.forEach((k,i)=>{o[k]=v[i];});
+    const zr=o.short_balance? (o.margin_balance/o.short_balance):null;
+    mb.innerHTML='<table><thead><tr><th class="l">項目</th><th>張數</th></tr></thead><tbody>'
+      +'<tr><td class="l">融資今日餘額</td><td class="num">'+o.margin_balance.toLocaleString()+'</td></tr>'
+      +'<tr><td class="l">融券今日餘額</td><td class="num">'+o.short_balance.toLocaleString()+'</td></tr>'
+      +'<tr><td class="l">券資比</td><td class="num">'+(zr==null?'—':(zr*100).toFixed(1)+'%')+'</td></tr>'
+      +'<tr><td class="l">融資買進／賣出（今日）</td><td class="num">'+o.margin_buy.toLocaleString()+'／'+o.margin_sell.toLocaleString()+'</td></tr>'
+      +'<tr><td class="l">融券買進／賣出（今日）</td><td class="num">'+o.short_buy.toLocaleString()+'／'+o.short_sell.toLocaleString()+'</td></tr>'
+      +'</tbody></table><p class="meta">快照日期：'+MARGIN.asof+'（僅上市；上櫃無融資券資料）</p>';
+  }else{
+    mb.innerHTML='<p class="meta">查無融資融券資料（可能為上櫃股票，僅上市有融資券快照）。</p>';
+  }
+  // 法人買賣超（FinMind 即時）
+  const d=new Date(); d.setDate(d.getDate()-70);
+  const s=d.toISOString().slice(0,10);
+  fetch('https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockInstitutionalInvestorsBuySell&data_id='+code+'&start_date='+s)
+    .then(r=>r.json()).then(j=>{
+      const rows=(j&&j.data)||[];
+      if(!rows.length){msg.textContent='FinMind 查無 '+code+' 法人資料。';return;}
+      const byDate={};
+      rows.forEach(r=>{
+        const day=byDate[r.date]||(byDate[r.date]={});
+        day[r.name]=((day[r.name]||0)+(r.buy-r.sell)/1000);
+      });
+      const dates=Object.keys(byDate).sort().slice(-60);
+      const kinds=['Foreign_Investor','Investment_Trust','Dealer'].filter(k=>rows.some(r=>r.name===k));
+      const ds=kinds.map(k=>({
+        label:NAME_ZH[k]||k, backgroundColor:COLORS[k]||'#999',
+        data:dates.map(dt=>Math.round((byDate[dt][k]||0)))
+      }));
+      if(chart)chart.destroy();
+      chart=new Chart(document.getElementById('ch_inst'),{type:'bar',
+        data:{labels:dates,datasets:ds},
+        options:{responsive:true,scales:{x:{stacked:true},y:{stacked:true}}}});
+      const sum=(k,n)=>dates.slice(-n).reduce((a,dt)=>a+(byDate[dt][k]||0),0);
+      msg.textContent='資料筆數 '+rows.length+'（'+dates[0]+' ~ '+dates[dates.length-1]+'）';
+      document.getElementById('inst_sum').textContent=
+        '外資近5日累計 '+kfmt(sum('Foreign_Investor',5))+' 張｜近20日 '+kfmt(sum('Foreign_Investor',20))+' 張；'
+        +'投信近5日 '+kfmt(sum('Investment_Trust',5))+' 張｜三大法人近20日合計 '
+        +kfmt(kinds.reduce((a,k)=>a+sum(k,20),0))+' 張。';
+      document.getElementById('inst_head').innerHTML='<th class="l">日期</th>'
+        +kinds.map(k=>'<th>'+(NAME_ZH[k]||k)+'</th>').join('')+'<th>合計</th>';
+      document.getElementById('inst_rows').innerHTML=dates.slice(-10).reverse().map(dt=>{
+        const d0=byDate[dt], tot=kinds.reduce((a,k)=>a+(d0[k]||0),0);
+        return '<tr><td class="l num">'+dt+'</td>'
+          +kinds.map(k=>'<td class="num">'+kfmt(d0[k]||0)+'</td>').join('')
+          +'<td class="num"><b>'+kfmt(tot)+'</b></td></tr>';
+      }).join('');
+    }).catch(()=>{msg.textContent='FinMind 查詢失敗，請稍後再試。';});
+}
+document.getElementById('q_go').addEventListener('click',query);
+document.getElementById('q_code').addEventListener('keydown',e=>{if(e.key==='Enter')query();});
+</script>
+</div>
+<footer class="site"><div class="wrap">
+<div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-06 收盤 ｜ 本頁建置 2026-10-07 15:48</div>
+</div></footer>
+</body>
+</html>
