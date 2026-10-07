@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>樂活五線譜｜台股研究工具站</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>台股研究工具站</h1>
+<p>台股基本面研究工具 · 總覽＋工具目錄</p>
+</div></header>
+<div class="wrap">
+
+<nav class="back"><a href="../index.html">← 回工具總覽</a></nav>
+<div class="card">
+<h2 style="margin-top:0">樂活五線譜：股價位階判讀</h2>
+<p class="meta">長期均值回歸工具：以期間日收盤價拉出一條線性迴歸趨勢線為中間基準，上下各畫 ±1σ、±2σ 平行通道。股價越靠下方代表相對便宜、越靠上方代表相對昂貴。資料：FinMind（上市＋上櫃）。</p>
+<div class="filters">
+<div><label>股票代號</label><input id="f_code" type="text" inputmode="numeric" maxlength="4" placeholder="如 2330"></div>
+<div><label>查詢區間</label><select id="f_years"><option value="3">3 年</option><option value="5" selected>5 年</option><option value="10">10 年</option></select></div>
+<div><label>&nbsp;</label><button class="btn" id="f_go" type="button">查詢</button></div>
+</div>
+<p class="meta" id="f_msg"></p>
+</div>
+<div class="card">
+<h3 style="margin-top:0">五線譜 <span id="f_badge" style="font-size:.7em"></span></h3>
+<canvas id="ch_fl" height="120"></canvas>
+<p class="meta" id="f_axis"></p>
+</div>
+<div class="card">
+<h3 style="margin-top:0">判讀</h3>
+<div class="filters" id="f_stats"></div>
+<div class="tbl-wrap"><table>
+<thead><tr><th class="l">目前位置</th><th class="l">判讀</th></tr></thead>
+<tbody id="f_zone_tbl"></tbody>
+</table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">方法與限制</h3>
+<p class="meta">中間線＝期間日收盤價的線性迴歸趨勢線（OLS）；σ＝迴歸殘差的標準差；五線為趨勢線 ±1σ、±2σ 的平行線，未來一年以虛線延伸。R² 衡量趨勢線擬合度（&gt;0.7 參考價值高，&lt;0.5 低）；CV＝σ ÷ 期間平均價，衡量五線間距寬窄。理論基礎：常態分佈（約 95% 價格落在 ±2σ 內，超出屬極端）與均值回歸。</p>
+<p class="meta">限制：FinMind 免費層股價未還原除權息，長期圖在除息日可能有跳空；僅供位階參考，不構成投資建議。</p>
+</div>
+<script src="../assets/chart.js"></script>
+<script>
+let flChart=null;
+const FL_COLORS={'p2':'#e0533d','p1':'#f0a35e','m0':'#444444','m1':'#7fb069','m2':'#2b7cd3'};
+const FL_LABELS={'p2':'樂觀線（+2σ）','p1':'相對樂觀線（+1σ）','m0':'趨勢線','m1':'相對悲觀線（−1σ）','m2':'悲觀線（−2σ）'};
+function fquery(){
+  const code=document.getElementById('f_code').value.trim();
+  const yrs=parseInt(document.getElementById('f_years').value,10);
+  const msg=document.getElementById('f_msg');
+  if(!/^\d{4}$/.test(code)){msg.textContent='請輸入 4 位數字代號。';return;}
+  msg.textContent='查詢中…';
+  const d=new Date(); d.setFullYear(d.getFullYear()-yrs);
+  const s=d.toISOString().slice(0,10);
+  fetch('https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id='+code+'&start_date='+s)
+    .then(r=>r.json()).then(j=>{
+      const rows=((j&&j.data)||[]).filter(r=>r.close>0);
+      if(rows.length<120){msg.textContent='資料不足（需至少 120 個交易日），換個代號或縮短區間試試。';return;}
+      const dates=rows.map(r=>r.date), cl=rows.map(r=>+r.close);
+      const n=cl.length, mx=n-1;
+      // OLS: y = a + b*x
+      let sx=0,sy=0,sxx=0,sxy=0;
+      for(let i=0;i<n;i++){sx+=i;sy+=cl[i];sxx+=i*i;sxy+=i*cl[i];}
+      const b=(n*sxy-sx*sy)/(n*sxx-sx*sx), a=(sy-b*sx)/n;
+      let ssres=0,sstot=0; const mean=sy/n;
+      const resid=[];
+      for(let i=0;i<n;i++){const r=cl[i]-(a+b*i);resid.push(r);ssres+=r*r;const dm=cl[i]-mean;sstot+=dm*dm;}
+      const sig=Math.sqrt(ssres/n), r2=sstot>0?1-ssres/sstot:0, cv=mean>0?sig/mean:0;
+      const FUT=250, N=n+FUT;
+      const line=k=>{const out=new Array(N);for(let i=0;i<N;i++)out[i]=a+b*i+k*sig;return out;};
+      const bands={p2:line(2),p1:line(1),m0:line(0),m1:line(-1),m2:line(-2)};
+      const labels=dates.concat(Array(FUT).fill(''));
+      const price=new Array(N).fill(null), ma=new Array(N).fill(null);
+      for(let i=0;i<n;i++){price[i]=cl[i];}
+      for(let i=59;i<n;i++){let s2=0;for(let k=0;k<60;k++)s2+=cl[i-k];ma[i]=s2/60;}
+      const dash=ctx=>ctx.p1.parsed.x>=mx?[6,4]:undefined;
+      const ds=[{label:'收盤價',data:price,borderColor:'#111111',borderWidth:1.5,pointRadius:0,tension:0},
+        {label:'MA60',data:ma,borderColor:'#ff9800',borderWidth:1.2,pointRadius:0,tension:0,borderDash:[4,3]}];
+      ['p2','p1','m0','m1','m2'].forEach(k=>{
+        ds.push({label:FL_LABELS[k],data:bands[k],borderColor:FL_COLORS[k],
+          borderWidth:k==='m0'?2:1.2,pointRadius:0,tension:0,
+          segment:{borderDash:dash}});
+      });
+      if(flChart)flChart.destroy();
+      flChart=new Chart(document.getElementById('ch_fl'),{type:'line',
+        data:{labels:labels,datasets:ds},
+        options:{responsive:true,interaction:{mode:'index',intersect:false},
+          plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:10}}}},
+          scales:{x:{ticks:{autoSkip:true,maxTicksLimit:8,font:{size:10}}},
+                  y:{ticks:{font:{size:10}}}}}});
+      // 目前區間判讀
+      const last=cl[mx], bv={p2:bands.p2[mx],p1:bands.p1[mx],m0:bands.m0[mx],m1:bands.m1[mx],m2:bands.m2[mx]};
+      let zi;
+      if(last>bv.p2)zi=0; else if(last>bv.p1)zi=1; else if(last>bv.m0)zi=2;
+      else if(last>bv.m1)zi=3; else if(last>bv.m2)zi=4; else zi=5;
+      const ZT=[['高於 +2σ','超漲，考慮獲利了結'],['+1σ ～ +2σ','偏貴，不宜追高'],
+        ['趨勢線 ～ +1σ','中性偏強'],['−1σ ～ 趨勢線','中性偏弱'],
+        ['−2σ ～ −1σ','偏便宜，可分批佈局'],['低於 −2σ','超跌，可逢低進場']];
+      const badge=document.getElementById('f_badge');
+      badge.innerHTML='<span style="background:#f5f0e6;border:1px solid #d8cfae;border-radius:12px;padding:2px 10px;">'+ZT[zi][0]+'：'+ZT[zi][1]+'</span>';
+      msg.textContent=code+'｜'+dates[0]+' ~ '+dates[mx]+'（'+n+' 個交易日）｜最新收盤 '+last.toFixed(2);
+      document.getElementById('f_axis').textContent=
+        '五線當前值：'+bv.p2.toFixed(1)+' / '+bv.p1.toFixed(1)+' / '+bv.m0.toFixed(1)+' / '+bv.m1.toFixed(1)+' / '+bv.m2.toFixed(1);
+      const stat=(l,v)=>'<div><label>'+l+'</label><div style="font-size:1.3em"><b>'+v+'</b></div></div>';
+      document.getElementById('f_stats').innerHTML=
+        stat('最新收盤',last.toFixed(2))+stat('R² 擬合度',r2.toFixed(3))
+        +stat('CV 變異係數',(cv*100).toFixed(1)+'%')
+        +stat('趨勢線斜率',(b>=0?'+':'')+b.toFixed(3)+'/日');
+      const zrow=(rng,txt,hot)=>'<tr'+(hot?' style="background:#fdf6e3"':'')+'><td class="l">'+rng+'</td><td class="l">'+txt+'</td></tr>';
+      document.getElementById('f_zone_tbl').innerHTML=ZT.map((z,i)=>zrow(z[0],z[1],i===zi)).join('');
+    }).catch(()=>{msg.textContent='FinMind 查詢失敗，請稍後再試。';});
+}
+document.getElementById('f_go').addEventListener('click',fquery);
+document.getElementById('f_code').addEventListener('keydown',e=>{if(e.key==='Enter')fquery();});
+</script>
+</div>
+<footer class="site"><div class="wrap">
+<div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-07 收盤 ｜ 本頁建置 2026-10-08 06:54</div>
+</div></footer>
+</body>
+</html>
