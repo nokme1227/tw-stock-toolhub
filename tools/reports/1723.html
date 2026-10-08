@@ -1,865 +1,163 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>中碳 股票分析報告</title>
-        <style>code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}</style>
-    <script src="../../assets/chart.js"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei", sans-serif;
-            background: linear-gradient(135deg, #0f0c29 0%, #1a1a2e 50%, #24243e 100%);
-            min-height: 100vh;
-            color: #e0e0e0;
-            padding: 12px;
-            line-height: 1.6;
-        }
-        .container { max-width: 920px; margin: 0 auto; }
+<html lang="zh-TW"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中碳(1723) 投資分析報告 v2</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"Microsoft JhengHei",sans-serif;background:#0f1420;color:#dfe6f2;padding:14px;line-height:1.65}
+.wrap{max-width:960px;margin:0 auto}
+.card{background:#182032;border:1px solid #2a3a55;border-radius:14px;padding:20px 22px;margin-bottom:16px}
+.card h2{color:#5cc8ff;font-size:1.15em;margin-bottom:12px;border-bottom:1px solid #2a3a55;padding-bottom:8px}
+.tbl{width:100%;border-collapse:collapse;font-size:.88em}
+.tbl th,.tbl td{padding:8px 6px;border-bottom:1px solid #243049;text-align:center}
+.tbl th{color:#8fa3c0;font-weight:600}
+.tbl td.l,.tbl th.l{text-align:left}
+.num{font-family:ui-monospace,Menlo,Consolas,monospace}
+.lights{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.light{background:#0f1626;border:1px solid #2a3a55;border-radius:10px;padding:10px 14px;text-align:center;min-width:110px}
+.light .e{font-size:1.6em}
+.note{color:#8fa3c0;font-size:.82em}
+.warn{background:#3a2b00;border:1px solid #d29922;border-radius:10px;padding:12px 14px;margin:10px 0;font-size:.9em}
+.err{background:#3d0a0a;border:1px solid #f85149;border-radius:10px;padding:12px 14px;margin:10px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+.bandwrap{position:relative;height:44px;background:#0f1626;border-radius:8px;margin:14px 0 6px}
+.marker{position:absolute;top:-6px;transform:translateX(-50%);color:#ffd166;font-weight:700}
+a{color:#5cc8ff}
+</style></head><body><div class="wrap">
 
-        .header {
-            text-align: center;
-            padding: 28px 0 18px;
-            border-bottom: 1px solid rgba(78,205,196,0.2);
-            margin-bottom: 22px;
-        }
-        .header h1 { font-size: 2.4em; margin-bottom: 6px; color: #4ecdc4; }
-        .header .subtitle { color: #777; font-size: 0.88em; }
-        .header .data-source-note { color: #555; font-size: 0.72em; margin-top: 6px; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.5; }
-        .header .data-source-note code { background: rgba(78,205,196,0.1); padding: 1px 5px; border-radius: 3px; font-size: 0.95em; }
+<div class="card" style="text-align:center">
+<h1 style="color:#fff">中碳 <span class="num">1723</span></h1>
+<p class="note">投資分析報告 v2（驗證案例）｜資料正確性優先，不虛構、不補值</p>
+<div class="tbl-wrap"><table class="tbl" style="max-width:640px;margin:10px auto">
+<tr><th class="l">資料項目</th><th>截至</th></tr>
+<tr><td class="l">股價資料 Market Data</td><td class="num">2026-10-07 收盤</td></tr>
+<tr><td class="l">營收資料 Revenue</td><td class="num">2026-10-01</td></tr>
+<tr><td class="l">財報資料 Fundamental</td><td class="num">2026-06-30（2026 Q2）</td></tr>
+<tr><td class="l">籌碼資料 Chip</td><td class="num">2026-10-07（法人）；集保：資料缺失</td></tr>
+<tr><td class="l">報告產生 Report Generated</td><td class="num">2026-10-08</td></tr>
+</table></div>
+</div>
 
-        /* 卡片 hover 上浮 + 光暈陰影 */
-        .card {
-            background: rgba(255,255,255,0.04);
-            border-radius: 18px;
-            padding: 22px 24px;
-            margin-bottom: 18px;
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: transform 0.22s ease, box-shadow 0.22s ease;
-        }
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 14px 42px rgba(78,205,196,0.10);
-        }
-        .card h2 {
-            color: #4ecdc4;
-            margin-bottom: 16px;
-            font-size: 1.1em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-bottom: 1px solid rgba(78,205,196,0.15);
-            padding-bottom: 10px;
-        }
+<div class="card"><h2>1. Executive Summary</h2>
+<div class="lights">
+<div class="light"><div class="e">🔴</div><div>基本面</div></div>
+<div class="light"><div class="e">🔴</div><div>估值</div></div>
+<div class="light"><div class="e">⚪</div><div>籌碼</div></div>
+<div class="light"><div class="e">🟡</div><div>技術面</div></div>
+<div class="light"><div class="e">🔴</div><div>風險</div></div>
+</div>
+<p style="font-size:1.25em;margin:8px 0"><b>Overall：🔴 CAUTIOUS</b>（謹慎）</p>
+<p class="note">燈號規則：紅燈≥2 → CAUTIOUS；綠燈≥3 且無紅燈 → POSITIVE；其餘 → OBSERVE。籌碼因集保缺失顯示 ⚪（不計入）。</p>
+<table class="tbl"><tr><th class="l">關鍵數據</th><th>數值</th><th class="l">關鍵數據</th><th>數值</th></tr>
+<tr><td class="l">現價</td><td class="num">81.40</td><td class="l">TTM EPS</td><td class="num">3.11</td></tr>
+<tr><td class="l">52W 高/低</td><td class="num">89.70 / 64.91</td><td class="l">現價 PE</td><td class="num">26.17x（歷史 84% 分位）</td></tr>
+<tr><td class="l">2026 H1 EPS</td><td class="num">2.07</td><td class="l">年化 EPS*</td><td class="num">4.14</td></tr>
+<tr><td class="l">2024 高/低</td><td class="num">111.98 / 85.25</td><td class="l">2025 高/低</td><td class="num">93.94 / 65.60</td></tr>
+<tr><td class="l">2026 YTD 高/低</td><td class="num">89.70 / 64.91</td><td class="l">現價 vs 52W 高</td><td class="num">-9.3%</td></tr>
+</table>
+<p class="note">*年化 EPS = H1×2，僅為算術年化，NOT 公司指引。</p>
 
-        /* 報價格 */
-        .price-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-        .price-item {
-            background: rgba(255,255,255,0.06);
-            padding: 14px 10px;
-            border-radius: 12px;
-            text-align: center;
-        }
-        .price-item .label { color: #888; font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.5px; }
-        .price-item .value { font-size: 1.25em; font-weight: 700; margin-top: 4px; font-family: 'Roboto Mono', monospace; }
-        .price-item .value.up { color: #4ecdc4; }
-        .price-item .value.down { color: #ff6b6b; }
+</div>
 
-        /* 圖表 */
-        .chart-box { height: 220px; margin-top: 14px; position: relative; }
+<div class="card"><h2>2. Fundamental 基本面趨勢</h2>
+<h3 style="color:#8fa3c0;font-size:.95em;margin:8px 0">營收趨勢（月營收年加總）</h3>
+<table class="tbl"><tr><th>年度</th><th>營收</th><th>YoY</th></tr>
+<tr><td class="num">2024</td><td class="num">77.20 億</td><td class="num">—</td></tr>
+<tr><td class="num">2025</td><td class="num">59.58 億</td><td class="num">-22.8%</td></tr>
+<tr><td class="num">2026 YTD</td><td class="num">59.34 億</td><td class="num">—</td></tr></table>
+<h3 style="color:#8fa3c0;font-size:.95em;margin:12px 0 8px">EPS 趨勢</h3>
+<table class="tbl"><tr><th>期間</th><th>EPS</th><th>說明</th></tr>
+<tr><td class="num">2024 FY</td><td class="num">5.20</td><td style="text-align:left">四季加總</td></tr>
+<tr><td class="num">2025 FY</td><td class="num">2.65</td><td style="text-align:left">四季加總</td></tr>
+<tr><td class="num">2026 H1</td><td class="num">2.07</td><td style="text-align:left">Q1+Q2，<b>不可稱為全年 EPS</b></td></tr>
+<tr><td class="num">TTM</td><td class="num">3.11</td><td style="text-align:left">2025Q3～2026Q2，PE 計算用</td></tr></table>
+<h3 style="color:#8fa3c0;font-size:.95em;margin:12px 0 8px">獲利能力</h3>
+<table class="tbl"><tr><th class="l">指標</th><th>TTM</th><th>去年同期</th></tr>
+<tr><td class="l">毛利率</td><td class="num">20.8%</td><td class="num">21.9%</td></tr>
+<tr><td class="l">營益率</td><td class="num">11.0%</td><td class="num">N/A</td></tr>
+<tr><td class="l">ROE（TTM/平均權益）</td><td class="num">9.1%</td><td class="num">—</td></tr>
+<tr><td class="l">ROA（TTM/平均資產）</td><td class="num">6.2%</td><td class="num">—</td></tr></table>
+<p class="note" style="margin-top:8px">單季 EPS：2025Q3 0.53 → Q4 0.51 → 2026Q1 0.77 → Q2 1.30，2026 年逐季改善，但 TTM 仍低於去年同期（4.12 → 3.11）。</p>
+</div>
 
-        /* 表格 */
-        .tbl-wrap { overflow-x: auto; border-radius: 10px; }
-        .tbl { width: 100%; border-collapse: collapse; font-size: 0.85em; }
-        .tbl th, .tbl td {
-            padding: 9px 8px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            font-family: 'Roboto Mono', monospace;
-        }
-        .tbl th { background: rgba(78,205,196,0.12); color: #4ecdc4; font-size: 0.75em; letter-spacing: 0.3px; }
-        .tbl td.year-cell { font-weight: 700; color: #f9a825; background: rgba(249,168,37,0.08); white-space: nowrap; font-size: 0.92em; }
-        .tbl .up { color: #4ecdc4; }
-        .tbl .down { color: #ff6b6b; }
-        .tbl tr:hover td { background: rgba(255,255,255,0.04); }
+<div class="card"><h2>3. Valuation 估值</h2>
+<table class="tbl"><tr><th class="l">項目</th><th>數值</th><th class="l">計算</th></tr>
+<tr><td class="l">TTM EPS</td><td class="num">3.11</td><td style="text-align:left">2025Q3～2026Q2 四季加總</td></tr>
+<tr><td class="l"><b>Current PE</b></td><td class="num"><b>26.17x</b></td><td style="text-align:left">81.40 ÷ 3.11</td></tr>
+<tr><td class="l">歷史 PE 低</td><td class="num">13.2x</td><td style="text-align:left" rowspan="3">近 3.5 年日 PE（收盤價 ÷ 當時 TTM EPS，季報以季底+45 天為可得日）</td></tr>
+<tr><td class="l">歷史 PE 中位數</td><td class="num">17.0x</td></tr>
+<tr><td class="l">歷史 PE 高</td><td class="num">36.2x</td></tr>
+<tr><td class="l">現價 PE 分位</td><td class="num">84%</td><td style="text-align:left">高於歷史 84% 的時間</td></tr></table>
+<p style="margin:10px 0 2px">PE Band（現價位置 ▼）：</p>
+<div class="bandwrap"><span style="position:absolute;left:16.7%">| 15x</span><span style="position:absolute;left:33.3%">| 20x</span><span style="position:absolute;left:50.0%">| 25x</span><span style="position:absolute;left:66.7%">| 30x</span><span style="position:absolute;left:83.3%">| 35x</span><div class="marker" style="left:53.9%">▼ 26.2x</div></div>
+<p class="note">燈號規則：分位 &lt;30% 🟢；30–70% 🟡；&gt;70% 🔴。目前 84% → 🔴 估值偏高。</p>
+</div>
 
-        /* YoY 彩色著色 */
-        .yoy-pos { background: rgba(78,205,196,0.15); color: #4ecdc4; font-weight: 600; border-radius: 4px; padding: 2px 5px; display: inline-block; }
-        .yoy-neg { background: rgba(255,107,107,0.15); color: #ff6b6b; font-weight: 600; border-radius: 4px; padding: 2px 5px; display: inline-block; }
+<div class="card"><h2>4. Chip 籌碼</h2>
+<table class="tbl"><tr><th class="l">法人（近 20 交易日累計，張）</th><th>買賣超</th></tr>
+<tr><td class="l">外資</td><td class="num">-2,419,196</td></tr>
+<tr><td class="l">投信</td><td class="num">-120,000</td></tr>
+<tr><td class="l">自營商</td><td class="num">-145,239</td></tr></table>
+<div class="warn"><b>資料缺失：</b>集保戶數、大戶/散戶持股（FinMind 免費層無此數據，無法取得）。籌碼結構燈號記為 ⚪，不納入綜合判斷。</div>
+<p class="note">用詞規範：僅描述「外資/投信近 20 日買賣超」，不使用「主力出貨」等無法定義之用語。</p>
+</div>
 
-        /* 月營收表格 - 未來月份灰字dash */
-        .tbl td.future-empty { color: #555; }
-        .tbl td.revenue-up { color: #4ecdc4; }
-        .tbl td.revenue-down { color: #ff6b6b; }
+<div class="card"><h2>5. Technical 技術面</h2>
+<table class="tbl"><tr><th class="l">指標</th><th>數值</th><th class="l">指標</th><th>數值</th></tr>
+<tr><td class="l">MA20</td><td class="num">81.11</td><td class="l">MA60</td><td class="num">84.27</td></tr>
+<tr><td class="l">MA120</td><td class="num">82.53</td><td class="l">MA240</td><td class="num">77.89</td></tr>
+<tr><td class="l">RSI(14)</td><td class="num">46.6</td><td class="l">MACD（DIF/DEA/柱）</td><td class="num">-1.03/-1.19/+0.162</td></tr>
+<tr><td class="l">量比（今/20日均）</td><td class="num">0.57x</td><td class="l">壓力/支撐（60日高低）</td><td class="num">89.70 / 79.70</td></tr></table>
+<p style="margin-top:10px"><b>Technical Trend：Neutral</b></p>
+<p class="note">Rule：Bullish = 收盤&gt;MA20 且 MA20&gt;MA60 且 MACD 柱&gt;0；Bearish = 收盤&lt;MA20 且 MA20&lt;MA60 且 MACD 柱&lt;0；其餘 Neutral。目前：收盤 81.40 vs MA20 81.11、MA20 vs MA60 84.27、柱 +0.162。</p>
+</div>
 
-        /* 六大指標 3x2 排列 */
-        .six-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        .six-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 18px;
-            padding: 20px 14px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: transform 0.22s ease, box-shadow 0.22s ease;
-        }
-        .six-card:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 12px 40px rgba(78,205,196,0.15), 0 0 30px rgba(78,205,196,0.08);
-        }
-        .six-card .label { color: #888; font-size: 0.78em; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .six-card .value { font-size: 1.5em; font-weight: 800; margin-bottom: 6px; font-family: 'Roboto Mono', monospace; }
-        .six-card .grade { font-size: 1.05em; font-weight: 700; }
-        .six-card .grade.aa { color: #4ecdc4; text-shadow: 0 0 16px rgba(78,205,196,0.7), 0 0 8px rgba(78,205,196,0.4); }
-        .six-card .grade.a  { color: #a8e6cf; }
-        .six-card .grade.bb { color: #f9a825; text-shadow: 0 0 16px rgba(249,168,37,0.6), 0 0 8px rgba(249,168,37,0.3); }
-        .six-card .grade.b  { color: #ff8c00; }
-        .six-card .grade.c  { color: #ff6b6b; }
+<div class="card"><h2>6. Earnings Quality 盈餘品質</h2>
+<table class="tbl"><tr><th class="l">檢查（Rule）</th><th>結果</th></tr>
+<tr><td class="l">應收帳款增速 vs 營收增速（H1 YoY）</td><td class="num">-15.3% vs 6.3%</td></tr>
+<tr><td class="l">存貨增速 vs 營收增速</td><td class="num">12.7% vs 同上</td></tr>
+<tr><td class="l">業外佔比（(稅後−營業利益)/稅後，TTM）</td><td class="num">7.6%</td></tr></table>
+<p class="note">判讀：應收/存貨增速若顯著高於營收，疑慮升高；業外佔比高則盈餘品質打折。數據為 2026-06-30 vs 2025-12-31 資產負債表。</p>
+</div>
 
-        /* 巴菲特紅旗 */
-        .verdict-box {
-            padding: 16px 24px;
-            border-radius: 14px;
-            margin-bottom: 14px;
-            font-size: 1.25em;
-            font-weight: 800;
-            text-align: center;
-        }
-        .verdict-box.pass {
-            background: rgba(78,205,196,0.2);
-            border: 2px solid rgba(78,205,196,0.5);
-            color: #4ecdc4;
-        }
-        .verdict-box.fail {
-            background: rgba(255,107,107,0.2);
-            border: 2px solid rgba(255,107,107,0.5);
-            color: #ff6b6b;
-        }
-        .verdict-box.warn {
-            background: rgba(249,168,37,0.2);
-            border: 2px solid rgba(249,168,37,0.5);
-            color: #f9a825;
-        }
-        .flag-list { list-style: none; padding: 0; }
-        .flag-list li { padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.06); color: #ff6b6b; font-size: 0.92em; }
-        .flag-list li:last-child { border-bottom: none; }
-        .flag-list li::before { content: '⚑ '; }
-        .flag-list li.no-flag { color: #4ecdc4; }
-        .flag-list li.no-flag::before { content: '✅ '; }
+<div class="card"><h2>7. Risk 風險</h2>
+<p>🔴 估值偏高（PE 位於歷史 84 百分位）</p><p>🔴 營收年減</p><p>🔴 TTM EPS 年減</p>
+<p class="note" style="margin-top:8px">風險燈號規則：0 個旗標 🟢；1–2 個 🟡；≥3 個 🔴。</p>
+</div>
 
-        /* 結論（脈衝光環動畫）*/
-        @keyframes glow-border {
-            0%, 100% { box-shadow: 0 0 8px 2px rgba(78,205,196,0.5); }
-            50% { box-shadow: 0 0 20px 6px rgba(78,205,196,0.2); }
-        }
-        .conclusion-box {
-            background: linear-gradient(135deg, #4ecdc4 0%, #2d9a8f 100%);
-            color: #0a0a0a;
-            padding: 22px 26px;
-            border-radius: 16px;
-            margin-top: 20px;
-            animation: glow-border 2.8s ease-in-out infinite;
-        }
-        .conclusion-box h3 { font-size: 0.9em; opacity: 0.7; margin-bottom: 6px; }
-        .conclusion-box .verdict { font-size: 2em; font-weight: 900; }
-        .conclusion-box .meta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
-        .conclusion-box .tag {
-            background: rgba(0,0,0,0.18);
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 0.88em;
-            font-weight: 600;
-            font-family: 'Roboto Mono', monospace;
-        }
-        /* v8 新增：6 指標體質摘要 */
-        /* === v10 整合結論 === */
-        .integrated-verdict { border: 2px solid rgba(78,205,196,0.4); }
-        .integ-list { display: flex; flex-direction: column; gap: 10px; }
-        .integ-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px; background: rgba(255,255,255,0.04); border-radius: 8px; }
-        .integ-item .integ-label { flex-shrink: 0; min-width: 80px; color: #4ecdc4; font-weight: 700; font-size: 0.9em; }
-        .integ-item .integ-text { color: #ddd; font-size: 0.95em; line-height: 1.5; word-wrap: break-word; }
-        .integ-item.integ-final { background: rgba(78,205,196,0.12); border: 1px solid rgba(78,205,196,0.4); }
-        .integ-item.integ-final .integ-label { color: #fbbf24; }
-        .integ-item.integ-final .integ-text { color: #fff; font-weight: 600; }
-        @media (max-width: 640px) {
-            .integ-item { flex-direction: column; gap: 4px; }
-            .integ-item .integ-label { min-width: 0; }
-        }
+<div class="card"><h2>8. Scenario Valuation 情境估值</h2>
+<p class="note">EPS 僅採用 TTM（3.11）；PE 採用歷史分位。公式：合理價 = TTM EPS × 歷史 PE。</p>
+<table class="tbl"><tr><th>情境</th><th>EPS</th><th>PE</th><th>合理價</th><th>vs 現價</th></tr>
+<tr><td>Bear</td><td class="num">3.11</td><td class="num">16.0x（25分位）</td><td class="num">49.83</td><td class="num">-38.8%</td></tr>
+<tr><td>Base</td><td class="num">3.11</td><td class="num">17.0x（中位數）</td><td class="num">52.90</td><td class="num">-35.0%</td></tr>
+<tr><td>Bull</td><td class="num">3.11</td><td class="num">20.9x（75分位）</td><td class="num">65.03</td><td class="num">-20.1%</td></tr></table>
+<p class="note">年化 EPS 4.14 僅供參考（H1×2，NOT 公司指引），未用於情境計算。</p>
+</div>
 
-        .conclusion-box .six-summary {
-            margin-top: 10px;
-            font-size: 0.82em;
-            opacity: 0.85;
-            font-family: 'Roboto Mono', monospace;
-        }
+<div class="card"><h2>9. Advanced Analysis 進階分析</h2>
+<p><b>Revenue → Profit：</b>營收與獲利同步衰退</p>
+<p class="note">Rule：營收YoY&gt;0 且 EPS YoY&gt;0 且毛利率未下滑 → 同步改善；營收&gt;0 但獲利未跟上 → 未同步；營收&lt;0 且 EPS&lt;0 → 同步衰退。</p>
+<p style="margin-top:8px"><b>樂活五線譜情緒</b>（本站同算法，還原股價，2026-10-07）：3.5年 <b>貪婪</b>（86.2/80.4/74.5/68.6/62.8）｜1.5年 中性｜0.5年 恐懼｜通道內</p>
+</div>
 
-        /* 風險 */
-        .risk-list { list-style: none; padding: 0; }
-        .risk-list li { padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; gap: 8px; align-items: flex-start; font-size: 0.9em; }
-        .risk-list li:last-child { border-bottom: none; }
-        .risk-icon { color: #ff6b6b; flex-shrink: 0; }
+<div class="card"><h2>10. Data Quality / Audit</h2>
+<table class="tbl"><tr><th class="l">檢查項</th><th>結果</th><th class="l">說明</th></tr>
+<tr><td style="text-align:left">Price Data</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">現價 81.40 ≤ 52W 高 89.70；單一來源 FinMind</td></tr><tr><td style="text-align:left">Historical Price</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">2024/2025/2026 高低價齊全</td></tr><tr><td style="text-align:left">Fundamental Data</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">季報至 2026Q2，TTM 季度 [(2025, 3), (2025, 4), (2026, 1), (2026, 2)]</td></tr><tr><td style="text-align:left">Revenue Data</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">月營收至 2026-10-01</td></tr><tr><td style="text-align:left">EPS Period</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">TTM=3.11（2025Q3~2026Q2）；H1=2.07；年化=4.14（標示非公司指引）</td></tr><tr><td style="text-align:left">PE Calculation</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">Current PE=26.17=81.40/3.11；歷史PE中位數 17.0</td></tr><tr><td style="text-align:left">Chip Data</td><td><span style="background:#d29922;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">WARNING</span></td><td style="text-align:left">法人買賣超有；集保戶數/大戶散戶：資料缺失</td></tr><tr><td style="text-align:left">Missing Data</td><td><span style="background:#d29922;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">WARNING</span></td><td style="text-align:left">集保戶數/大戶散戶持股（FinMind 免費層無此數據）</td></tr><tr><td style="text-align:left">Cross-source</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">股價/財報/營收皆 FinMind；PE 分子分母期間一致</td></tr>
+</table>
+<p class="note" style="margin-top:8px">重大 ERROR（如現價 &gt; 52W 高點）出現時，本報告不產生確定性投資結論。本次：無 ERROR，結論有效。</p>
+</div>
 
-        /* === V6: 技術關鍵價位 === */
-        .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 14px; }
-        .tech-card { background: rgba(255,255,255,0.04); border-radius: 8px; padding: 12px; text-align: center; }
-        .tech-card .t-label { color: #888; font-size: 0.72em; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
-        .tech-card .t-value { font-size: 1.25em; font-weight: 800; font-family: 'Roboto Mono', monospace; }
-        .tech-card .t-sub { font-size: 0.72em; color: #666; margin-top: 4px; }
-        .tech-card.high52 .t-value { color: #ff6b6b; }
-        .tech-card.low52 .t-value { color: #4ecdc4; }
-        .tech-card.ma20 .t-value { color: #fbbf24; }
-        .tech-card.ma60 .t-value { color: #a78bfa; }
+<div class="card"><h2>資料來源與計算方法</h2>
+<table class="tbl"><tr><th class="l">資料</th><th class="l">來源</th><th class="l">方法</th></tr>
+<tr><td class="l">股價/除權息</td><td style="text-align:left">FinMind TaiwanStockPrice / TaiwanStockDividend</td><td style="text-align:left">向後還原；分割自動偵測（隔夜跳空≈整數倍）</td></tr>
+<tr><td class="l">季財報</td><td style="text-align:left">FinMind TaiwanStockFinancialStatements（單季值，2022Q1～2026Q2）</td><td style="text-align:left">TTM=近4季加總；歷史PE以季底+45天為可得日</td></tr>
+<tr><td class="l">資產負債表</td><td style="text-align:left">FinMind TaiwanStockBalanceSheet</td><td style="text-align:left">ROE/ROA=TTM淨利÷平均權益/資產</td></tr>
+<tr><td class="l">月營收</td><td style="text-align:left">FinMind TaiwanStockMonthRevenue</td><td style="text-align:left">年度加總比 YoY</td></tr>
+<tr><td class="l">法人買賣超</td><td style="text-align:left">FinMind InstitutionalInvestorsBuySell</td><td style="text-align:left">近20交易日買−賣加總</td></tr>
+<tr><td class="l">集保</td><td style="text-align:left">—</td><td style="text-align:left">免費層無此數據，標示缺失（非 0）</td></tr></table>
+<p class="note" style="margin-top:10px">本報告僅供研究參考，不構成投資建議。投資有風險，決策請自行負責。</p>
+<p style="margin-top:12px"><a href="./index.html">← 回報告列表</a></p>
+</div>
 
-        /* === v9 集保子段（併入技術區，字體與 tech-card 一致） === */
-        .shareholding-subsection {
-            margin-top: 18px;
-            padding-top: 14px;
-            border-top: 1px dashed rgba(78,205,196,0.15);
-            max-width: 100%;
-            overflow: hidden;
-        }
-        .shareholding-subsection .sh-header {
-            font-size: 0.85em;
-            color: #bbb;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        .shareholding-subsection .sh-signal {
-            font-weight: 800;
-            font-size: 1.1em;
-            margin-left: 4px;
-        }
-        .shareholding-subsection .sh-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 10px;
-        }
-        .shareholding-subsection .sh-item {
-            background: rgba(255,255,255,0.04);
-            border-radius: 8px;
-            padding: 10px 8px;
-            text-align: center;
-            min-width: 0;
-        }
-        .shareholding-subsection .sh-item .t-label,
-        .shareholding-subsection .sh-item .t-sub {
-            font-size: 0.72em;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 0.4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .shareholding-subsection .sh-item .t-sub { color: #666; text-transform: none; }
-        .shareholding-subsection .sh-item .t-value {
-            font-size: 1.15em;
-            font-weight: 800;
-            font-family: 'Roboto Mono', monospace;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin: 6px 0 4px;
-        }
-        .shareholding-subsection .sh-item .t-value.up { color: #4ecdc4; }
-        .shareholding-subsection .sh-item .t-value.down { color: #ff6b6b; }
-        .shareholding-subsection .sh-reason {
-            font-size: 0.78em;
-            color: #aaa;
-            margin-top: 10px;
-            line-height: 1.5;
-            word-wrap: break-word;
-        }
-        .shareholding-subsection .sh-footnote {
-            font-size: 0.68em;
-            color: #555;
-            margin-top: 6px;
-            font-style: italic;
-        }
-        .shareholding-subsection .sh-footnote code {
-            background: rgba(78,205,196,0.08);
-            padding: 1px 4px;
-            border-radius: 3px;
-            font-size: 0.95em;
-        }
-        /* 手機版：變成 1 列堆叠，避免超出畫面 */
-        @media (max-width: 640px) {
-            .shareholding-subsection .sh-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* === V6: 放空評估 === */
-        .short-sell-score { font-size: 2.2em; font-weight: 900; font-family: 'Roboto Mono', monospace; text-align: center; margin: 16px 0 8px; }
-        .short-sell-score.green { color: #4ecdc4; text-shadow: 0 0 20px rgba(78,205,196,0.6); }
-        .short-sell-score.yellow { color: #fbbf24; text-shadow: 0 0 20px rgba(251,191,36,0.6); }
-        .short-sell-score.red { color: #ff6b6b; text-shadow: 0 0 20px rgba(255,107,107,0.6); }
-        .short-bar { display: flex; height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; margin: 10px 0; }
-        .short-bar-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
-        .short-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-top: 12px; }
-        .short-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; font-size: 0.85em; }
-        .short-item-label { color: #888; }
-        .short-item-score { font-weight: 700; font-family: 'Roboto Mono', monospace; }
-        .short-item-score.hi { color: #ff6b6b; }
-        .short-item-score.mid { color: #fbbf24; }
-        .short-item-score.lo { color: #4ecdc4; }
-        .short-verdict { text-align: center; font-size: 1.1em; font-weight: 700; margin-top: 12px; padding: 10px; border-radius: 8px; }
-        .short-verdict.green { background: rgba(78,205,196,0.15); color: #4ecdc4; }
-        .short-verdict.yellow { background: rgba(251,191,36,0.15); color: #fbbf24; }
-        .short-verdict.red { background: rgba(255,107,107,0.15); color: #ff6b6b; }
-
-        /* === V6: 執行計劃 === */
-        .exec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-top: 14px; }
-        .exec-card { background: rgba(255,255,255,0.04); border-radius: 8px; padding: 14px; text-align: center; }
-        .exec-card .e-label { color: #888; font-size: 0.72em; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-        .exec-card .e-value { font-size: 1.3em; font-weight: 800; font-family: 'Roboto Mono', monospace; }
-        .exec-card .e-note { font-size: 0.72em; color: #666; margin-top: 4px; }
-        .exec-card.enter .e-value { color: #4ecdc4; }
-        .exec-card.stop .e-value { color: #ff6b6b; }
-        .exec-card.target1 .e-value { color: #fbbf24; }
-        .exec-card.target2 .e-value { color: #a78bfa; }
-        .exec-card.limit .e-value { color: #60a5fa; }
-        .exec-card.notice { border-left: 3px solid #ff6b6b; background: rgba(255,107,107,0.06); }
-        .exec-card.notice .e-value { color: #ff6b6b; font-size: 1em; }
-
-        /* footer 浮水印 */
-        .footer { text-align: center; padding: 24px; color: #555; font-size: 0.82em; }
-        .footer a { color: #4ecdc4; text-decoration: none; }
-        .footer .watermark { color: #4ecdc4; font-size: 1.05em; margin-bottom: 4px; }
-
-        /* Chart.js tooltip 增強 */
-        .chart-tooltip {
-            background: rgba(26,26,46,0.95) !important;
-            border: 1px solid rgba(78,205,196,0.3) !important;
-            border-radius: 8px !important;
-            padding: 8px 12px !important;
-            font-family: 'Roboto Mono', monospace !important;
-            font-size: 11px !important;
-            color: #e0e0e0 !important;
-        }
-
-        /* 投資數據總覽：推估標示（灰字斜體）*/
-        /* v9.1 近52週 資料列高亮 */
-        .row-52w {
-            background: linear-gradient(90deg, rgba(78,205,196,0.12), rgba(78,205,196,0.04)) !important;
-            border-left: 3px solid #4ecdc4;
-        }
-        .row-52w td:first-child {
-            font-weight: 700;
-            color: #2c7a7b;
-        }
-        .note {
-            color: #888;
-            font-size: 0.78em;
-            font-style: italic;
-            margin-left: 4px;
-        }
-
-        @media (max-width: 700px) {
-            .price-grid { grid-template-columns: repeat(2, 1fr); }
-            .six-grid { grid-template-columns: repeat(2, 1fr); }
-            .header h1 { font-size: 1.7em; }
-            .tbl { font-size: 0.72em; }
-            .tbl th, .tbl td { padding: 6px 4px; }
-        }
-    </style>
-    <style>
-/* 六大指標總分標籤 */
-.six-total {
-    font-size: 0.65em;
-    background: rgba(78,205,196,0.15);
-    border: 1px solid rgba(78,205,196,0.3);
-    border-radius: 20px;
-    padding: 2px 10px;
-    color: #4ecdc4;
-    font-family: 'Roboto Mono', monospace;
-    font-weight: 600;
-    vertical-align: middle;
-    margin-left: 8px;
-}
-</style>
-</head>
-<body>
-<div class="container">
-
-    <!-- Header -->
-    <div class="header">
-        <h1>中碳</h1>
-        <p class="subtitle">股票分析報告 v10 &nbsp;|&nbsp; 2026-10-08 09:59:52 &nbsp;|&nbsp; 資料來源：本地 DB (<code>stock_data.db</code>, read-only) + 即時 CSV + FinMind API 備援 + GitHub Pages 部署</p>
-        <p class="data-source-note">所有數據均來自真實資料源（不做模擬、不取虜構值）。N/A 表示 DB / API 中無該資料。報告中所有數字均為 <code>fetch_time</code> 時間點的快照。</p>
-    </div>
-
-    <!-- 1. 最新報價 -->
-    <div class="card">
-        <h2>📊 最新報價（近60日）</h2>
-        <div class="price-grid">
-            <div class="price-item">
-                <div class="label">現在股價</div>
-                <div class="value up">83.20 元</div>
-            </div>
-            <div class="price-item">
-                <div class="label">漲跌幅</div>
-                <div class="value up">+1.80 (+2.2%)</div>
-            </div>
-            <div class="price-item">
-                <div class="label">成交量（張）</div>
-                <div class="value">422</div>
-            </div>
-            <div class="price-item">
-                <div class="label">20日均量（張）</div>
-                <div class="value">447</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. K線 60天 -->
-    <div class="card">
-        <h2>📈 股價走勢（近60日）</h2>
-        <div class="chart-box"><canvas id="priceChart"></canvas></div>
-    </div>
-
-    <!-- 3. 成交量（MA20均量線） -->
-    <div class="card">
-        <h2>📉 成交量（20日均量線）</h2>
-        <div class="chart-box"><canvas id="volChart"></canvas></div>
-    </div>
-
-    <!-- 4. 月營收（今年+去年） -->
-    <div class="card">
-        <h2>💰 月營收（今年 + 去年）</h2>
-        <p style="color:#666;font-size:0.8em;margin-bottom:10px;">左：YoY 年增率（已公布月份全顯示）｜右：當月營收（十億）</p>
-        <div class="tbl-wrap">
-            <table class="tbl">
-                <thead>
-                    <tr>
-                        <th>年度</th>
-                        <th>1月</th><th>2月</th><th>3月</th><th>4月</th><th>5月</th><th>6月</th>
-                        <th>7月</th><th>8月</th><th>9月</th><th>10月</th><th>11月</th><th>12月</th>
-                        <th>YoY 1</th><th>YoY 2</th><th>YoY 3</th><th>YoY 4</th><th>YoY 5</th><th>YoY 6</th><th>YoY 7</th><th>YoY 8</th><th>YoY 9</th><th>YoY 10</th><th>YoY 11</th><th>YoY 12</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td class="year-cell">2026</td><td><span class="yoy-neg">-44.0%</span></td><td><span class="yoy-neg">-34.1%</span></td><td><span class="yoy-pos">+13.8%</span></td><td><span class="yoy-pos">+40.9%</span></td><td><span class="yoy-pos">+58.4%</span></td><td><span class="yoy-pos">+32.1%</span></td><td><span class="yoy-pos">+46.2%</span></td><td><span class="yoy-pos">+46.9%</span></td><td><span class="yoy-pos">+61.9%</span></td><td>—</td><td>—</td><td>—</td><td>0.34B</td><td>0.41B</td><td>0.53B</td><td>0.73B</td><td>0.64B</td><td>0.67B</td><td>0.68B</td><td>0.62B</td><td>0.81B</td><td>NA</td><td>NA</td><td>NA</td></tr><tr><td class="year-cell">2025</td><td><span class="yoy-pos">+16.7%</span></td><td><span class="yoy-neg">-2.5%</span></td><td><span class="yoy-neg">-18.8%</span></td><td><span class="yoy-neg">-30.9%</span></td><td><span class="yoy-neg">-45.9%</span></td><td><span class="yoy-neg">-4.5%</span></td><td><span class="yoy-neg">-34.3%</span></td><td><span class="yoy-neg">-51.9%</span></td><td><span class="yoy-neg">-2.1%</span></td><td><span class="yoy-neg">-26.5%</span></td><td><span class="yoy-neg">-31.7%</span></td><td><span class="yoy-neg">-16.7%</span></td><td>0.60B</td><td>0.63B</td><td>0.46B</td><td>0.52B</td><td>0.40B</td><td>0.51B</td><td>0.47B</td><td>0.42B</td><td>0.50B</td><td>0.46B</td><td>0.38B</td><td>0.50B</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- 5. 投資數據總覽（近三年） -->
-    <div class="card">
-        <h2>📊 投資數據總覽（近52週 + 近三年）</h2>
-        <div class="tbl-wrap">
-            <table class="tbl">
-                <thead>
-                    <tr><th>年度</th><th>EPS（來源）</th><th>高點</th><th>低點</th><th>高點PE</th><th>低點PE</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td class="year-cell">2026</td><td>2.07 <small class="note">Q1+Q2 推估</small></td><td>81</td><td>80</td><td>39.1</td><td>38.6</td></tr><tr><td class="year-cell">2025</td><td>2.65 <small class="note">年報</small></td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td class="year-cell">2024</td><td>5.20 <small class="note">年報</small></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- 8. 六大指標 -->
-    <div class="card">
-        <h2>📋 六大指標評分 <span class="six-total">18/30 優</span></h2>
-        <div class="six-grid">
-            <div class="six-card">
-            <div class="label">營業利益率</div>
-            <div class="value">✅ 10.6%</div>
-            <div class="grade bb">🟠 BB</div>
-        </div><div class="six-card">
-            <div class="label">營收 YoY</div>
-            <div class="value">✅ 49.1%</div>
-            <div class="grade aa">🟢 AA</div>
-        </div><div class="six-card">
-            <div class="label">稅後淨利率</div>
-            <div class="value">✅ 22.0%</div>
-            <div class="grade a">🟡 A</div>
-        </div><div class="six-card">
-            <div class="label">EPS</div>
-            <div class="value">✅ 3.11元</div>
-            <div class="grade a">🟡 A</div>
-        </div><div class="six-card">
-            <div class="label">存貨周轉率</div>
-            <div class="value">✅ 0.86次</div>
-            <div class="grade bb">🟠 BB</div>
-        </div><div class="six-card">
-            <div class="label">自由現金流量</div>
-            <div class="value">✅ 0.9十億</div>
-            <div class="grade aa">🟢 AA</div>
-        </div>
-        </div>
-    </div>
-
-    <!-- 9. 基本面數據 -->
-    <div class="card">
-        <h2>📊 基本面數據</h2>
-        <div class="price-grid">
-            <div class="price-item">
-                <div class="label">本益比 (PE)</div>
-                <div class="value">26.0</div>
-            </div>
-            <div class="price-item">
-                <div class="label">ROE</div>
-                <div class="value">NA</div>
-            </div>
-            <div class="price-item">
-                <div class="label">ROA</div>
-                <div class="value">NA</div>
-            </div>
-            <div class="price-item">
-                <div class="label">營收增長</div>
-                <div class="value up">49.1%</div>
-            </div>
-            <div class="price-item">
-                <div class="label">營業利益率</div>
-                <div class="value">NA</div>
-            </div>
-            <div class="price-item">
-                <div class="label">股息率</div>
-                <div class="value">NA</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- V6: 技術關鍵價位（含 v9 集保子段） -->
-    <div class="card">
-        <h2>📈 技術關鍵價位</h2>
-        <div class="tech-grid">
-            <div class="tech-card high52">
-                <div class="t-label">52W 高點</div>
-                <div class="t-value">81</div>
-                <div class="t-sub">近一年最高</div>
-            </div>
-            <div class="tech-card low52">
-                <div class="t-label">52W 低點</div>
-                <div class="t-value">80</div>
-                <div class="t-sub">近一年最低</div>
-            </div>
-            <div class="tech-card">
-                <div class="t-label">現價</div>
-                <div class="t-value">83.2</div>
-                <div class="t-sub">距高 2.7%</div>
-            </div>
-            <div class="tech-card ma20">
-                <div class="t-label">20日均線</div>
-                <div class="t-value">81.08</div>
-            </div>
-            <div class="tech-card ma60">
-                <div class="t-label">60日均線</div>
-                <div class="t-value">84.23</div>
-            </div>
-            <div class="tech-card">
-                <div class="t-label">20日區間</div>
-                <div class="t-value">79.7~83.6</div>
-            </div>
-        </div>
-        <!-- v9 集保子段（併入技術區下方，與上面 tech-card 同一字級） -->
-        <div class="shareholding-subsection">
-            <div class="sh-header">🔥 主力出貨給散戶訊號 <span class="sh-signal" style="color:#888;">N/A</span></div>
-            <div class="sh-grid">
-                <div class="sh-item">
-                    <div class="t-label">散戶持倉</div>
-                    <div class="t-value ">N/A</div>
-                    <div class="t-sub">人數 N/A</div>
-                </div>
-                <div class="sh-item">
-                    <div class="t-label">大戶持倉</div>
-                    <div class="t-value ">N/A</div>
-                    <div class="t-sub">人數 N/A</div>
-                </div>
-                <div class="sh-item">
-                    <div class="t-label">風險</div>
-                    <div class="t-value" style="color:#888;">N/A</div>
-                    <div class="t-sub">0 週觀察</div>
-                </div>
-            </div>
-            <div class="sh-reason">集保資料不足</div>
-            <div class="sh-footnote">資料來源：DB <code>stock_weekly_shareholding</code>（N/A → N/A）</div>
-        </div>
-    </div>
-
-    <!-- 10. 巴菲特紅旗判斷 -->
-    <div class="card" id="buffett-analysis">
-        <h2>🧐 Buffett 8問分析</h2>
-
-        <!-- 8問表格 -->
-        <div class="buffett-q-table">
-            <table class="tbl">
-                <thead><tr><th>#</th><th>問題</th><th>答案</th><th>紅旗</th></tr></thead>
-                <tbody><tr><td>1</td><td class='q-col'>能否用一句話說明這家公司如何賺錢？</td><td class='answer-col'>資料不足，無法判斷</td><td class='flag-col'><span class="pass">✅</span></td></tr><tr><td>2</td><td class='q-col'>10年後這公司仍會存在且更具競爭力？</td><td class='answer-col'>營收年增率 49.1%，成長中</td><td class='flag-col'><span class="pass">✅</span></td></tr><tr><td>3</td><td class='q-col'>競爭對手能否複製核心優勢？</td><td class='answer-col'>無法計算ROIC</td><td class='flag-col'><span class="pass">✅</span></td></tr><tr><td>4</td><td class='q-col'>能否漲價5-10%而不流失客戶？</td><td class='answer-col'>營益率 10.6%，有基本定價權</td><td class='flag-col'><span class="pass">✅</span></td></tr><tr><td>5</td><td class='q-col'>獲利真正轉換為現金？</td><td class='answer-col'>OCF/淨利 151%，現金品質佳</td><td class='flag-col'><span class="pass">✅</span></td></tr><tr><td>6</td><td class='q-col'>營收-30%能否存活？</td><td class='answer-col'>無負債資料</td><td class='flag-col'><span class="pass">✅</span></td></tr><tr><td>7</td><td class='q-col'>管理層誠信？</td><td class='answer-col'>無資料（不自動打紅旗）</td><td class='flag-col'><span class="pass">✅</span></td></tr><tr><td>8</td><td class='q-col'>股價與內在價值差距夠大？</td><td class='answer-col'>PE 26x，評價合理偏高</td><td class='flag-col'><span class="pass">✅</span></td></tr></tbody>
-            </table>
-        </div>
-
-        <!-- 護城河評估 -->
-        <h3 style="margin-top:20px;">🏰 護城河評估</h3>
-        <div class="moat-grid"><div class='moat-card'><div class='moat-type'>無形資產（品牌/專利）</div><div class='moat-strength weak'>弱</div><div style='font-size:0.72em;color:#888;margin-top:4px'>營益率 10.6%（FinMind備援）</div></div><div class='moat-card'><div class='moat-type'>成本優勢</div><div class='moat-strength none'>無</div><div style='font-size:0.72em;color:#888;margin-top:4px'>資料不足</div></div><div class='moat-card'><div class='moat-type'>轉換成本</div><div class='moat-strength none'>無</div><div style='font-size:0.72em;color:#888;margin-top:4px'>資料不足</div></div><div class='moat-card'><div class='moat-type'>網路效應</div><div class='moat-strength none'>無</div><div style='font-size:0.72em;color:#888;margin-top:4px'>無明顯網路效應跡象</div></div><div class='moat-card'><div class='moat-type'>規模經濟</div><div class='moat-strength weak'>弱</div><div style='font-size:0.72em;color:#888;margin-top:4px'>規模效益有限</div></div><div class='moat-card'><div class='moat-type'>商品型企業</div><div class='moat-strength none'>是</div><div style='font-size:0.72em;color:#888;margin-top:4px'>營益率 10.6% < 15%，接近商品型（FinMind備援）</div></div></div>
-
-        <!-- 紅旗列表（詳細）-->
-        <h3 style="margin-top:20px;">🚩 紅旗分析</h3>
-        <div class="flag-list"><div class='flag-item no-flag'>✅ 無重大紅旗</div></div>
-
-        <!-- 結論判定 -->
-        <div class="buffett-verdict pass">
-            <div class="verdict-icon">✅</div>
-            <div class="verdict-text">紅旗數量少，具備投資基本條件</div>
-        </div>
-    </div>
-
-    <!-- V6: 放空評估（8問不通過時顯示）==>
-    
-
-    <!-- 11. 風險評估 -->
-    <div class="card">
-        <h2>⚠️ 風險評估</h2>
-        <ul class="risk-list">
-            <li>⚠️ 無重大風險</li>
-        </ul>
-    </div>
-
-    <!-- V6: 執行計劃 -->
-    <div class="card">
-        <h2>🎯 執行計劃</h2>
-        <div class="exec-grid">
-            <div class="exec-card enter">
-                <div class="e-label">進場區間</div>
-                <div class="e-value">75~83</div>
-                <div class="e-note">理想價位</div>
-            </div>
-            <div class="exec-card stop">
-                <div class="e-label">停損價</div>
-                <div class="e-value">77</div>
-                <div class="e-note">跌破無條件出</div>
-            </div>
-            <div class="exec-card target1">
-                <div class="e-label">第一目標</div>
-                <div class="e-value">62</div>
-                <div class="e-note">目標價</div>
-            </div>
-            <div class="exec-card target2">
-                <div class="e-label">第二目標</div>
-                <div class="e-value">N/A</div>
-                <div class="e-note"></div>
-            </div>
-            <div class="exec-card limit">
-                <div class="e-label">資金上限</div>
-                <div class="e-value">總部位 20%</div>
-                <div class="e-note">單筆不超過</div>
-            </div>
-        </div>
-        <div class="exec-card notice" style="margin-top:12px;">
-            <div class="e-label">⚠️ 紀律提醒</div>
-            <div class="e-value">八大問通過，等拉回佈局</div>
-        </div>
-    </div>
-
-    <!-- 結論（v8） -->
-    <div class="conclusion-box">
-        <h3>📋 分析結論</h3>
-        <div class="verdict">✅ 可考慮買入</div>
-        <div class="meta">
-            <span class="tag">💰 買入價：71</span>
-            <span class="tag">🎯 目標價：62</span>
-            <span class="tag">⚠️ 風險：低</span>
-        </div>
-        <!-- v8 新增：6 指標體質摘要 -->
-        <div class="six-summary">📊 6 指標體質：6/6 達標（AA/A/BB 為合格）</div>
-    </div>
-
-    <!-- v10 整合結論（Buffett + 6 指標 + 集保三為一體） -->
-    <div class="card integrated-verdict">
-        <h2>🎯 v10 整合結論</h2>
-        <p style="color:#888;font-size:0.78em;margin-bottom:12px;">Buffett 基本面 + 6 指標體質 + 集保訊號 三位一體</p>
-        <div class="integ-list">
-            <div class="integ-item"><span class="integ-label">基本面</span><span class="integ-text">基本面「優」（巴菲特 0 紅旗，6 指標 6/6 達標）</span></div>
-            <div class="integ-item"><span class="integ-label">集保訊號</span><span class="integ-text">集保訊號「」（未見明顯主力動態）</span></div>
-            <div class="integ-item integ-final"><span class="integ-label">整合判斷</span><span class="integ-text">🟢 整合判斷：基本面佳 + 集保中性 = 可進場，但留意主力後續動態</span></div>
-        </div>
-    </div>
-
-    <!-- 🆕 v10 盈餘品質評分（5 維度） -->
-    <div class="card earnings-quality">
-        <h2>💎 盈餘品質評分</h2>
-        <div class="eq-grade-row">
-            <span class="eq-grade-icon">🟢</span>
-            <span class="eq-grade-text">評級 <strong>A</strong>（7.5/10）</span>
-            <span class="eq-period">2026Q2 vs 2025Q2</span>
-        </div>
-        <div class="eq-quick">
-            營收 YoY +42.69% · 淨利 YoY +93.19% ·
-            費用率 8.85%→7.73% ·
-            毛利率 17.88%→22.62% ·
-            業外佔 13.21%
-        </div>
-        
-                <div class="eq-card" style="border-left: 4px solid #10b981; padding: 10px; margin: 6px 0; background: rgba(255,255,255,0.04);">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <strong style="color: #10b981;">A. 營運槓桿（+2）</strong>
-                        <small style="color: #9ca3af;">淨利 YoY vs 營收 YoY</small>
-                    </div>
-                    <div style="color: #d1d5db; margin-top: 4px; font-size: 13px;">正向槓桿強（淨利 +93.2% vs 營收 +42.7%, 差 +50.5pp）</div>
-                </div>
-            
-                <div class="eq-card" style="border-left: 4px solid #10b981; padding: 10px; margin: 6px 0; background: rgba(255,255,255,0.04);">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <strong style="color: #10b981;">B. 費用率趨勢（+1）</strong>
-                        <small style="color: #9ca3af;">營業費用率 YoY</small>
-                    </div>
-                    <div style="color: #d1d5db; margin-top: 4px; font-size: 13px;">費用率微降（8.85% → 7.73%, -1.12pp）</div>
-                </div>
-            
-                <div class="eq-card" style="border-left: 4px solid #9ca3af; padding: 10px; margin: 6px 0; background: rgba(255,255,255,0.04);">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <strong style="color: #9ca3af;">C. R&D 強度（+0）</strong>
-                        <small style="color: #9ca3af;">研發費佔營收比</small>
-                    </div>
-                    <div style="color: #d1d5db; margin-top: 4px; font-size: 13px;">資料缺失（R&D 費用）</div>
-                </div>
-            
-                <div class="eq-card" style="border-left: 4px solid #10b981; padding: 10px; margin: 6px 0; background: rgba(255,255,255,0.04);">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <strong style="color: #10b981;">D. 業外佔比（+2）</strong>
-                        <small style="color: #9ca3af;">業外損益佔淨利比</small>
-                    </div>
-                    <div style="color: #d1d5db; margin-top: 4px; font-size: 13px;">常規獲利為主（業外佔 13.2%）🟢</div>
-                </div>
-            
-                <div class="eq-card" style="border-left: 4px solid #9ca3af; padding: 10px; margin: 6px 0; background: rgba(255,255,255,0.04);">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <strong style="color: #9ca3af;">E. 毛利率穩定（+0）</strong>
-                        <small style="color: #9ca3af;">近 4 季標準差</small>
-                    </div>
-                    <div style="color: #d1d5db; margin-top: 4px; font-size: 13px;">毛利率劇烈波動（std=3.29pp）⚠️</div>
-                </div>
-            
-    </div>
-
-    <div class="footer">
-        <p class="watermark">🍎 小蘋果股票分析報告</p>
-        <p>自動生成 &nbsp;|&nbsp; 原始數據：<a href=""></a></p>
-    </div>
-
-</div><!-- container -->
-
-<script>
-// 通用 tooltip 樣式
-const commonTooltipOpts = {
-    backgroundColor: 'rgba(26,26,46,0.95)',
-    borderColor: 'rgba(78,205,196,0.3)',
-    borderWidth: 1,
-    titleColor: '#4ecdc4',
-    bodyColor: '#e0e0e0',
-    padding: 10,
-    cornerRadius: 8,
-    titleFont: { family: "'Roboto Mono', monospace", size: 11 },
-    bodyFont: { family: "'Roboto Mono', monospace", size: 11 },
-};
-
-// K線圖 - 十字游標 + 格線增強
-new Chart(document.getElementById('priceChart').getContext('2d'), {
-    type: 'line',
-    data: {
-        labels: ["07-15", "07-16", "07-17", "07-20", "07-21", "07-22", "07-23", "07-24", "07-27", "07-28", "07-29", "07-30", "07-31", "08-03", "08-04", "08-05", "08-06", "08-07", "08-10", "08-11", "08-12", "08-13", "08-14", "08-17", "08-18", "08-19", "08-20", "08-21", "08-24", "08-25", "08-26", "08-27", "08-28", "08-31", "09-01", "09-02", "09-03", "09-04", "09-07", "09-08", "09-09", "09-10", "09-11", "09-14", "09-15", "09-16", "09-17", "09-18", "09-21", "09-22", "09-23", "09-24", "09-29", "09-30", "10-01", "10-02", "10-05", "10-06", "10-07", "10-08"],
-        datasets: [{
-            label: '股價',
-            data: [85.6, 89.7, 88.2, 86.6, 89.5, 85.7, 89.4, 88.1, 86.4, 83.8, 82.3, 84.2, 81.3, 83.5, 83.3, 83.7, 83.4, 84.8, 86.3, 85.2, 84.8, 83.6, 82.4, 87.1, 86.4, 86.3, 86.3, 88.3, 88.4, 87.4, 88.0, 86.6, 86.3, 86.1, 85.6, 87.0, 86.9, 86.0, 84.0, 83.9, 83.6, 82.3, 81.7, 81.9, 81.3, 80.1, 81.0, 80.6, 80.7, 80.7, 80.7, 80.5, 80.0, 80.7, 79.7, 80.4, 80.1, 80.9, 81.4, 83.2],
-            borderColor: '#4ecdc4',
-            backgroundColor: 'rgba(78,205,196,0.08)',
-            fill: true, tension: 0.35, pointRadius: 2, borderWidth: 2
-        }]
-    },
-    options: {
-        responsive: true, maintainAspectRatio: false,
-        animation: { duration: 900, easing: 'easeOutQuart' },
-        plugins: {
-            legend: { display: false },
-            tooltip: {
-                ...commonTooltipOpts,
-                callbacks: {
-                    title: (items) => items[0].label,
-                    label: (item) => `股價: ${item.raw}`
-                }
-            },
-        },
-        scales: {
-            x: {
-                grid: { color: 'rgba(255,255,255,0.08)', drawBorder: false },
-                ticks: { color: '#666', maxTicksLimit: 12, font: { size: 10 } }
-            },
-            y: {
-                grid: { color: 'rgba(255,255,255,0.08)', drawBorder: false },
-                ticks: {
-                    color: '#666',
-                    font: { family: "'Roboto Mono', monospace", size: 11 },
-                    callback: v => v
-                }
-            }
-        },
-        interaction: { intersect: false, mode: 'index' },
-    }
-});
-
-// 成交量圖 - 漲跌顏色區分 + MA20橙線 + M單位
-new Chart(document.getElementById('volChart').getContext('2d'), {
-    type: 'bar',
-    data: {
-        labels: ["07-15", "07-16", "07-17", "07-20", "07-21", "07-22", "07-23", "07-24", "07-27", "07-28", "07-29", "07-30", "07-31", "08-03", "08-04", "08-05", "08-06", "08-07", "08-10", "08-11", "08-12", "08-13", "08-14", "08-17", "08-18", "08-19", "08-20", "08-21", "08-24", "08-25", "08-26", "08-27", "08-28", "08-31", "09-01", "09-02", "09-03", "09-04", "09-07", "09-08", "09-09", "09-10", "09-11", "09-14", "09-15", "09-16", "09-17", "09-18", "09-21", "09-22", "09-23", "09-24", "09-29", "09-30", "10-01", "10-02", "10-05", "10-06", "10-07", "10-08"],
-        datasets: [
-            {
-                label: '成交量',
-                data: [714314, 2115434, 1944039, 933136, 1132944, 1795338, 1566245, 769040, 741586, 773456, 895344, 775221, 1053944, 535172, 413035, 300052, 284203, 413278, 515234, 413252, 284731, 424385, 425852, 1246418, 502136, 217054, 222536, 1523388, 569155, 298035, 321235, 459285, 365097, 309037, 566621, 248034, 925498, 816047, 1156217, 507259, 666026, 914002, 496037, 499500, 270001, 785000, 410036, 503043, 283385, 412001, 285062, 215003, 533038, 379106, 748031, 292001, 310306, 249280, 265102, 422319],
-                backgroundColor: ["rgba(78,205,196,0.6)", "rgba(78,205,196,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(78,205,196,0.6)", "rgba(255,107,107,0.6)", "rgba(78,205,196,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(78,205,196,0.6)", "rgba(255,107,107,0.6)", "rgba(78,205,196,0.6)", "rgba(255,107,107,0.6)", "rgba(78,205,196,0.6)", "rgba(255,107,107,0.6)", "rgba(78,205,196,0.6)", "rgba(78,205,196,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(78,205,196,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(78,205,196,0.6)", "rgba(78,205,196,0.6)", "rgba(78,205,196,0.6)", "rgba(255,107,107,0.6)", "rgba(78,205,196,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(78,205,196,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(78,205,196,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(78,205,196,0.6)", "rgba(255,107,107,0.6)", "rgba(78,205,196,0.6)", "rgba(78,205,196,0.6)", "rgba(78,205,196,0.6)", "rgba(255,107,107,0.6)", "rgba(255,107,107,0.6)", "rgba(78,205,196,0.6)", "rgba(255,107,107,0.6)", "rgba(78,205,196,0.6)", "rgba(255,107,107,0.6)", "rgba(78,205,196,0.6)", "rgba(78,205,196,0.6)", "rgba(78,205,196,0.6)"],
-                yAxisID: 'y',
-                borderRadius: 2,
-            },
-            {
-                type: 'line',
-                label: 'MA20',
-                data: [446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913, 446913],
-                borderColor: '#ff8c00',
-                backgroundColor: 'transparent',
-                tension: 0.3,
-                pointRadius: 0,
-                borderWidth: 2,
-                yAxisID: 'y'
-            }
-        ]
-    },
-    options: {
-        responsive: true, maintainAspectRatio: false,
-        animation: { duration: 900, easing: 'easeOutQuart' },
-        plugins: {
-            legend: { display: true, labels: { color: '#aaa', boxWidth: 12, font: { size: 10 } } },
-            tooltip: {
-                ...commonTooltipOpts,
-                callbacks: {
-                    label: (item) => {
-                        if (item.dataset.label === '成交量') {
-                            return `成交量: ${(item.raw / 1000000).toFixed(2)}M`;
-                        }
-                        return `MA20: ${(item.raw / 1000000).toFixed(2)}M`;
-                    }
-                }
-            },
-        },
-        scales: {
-            x: {
-                grid: { color: 'rgba(255,255,255,0.06)', drawBorder: false },
-                ticks: { color: '#666', maxTicksLimit: 12, font: { size: 10 } }
-            },
-            y: {
-                grid: { color: 'rgba(255,255,255,0.06)', drawBorder: false },
-                ticks: {
-                    color: '#666',
-                    font: { family: "'Roboto Mono', monospace", size: 11 },
-                    callback: v => (v / 1000000).toFixed(0) + 'M'
-                }
-            }
-        },
-        interaction: { intersect: false, mode: 'index' },
-    }
-});
-</script>
-</body>
-</html>
+</div></body></html>
