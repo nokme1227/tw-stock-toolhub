@@ -34,7 +34,7 @@ a{color:#5cc8ff}
 <tr><td class="l">股價資料 Market Data</td><td class="num">2026-10-07 收盤</td></tr>
 <tr><td class="l">營收資料 Revenue</td><td class="num">2026-10-01</td></tr>
 <tr><td class="l">財報資料 Fundamental</td><td class="num">2026-06-30（2026 Q2）</td></tr>
-<tr><td class="l">籌碼資料 Chip</td><td class="num">2026-10-07（法人）；集保：資料缺失</td></tr>
+<tr><td class="l">籌碼資料 Chip</td><td class="num">2026-10-07（法人）；集保 2026-10-02</td></tr>
 <tr><td class="l">報告產生 Report Generated</td><td class="num">2026-10-08</td></tr>
 </table></div>
 </div>
@@ -43,7 +43,7 @@ a{color:#5cc8ff}
 <div class="lights">
 <div class="light"><div class="e">🔴</div><div>基本面</div></div>
 <div class="light"><div class="e">🔴</div><div>估值</div></div>
-<div class="light"><div class="e">⚪</div><div>籌碼</div></div>
+<div class="light"><div class="e">🟡</div><div>籌碼</div></div>
 <div class="light"><div class="e">🟡</div><div>技術面</div></div>
 <div class="light"><div class="e">🔴</div><div>風險</div></div>
 </div>
@@ -99,8 +99,13 @@ a{color:#5cc8ff}
 <tr><td class="l">外資</td><td class="num">-2,419,196</td></tr>
 <tr><td class="l">投信</td><td class="num">-120,000</td></tr>
 <tr><td class="l">自營商</td><td class="num">-145,239</td></tr></table>
-<div class="warn"><b>資料缺失：</b>集保戶數、大戶/散戶持股（FinMind 免費層無此數據，無法取得）。籌碼結構燈號記為 ⚪，不納入綜合判斷。</div>
-<p class="note">用詞規範：僅描述「外資/投信近 20 日買賣超」，不使用「主力出貨」等無法定義之用語。</p>
+<table class="tbl"><tr><th class="l">集保股權分散（週）</th><th>2026-09-24</th><th>2026-10-02</th><th>變化</th></tr>
+<tr><td class="l">大戶 ≥400張（人數）</td><td class="num">37</td><td class="num">36</td><td class="num">-1人</td></tr>
+<tr><td class="l">大戶持股佔比</td><td class="num">52.10%</td><td class="num">52.00%</td><td class="num">-0.10pp</td></tr>
+<tr><td class="l">散戶 &lt;1張（人數）</td><td class="num">42,223</td><td class="num">42,243</td><td class="num">+20人</td></tr>
+<tr><td class="l">總戶數</td><td class="num">62,672</td><td class="num">62,789</td><td class="num">+117</td></tr></table>
+<p style="margin-top:8px"><b>判讀：</b>大戶持股持平，籌碼結構中性（變化輕微）。</p>
+<p class="note">用詞規範：僅描述「大戶持股/散戶人數變化」「法人買賣超」，不使用「主力出貨」等無法定義之用語。資料來源：TDCC 集保戶股權分散表（經 GitHub 開源備份 wirelessr/tdcc-opendata-archive）。</p>
 </div>
 
 <div class="card"><h2>5. Technical 技術面</h2>
@@ -143,7 +148,7 @@ a{color:#5cc8ff}
 
 <div class="card"><h2>10. Data Quality / Audit</h2>
 <table class="tbl"><tr><th class="l">檢查項</th><th>結果</th><th class="l">說明</th></tr>
-<tr><td style="text-align:left">Price Data</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">現價 81.40 ≤ 52W 高 89.70；單一來源 FinMind</td></tr><tr><td style="text-align:left">Historical Price</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">2024/2025/2026 高低價齊全</td></tr><tr><td style="text-align:left">Fundamental Data</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">季報至 2026Q2，TTM 季度 [(2025, 3), (2025, 4), (2026, 1), (2026, 2)]</td></tr><tr><td style="text-align:left">Revenue Data</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">月營收至 2026-10-01</td></tr><tr><td style="text-align:left">EPS Period</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">TTM=3.11（2025Q3~2026Q2）；H1=2.07；年化=4.14（標示非公司指引）</td></tr><tr><td style="text-align:left">PE Calculation</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">Current PE=26.17=81.40/3.11；歷史PE中位數 17.0</td></tr><tr><td style="text-align:left">Chip Data</td><td><span style="background:#d29922;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">WARNING</span></td><td style="text-align:left">法人買賣超有；集保戶數/大戶散戶：資料缺失</td></tr><tr><td style="text-align:left">Missing Data</td><td><span style="background:#d29922;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">WARNING</span></td><td style="text-align:left">集保戶數/大戶散戶持股（FinMind 免費層無此數據）</td></tr><tr><td style="text-align:left">Cross-source</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">股價/財報/營收皆 FinMind；PE 分子分母期間一致</td></tr>
+<tr><td style="text-align:left">Price Data</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">現價 81.40 ≤ 52W 高 89.70；單一來源 FinMind</td></tr><tr><td style="text-align:left">Historical Price</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">2024/2025/2026 高低價齊全</td></tr><tr><td style="text-align:left">Fundamental Data</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">季報至 2026Q2，TTM 季度 [(2025, 3), (2025, 4), (2026, 1), (2026, 2)]</td></tr><tr><td style="text-align:left">Revenue Data</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">月營收至 2026-10-01</td></tr><tr><td style="text-align:left">EPS Period</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">TTM=3.11（2025Q3~2026Q2）；H1=2.07；年化=4.14（標示非公司指引）</td></tr><tr><td style="text-align:left">PE Calculation</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">Current PE=26.17=81.40/3.11；歷史PE中位數 17.0</td></tr><tr><td style="text-align:left">Chip Data</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">法人買賣超有；集保 2026-10-02 大戶(≥400張)36人佔52.00%</td></tr><tr><td style="text-align:left">Missing Data</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">無重大缺失</td></tr><tr><td style="text-align:left">Cross-source</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td><td style="text-align:left">股價/財報/營收皆 FinMind；PE 分子分母期間一致</td></tr>
 </table>
 <p class="note" style="margin-top:8px">重大 ERROR（如現價 &gt; 52W 高點）出現時，本報告不產生確定性投資結論。本次：無 ERROR，結論有效。</p>
 </div>
