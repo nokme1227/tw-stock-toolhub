@@ -41,14 +41,15 @@ a{color:#5cc8ff}
 
 <div class="card"><h2>1. Executive Summary</h2>
 <div class="lights">
-<div class="light"><div class="e">🔴</div><div>基本面</div></div>
+<div class="light"><div class="e">🟡</div><div>基本面</div></div>
 <div class="light"><div class="e">🔴</div><div>估值</div></div>
 <div class="light"><div class="e">🟡</div><div>籌碼</div></div>
 <div class="light"><div class="e">🟡</div><div>技術面</div></div>
-<div class="light"><div class="e">🔴</div><div>風險</div></div>
+<div class="light"><div class="e">🟡</div><div>風險</div></div>
 </div>
-<p style="font-size:1.25em;margin:8px 0"><b>Overall：🔴 CAUTIOUS</b>（謹慎）</p>
-<p class="note">燈號規則：紅燈≥2 → CAUTIOUS；綠燈≥3 且無紅燈 → POSITIVE；其餘 → OBSERVE。籌碼因集保缺失顯示 ⚪（不計入）。</p>
+<p style="font-size:1.25em;margin:8px 0"><b>Overall：🟡 OBSERVE</b>（觀望）</p>
+<p class="note">燈號規則：紅燈≥2 → CAUTIOUS；綠燈≥3 且無紅燈 → POSITIVE；其餘 → OBSERVE。⚪=資料不足，不計入紅綠計數（不視為中性）。</p>
+<p class="note">基本面 5 因子：營收TTM YoY✗(-13.6%)、EPS TTM YoY✗(-24.5%)、毛利率未惡化✗(-1.1%)、單季EPS YoY✓(+94.0%)、單季營收YoY✓(+42.7%) → 🟡（≥4 🟢；2–3 🟡；≤1 🔴）</p>
 <table class="tbl"><tr><th class="l">關鍵數據</th><th>數值</th><th class="l">關鍵數據</th><th>數值</th></tr>
 <tr><td class="l">現價</td><td class="num">81.40</td><td class="l">TTM EPS</td><td class="num">3.11</td></tr>
 <tr><td class="l">52W 高/低</td><td class="num">89.70 / 64.91</td><td class="l">現價 PE</td><td class="num">26.17x（歷史 84% 分位）</td></tr>
@@ -96,17 +97,17 @@ a{color:#5cc8ff}
 </div>
 
 <div class="card"><h2>4. Chip 籌碼</h2>
-<table class="tbl"><tr><th class="l">法人（近 20 交易日累計，張）</th><th>買賣超</th></tr>
-<tr><td class="l">外資</td><td class="num">-2,419,196</td></tr>
-<tr><td class="l">投信</td><td class="num">-120,000</td></tr>
-<tr><td class="l">自營商</td><td class="num">-145,239</td></tr></table>
+<table class="tbl"><tr><th class="l">法人（近 20 交易日累計）</th><th>買賣超（張）</th></tr>
+<tr><td class="l">外資</td><td class="num">-2,419.196</td></tr>
+<tr><td class="l">投信</td><td class="num">-120.0</td></tr>
+<tr><td class="l">自營商</td><td class="num">-145.239</td></tr></table>
 <table class="tbl"><tr><th class="l">集保股權分散（週）</th><th>2026-09-24</th><th>2026-10-02</th><th>變化</th></tr>
 <tr><td class="l">大戶 ≥400張（人數）</td><td class="num">37</td><td class="num">36</td><td class="num">-1人</td></tr>
 <tr><td class="l">大戶持股佔比</td><td class="num">52.10%</td><td class="num">52.00%</td><td class="num">-0.10pp</td></tr>
 <tr><td class="l">散戶 &lt;1張（人數）</td><td class="num">42,223</td><td class="num">42,243</td><td class="num">+20人</td></tr>
 <tr><td class="l">總戶數</td><td class="num">62,672</td><td class="num">62,789</td><td class="num">+117</td></tr></table>
 <p style="margin-top:8px"><b>判讀：</b>大戶持股持平，籌碼結構中性（變化輕微）。</p>
-<p class="note">用詞規範：僅描述「大戶持股/散戶人數變化」「法人買賣超」，不使用「主力出貨」等無法定義之用語。資料來源：TDCC 集保戶股權分散表（經 GitHub 開源備份 wirelessr/tdcc-opendata-archive）。</p>
+<p class="note">用詞規範：僅描述「大戶持股/散戶人數變化」「法人買賣超」，不使用「主力出貨」等無法定義之用語。單位：張（FinMind 原始為股，已 ÷1000）。資料來源：TDCC 集保戶股權分散表（經 GitHub 開源備份 wirelessr/tdcc-opendata-archive）。</p>
 </div>
 
 <div class="card"><h2>5. Technical 技術面</h2>
@@ -128,22 +129,23 @@ a{color:#5cc8ff}
 </div>
 
 <div class="card"><h2>7. Risk 風險</h2>
-<p>🔴 估值偏高（PE 位於歷史 84 百分位）</p><p>🔴 營收年減</p><p>🔴 TTM EPS 年減</p>
-<p class="note" style="margin-top:8px">規則：ROE/ROA/負債比/集保任一缺失 → Risk Assessment = INCOMPLETE（不得判定「無重大風險」）；資料齊全時：0 旗標 🟢；1–2 個 🟡；≥3 個 🔴。</p>
+<p>🔴 估值偏高（PE 位於歷史 84 分位）</p>
+<p class="note" style="margin-top:8px">規則：ROE/ROA/負債比/集保任一缺失 → Risk Assessment = INCOMPLETE（不得判定「無重大風險」）；資料齊全時採 5 結構旗標：0 個 🟢；1–2 個 🟡；≥3 個 🔴。</p>
 </div>
 
-<div class="card"><h2>8. Scenario Valuation 情境估值</h2>
-<p class="note">EPS 僅採用 TTM（3.11）；PE 採用歷史分位。公式：合理價 = TTM EPS × 歷史 PE。</p>
-<table class="tbl"><tr><th>情境</th><th>EPS</th><th>PE</th><th>合理價</th><th>vs 現價</th></tr>
-<tr><td>Bear</td><td class="num">3.11</td><td class="num">16.0x（25分位）</td><td class="num">49.83</td><td class="num">-38.8%</td></tr>
-<tr><td>Base</td><td class="num">3.11</td><td class="num">17.0x（中位數）</td><td class="num">52.90</td><td class="num">-35.0%</td></tr>
-<tr><td>Bull</td><td class="num">3.11</td><td class="num">20.9x（75分位）</td><td class="num">65.03</td><td class="num">-20.1%</td></tr></table>
-<p class="note">年化 EPS 4.14 僅供參考（H1×2，NOT 公司指引），未用於情境計算。</p>
+<div class="card"><h2>8. PE Sensitivity PE 敏感度分析</h2>
+<p class="note"><b>此非情境估值（Scenario Valuation）</b>：三列使用<u>相同 EPS</u>（TTM 3.11），僅變動 PE 假設，觀察合理價對 PE 的敏感度。真正的情境估值需要對 EPS 做情境假設，本報告無可靠 EPS 預測，故不偽裝為情境估值。</p>
+<p class="note">公式：敏感度價格 = TTM EPS × 歷史 PE 分位。</p>
+<table class="tbl"><tr><th>PE 假設</th><th>EPS（固定）</th><th>PE</th><th>對應價格</th><th>vs 現價</th></tr>
+<tr><td>保守（25分位）</td><td class="num">3.11</td><td class="num">16.0x</td><td class="num">49.83</td><td class="num">-38.8%</td></tr>
+<tr><td>中位（50分位）</td><td class="num">3.11</td><td class="num">17.0x</td><td class="num">52.90</td><td class="num">-35.0%</td></tr>
+<tr><td>樂觀（75分位）</td><td class="num">3.11</td><td class="num">20.9x</td><td class="num">65.03</td><td class="num">-20.1%</td></tr></table>
+<p class="note">年化 EPS 4.14 僅供參考（H1×2，NOT 公司指引），未用於計算。</p>
 </div>
 
 <div class="card"><h2>9. Advanced Analysis 進階分析</h2>
 <p><b>Revenue → Profit：</b>營收與獲利同步衰退</p>
-<p class="note">Rule：營收YoY&gt;0 且 EPS YoY&gt;0 且毛利率未下滑 → 同步改善；營收&gt;0 但獲利未跟上 → 未同步；營收&lt;0 且 EPS&lt;0 → 同步衰退。</p>
+<p class="note">Rule（同期間 TTM YoY）：營收&gt;0 且 EPS&gt;0 且毛利率未惡化(&gt;-1pp) → 同步改善；營收&gt;0 但獲利未跟上 → 未同步；營收&lt;0 且 EPS&lt;0 → 同步衰退。另列單季 YoY 觀察轉折：2026Q2 營收 +42.7%、EPS +94.0%。</p>
 <p style="margin-top:8px"><b>樂活五線譜情緒</b>（本站同算法，還原股價，2026-10-07）：3.5年 <b>貪婪</b>（86.2/80.4/74.5/68.6/62.8）｜1.5年 中性｜0.5年 恐懼｜通道內</p>
 </div>
 
@@ -156,7 +158,7 @@ a{color:#5cc8ff}
 
 <div class="card"><h2>Data Source Matrix</h2>
 <table class="tbl"><tr><th class="l">數據</th><th>Value</th><th class="l">Source</th><th>Data As Of</th><th>Status</th></tr>
-<tr><td class="l">現價</td><td class="num">81.40</td><td style="text-align:left">FinMind TaiwanStockPrice</td><td class="num">2026-10-07</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td></tr><tr><td class="l">52W 高/低</td><td class="num">89.70 / 64.91</td><td style="text-align:left">FinMind TaiwanStockPrice（還原）</td><td class="num">2026-10-07</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td></tr><tr><td class="l">TTM EPS</td><td class="num">3.11</td><td style="text-align:left">FinMind TaiwanStockFinancialStatements</td><td class="num">2026Q2</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td></tr><tr><td class="l">2026 H1 EPS</td><td class="num">2.07</td><td style="text-align:left">FinMind TaiwanStockFinancialStatements</td><td class="num">2026Q2</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td></tr><tr><td class="l">年營收</td><td class="num">59.58 億</td><td style="text-align:left">FinMind TaiwanStockMonthRevenue</td><td class="num">2026-10-01</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td></tr><tr><td class="l">ROE/ROA/負債比</td><td class="num">9.1% / 6.2% / 32.1%</td><td style="text-align:left">FinMind TaiwanStockBalanceSheet</td><td class="num">2026-06-30</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td></tr><tr><td class="l">法人買賣超</td><td class="num">-2,419,196 張</td><td style="text-align:left">FinMind InstitutionalInvestorsBuySell</td><td class="num">2026-10-07</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td></tr><tr><td class="l">集保股權分散</td><td class="num">大戶36人 52.00%</td><td style="text-align:left">TDCC（GitHub 開源備份）</td><td class="num">2026-10-02</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td></tr>
+<tr><td class="l">現價</td><td class="num">81.40</td><td style="text-align:left">FinMind TaiwanStockPrice</td><td class="num">2026-10-07</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td></tr><tr><td class="l">52W 高/低</td><td class="num">89.70 / 64.91</td><td style="text-align:left">FinMind TaiwanStockPrice（還原）</td><td class="num">2026-10-07</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td></tr><tr><td class="l">TTM EPS</td><td class="num">3.11</td><td style="text-align:left">FinMind TaiwanStockFinancialStatements</td><td class="num">2026Q2</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td></tr><tr><td class="l">2026 H1 EPS</td><td class="num">2.07</td><td style="text-align:left">FinMind TaiwanStockFinancialStatements</td><td class="num">2026Q2</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td></tr><tr><td class="l">年營收</td><td class="num">59.58 億</td><td style="text-align:left">FinMind TaiwanStockMonthRevenue</td><td class="num">2026-10-01</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td></tr><tr><td class="l">ROE/ROA/負債比</td><td class="num">9.1% / 6.2% / 32.1%</td><td style="text-align:left">FinMind TaiwanStockBalanceSheet</td><td class="num">2026-06-30</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td></tr><tr><td class="l">法人買賣超</td><td class="num">-2,419.2 張</td><td style="text-align:left">FinMind InstitutionalInvestorsBuySell（股→張 ÷1000）</td><td class="num">2026-10-07</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td></tr><tr><td class="l">集保股權分散</td><td class="num">大戶36人 52.00%</td><td style="text-align:left">TDCC（GitHub 開源備份）</td><td class="num">2026-10-02</td><td><span style="background:#2ea043;color:#fff;border-radius:6px;padding:2px 10px;font-size:.8em">PASS</span></td></tr>
 </table></div>
 <div class="card"><h2>資料來源與計算方法</h2>
 <table class="tbl"><tr><th class="l">資料</th><th class="l">來源</th><th class="l">方法</th></tr>
