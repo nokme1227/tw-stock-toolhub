@@ -259,7 +259,8 @@ function renderFL(name){
       borderWidth:k==='m0'?2.2:1.3,pointRadius:0,tension:0,segment:{borderDash:dash}});
   });
   if(CHARTS.ch_fl)CHARTS.ch_fl.destroy();
-  CHARTS.ch_fl=new Chart(document.getElementById('ch_fl'),{type:'line',data:{labels:labels,datasets:ds},options:baseOpts()});
+  const fo=baseOpts();fo.scales.y.position='right';
+  CHARTS.ch_fl=new Chart(document.getElementById('ch_fl'),{type:'line',data:{labels:labels,datasets:ds},options:fo});
   ZOOMS.ch_fl={min:0,max:N-1,n:N};
   const last=cl[mx],bv={p2:bands.p2[mx],p1:bands.p1[mx],m0:bands.m0[mx],m1:bands.m1[mx],m2:bands.m2[mx]};
   const ZT=[['高於 +2σ','極度貪婪','超漲，考慮獲利了結'],['+1σ ～ +2σ','貪婪','偏貴，不宜追高'],
@@ -320,14 +321,20 @@ function renderCh(){
   if(!C){document.getElementById('f_ch_badges').innerHTML='';
     document.getElementById('f_ch_axis').textContent='週線資料不足（需 20 週）。';return;}
   const up=C.ma20.map(v=>v==null?null:v+2*R.sig),dn=C.ma20.map(v=>v==null?null:v-2*R.sig);
+  const FUT=250,N=S.dates.length+FUT;
+  const labels=S.dates.concat(new Array(FUT).fill(''));
+  const idx={};S.dates.forEach((d,i)=>{idx[d]=i;});
+  const put=arr=>{const o=new Array(N).fill(null);C.wd.forEach((d,i)=>{const j=idx[d];if(j!=null)o[j]=arr[i];});return o;};
+  const wcl=put(C.wcl),ma=put(C.ma20),upA=put(up),dnA=put(dn);
+  const o=baseOpts();o.scales.y.position='right';
   CHARTS.ch_ch=new Chart(document.getElementById('ch_ch'),{type:'line',
-    data:{labels:C.wd,datasets:[
-      {label:'週還原收盤價',data:C.wcl,borderColor:'#111111',borderWidth:1.4,pointRadius:0,tension:0},
-      {label:'上線（20週均線+2σ）',data:up,borderColor:'#e0533d',borderWidth:1.3,pointRadius:0,tension:0.2},
-      {label:'20週均線',data:C.ma20,borderColor:'#6b7280',borderWidth:1.6,pointRadius:0,tension:0.2},
-      {label:'下線（20週均線−2σ）',data:dn,borderColor:'#2b7cd3',borderWidth:1.3,pointRadius:0,tension:0.2}]},
-    options:baseOpts()});
-  ZOOMS.ch_ch={min:0,max:C.wd.length-1,n:C.wd.length};
+    data:{labels:labels,datasets:[
+      {label:'週還原收盤價',data:wcl,borderColor:'#111111',borderWidth:1.4,pointRadius:0,tension:0.2},
+      {label:'上線（20週均線+2σ）',data:upA,borderColor:'#e0533d',borderWidth:1.3,pointRadius:0,tension:0.2},
+      {label:'20週均線',data:ma,borderColor:'#6b7280',borderWidth:1.6,pointRadius:0,tension:0.2},
+      {label:'下線（20週均線−2σ）',data:dnA,borderColor:'#2b7cd3',borderWidth:1.3,pointRadius:0,tension:0.2}]},
+    options:o});
+  ZOOMS.ch_ch={min:0,max:N-1,n:N};
   const st=C.st==='above'?'突破上線（強勢）':C.st==='below'?'跌破下線（弱勢）':'通道內';
   const c=C.st==='above'?'#e0533d':C.st==='below'?'#2b7cd3':'#166534';
   document.getElementById('f_ch_badges').innerHTML=
@@ -375,7 +382,7 @@ document.getElementById('f_code').addEventListener('keydown',e=>{if(e.key==='Ent
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-12 收盤 ｜ 本頁建置 2026-10-13 22:57</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-12 收盤 ｜ 本頁建置 2026-10-13 23:14</div>
 </div></footer>
 </body>
 </html>
