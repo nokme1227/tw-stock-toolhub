@@ -240,7 +240,11 @@ async function fquery(){
 }
 function baseOpts(){
   return {responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-    plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:10}}}},
+    plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:10},usePointStyle:true}},
+      tooltip:{backgroundColor:'rgba(17,24,39,.92)',padding:10,cornerRadius:8,usePointStyle:true,
+        filter:ti=>ti.raw!=null&&ti.raw!=='',
+        callbacks:{title:items=>items.length?(items[0].label||'未來'):'',
+          label:c=>' '+c.dataset.label+'：'+(+c.raw).toFixed(1)}}},
     scales:{x:{ticks:{autoSkip:true,maxTicksLimit:8,font:{size:10}}},y:{ticks:{font:{size:10}}}}};
 }
 function renderFL(name){
@@ -329,10 +333,10 @@ function renderCh(){
   const o=baseOpts();o.scales.y.position='right';
   CHARTS.ch_ch=new Chart(document.getElementById('ch_ch'),{type:'line',
     data:{labels:labels,datasets:[
-      {label:'週還原收盤價',data:wcl,borderColor:'#111111',borderWidth:1.4,pointRadius:0,tension:0.2},
-      {label:'上線（20週均線+2σ）',data:upA,borderColor:'#e0533d',borderWidth:1.3,pointRadius:0,tension:0.2},
-      {label:'20週均線',data:ma,borderColor:'#6b7280',borderWidth:1.6,pointRadius:0,tension:0.2},
-      {label:'下線（20週均線−2σ）',data:dnA,borderColor:'#2b7cd3',borderWidth:1.3,pointRadius:0,tension:0.2}]},
+      {label:'週還原收盤價',data:wcl,borderColor:'#111111',borderWidth:1.4,pointRadius:0,tension:0.2,spanGaps:true},
+      {label:'上線（20週均線+2σ）',data:upA,borderColor:'#e0533d',borderWidth:1.3,pointRadius:0,tension:0.2,spanGaps:true},
+      {label:'20週均線',data:ma,borderColor:'#6b7280',borderWidth:1.6,pointRadius:0,tension:0.2,spanGaps:true},
+      {label:'下線（20週均線−2σ）',data:dnA,borderColor:'#2b7cd3',borderWidth:1.3,pointRadius:0,tension:0.2,spanGaps:true}]},
     options:o});
   ZOOMS.ch_ch={min:0,max:N-1,n:N};
   const st=C.st==='above'?'突破上線（強勢）':C.st==='below'?'跌破下線（弱勢）':'通道內';
@@ -371,10 +375,12 @@ function renderInd(){
       {label:'20',data:new Array(n).fill(20),borderColor:'#2b7cd3',borderWidth:1,borderDash:[5,4],pointRadius:0}];
     ycfg.min=0;ycfg.max=100;
   }
-  const o=baseOpts();o.scales.y=ycfg;
+  const o=baseOpts();o.scales.y=ycfg;o.scales.y.position='right';
   if(CHARTS.ch_ind)CHARTS.ch_ind.destroy();
-  CHARTS.ch_ind=new Chart(document.getElementById('ch_ind'),{type:'line',data:{labels:dates,datasets:ds},options:o});
-  ZOOMS.ch_ind={min:0,max:n-1,n:n};
+  const FUT=250,NI=n+FUT,labels=dates.concat(new Array(FUT).fill(''));
+  ds.forEach(d=>{d.data=d.data.concat(new Array(FUT).fill(null));});
+  CHARTS.ch_ind=new Chart(document.getElementById('ch_ind'),{type:'line',data:{labels:labels,datasets:ds},options:o});
+  ZOOMS.ch_ind={min:0,max:NI-1,n:NI};
 }
 document.getElementById('f_go').addEventListener('click',fquery);
 document.getElementById('f_code').addEventListener('keydown',e=>{if(e.key==='Enter')fquery();});
@@ -382,7 +388,7 @@ document.getElementById('f_code').addEventListener('keydown',e=>{if(e.key==='Ent
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-12 收盤 ｜ 本頁建置 2026-10-13 23:14</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-12 收盤 ｜ 本頁建置 2026-10-13 23:31</div>
 </div></footer>
 </body>
 </html>
