@@ -171,11 +171,13 @@ function query(){
 }
 document.getElementById('q_go').addEventListener('click',query);
 document.getElementById('q_code').addEventListener('keydown',e=>{if(e.key==='Enter')query();});
+(function(){const c=(new URLSearchParams(location.search).get('code')||'').trim();
+if(/^\d{4}$/.test(c)){document.getElementById('q_code').value=c;query();}})();
 </script>
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-13 收盤 ｜ 本頁建置 2026-10-14 22:02</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-13 收盤 ｜ 本頁建置 2026-10-14 23:34</div>
 </div></footer>
 </body>
 </html>
