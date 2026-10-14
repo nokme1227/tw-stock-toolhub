@@ -15,8 +15,8 @@
 
 <nav class="back"><a href="../index.html">← 回工具總覽</a></nav>
 <div class="card">
-<h2 style="margin-top:0">籌碼工具：法人買賣超＋融資融券</h2>
-<p class="meta">法人買賣超來自 FinMind（上市＋上櫃，查詢時即時抓取近 60 日）；融資融券為上市每日快照（以站上最新收盤日為準）。自營商＝自行買賣＋避險合計；外資含外資自營商。單位：張。</p>
+<h2 style="margin-top:0">籌碼工具：法人買賣超＋融資融券＋集保股權分散</h2>
+<p class="meta">法人買賣超來自 FinMind（上市＋上櫃，查詢時即時抓取近 60 日）；融資融券為上市每日快照；集保股權分散為每週快照（站內靜態資料，每週六更新）。自營商＝自行買賣＋避險合計；外資含外資自營商。單位：張。</p>
 <div class="filters">
 <div><label>股票代號</label><input id="q_code" type="text" inputmode="numeric" maxlength="4" placeholder="如 2330"></div>
 <div><label>&nbsp;</label><button class="btn" id="q_go" type="button">查詢</button></div>
@@ -39,17 +39,61 @@
 <tbody id="inst_rows"><tr><td class="l" colspan="5">—</td></tr></tbody>
 </table></div>
 </div>
+<div class="card">
+<h3 style="margin-top:0" id="eq_title">集保股權分散</h3>
+<p class="meta" id="eq_meta">輸入代號後顯示（每週六更新）。</p>
+<canvas id="ch_eq" height="120"></canvas>
+<div class="tbl-wrap"><table>
+<thead><tr><th class="l">持股級距</th><th>股東人數</th><th>持有股數</th><th>佔比</th></tr></thead>
+<tbody id="eq_rows"><tr><td class="l" colspan="4">—</td></tr></tbody>
+</table></div>
+</div>
 <script src="../assets/chart.js"></script>
 <script>
 const GRP={'Foreign_Investor':'外資','Foreign_Dealer_Self':'外資','Investment_Trust':'投信','Dealer_self':'自營商','Dealer_Hedging':'自營商'};
 const NAME_ZH={'外資':'外資','投信':'投信','自營商':'自營商'};
 const COLORS={'外資':'#e0533d','投信':'#2b7cd3','自營商':'#7a9e43'};
-let NAMES={}, MARGIN=null, chart=null;
+let NAMES={}, MARGIN=null, chart=null, EQ_L=null, EQ_T=null, eqChart=null;
 fetch('../assets/data/huang6_latest.json').then(r=>r.json()).then(j=>{
   j.stocks.forEach(s=>{NAMES[s.code]=s.name;});
 }).catch(()=>{});
 fetch('../assets/data/margin_latest.json').then(r=>r.json()).then(j=>{MARGIN=j;}).catch(()=>{});
+fetch('../assets/data/equity_latest.json').then(r=>r.json()).then(j=>{EQ_L=j;}).catch(()=>{});
+fetch('../assets/data/equity_trend.json').then(r=>r.json()).then(j=>{EQ_T=j;}).catch(()=>{});
 function kfmt(x){return x==null?'—':(x>=0?'+':'')+Math.round(x).toLocaleString();}
+function renderEquity(code){
+  const box=document.getElementById('eq_rows'), meta=document.getElementById('eq_meta');
+  document.getElementById('eq_title').textContent='集保股權分散 — '+code+(NAMES[code]?' '+NAMES[code]:'');
+  if(!EQ_L||!EQ_L.stocks||!EQ_L.stocks[code]){
+    box.innerHTML='<tr><td class="l" colspan="4">查無集保資料（可能為新上市或資料缺漏）。</td></tr>';
+    meta.textContent=''; if(eqChart){eqChart.destroy();eqChart=null;} return;
+  }
+  const lv=EQ_L.levels, holders=EQ_L.stocks[code][0], shares=EQ_L.stocks[code][1];
+  const totS=shares.reduce((a,b)=>a+b,0), totH=holders.reduce((a,b)=>a+b,0);
+  const sH=holders.slice(0,8).reduce((a,b)=>a+b,0), sS=shares.slice(0,8).reduce((a,b)=>a+b,0);
+  const lH=totH-sH, lS=totS-sS;
+  meta.textContent='統計週：'+EQ_L.week_date+'｜散戶（50張以下，1–8級）：'
+    +sH.toLocaleString()+' 人（'+(totH?sH/totH*100:0).toFixed(1)+'%），持股佔比 '+(totS?sS/totS*100:0).toFixed(1)+'%'
+    +'｜大戶（50張以上）：'+lH.toLocaleString()+' 人，持股佔比 '+(totS?lS/totS*100:0).toFixed(1)+'%';
+  box.innerHTML=lv.map((n,i)=>{
+    const pct=totS?shares[i]/totS*100:0;
+    return '<tr><td class="l">'+n+'</td><td class="num">'+holders[i].toLocaleString()+'</td>'
+      +'<td class="num">'+shares[i].toLocaleString()+'</td><td class="num">'+pct.toFixed(2)+'%</td></tr>';
+  }).join('');
+  // 24週散戶/大戶持股佔比走勢
+  if(eqChart){eqChart.destroy();eqChart=null;}
+  if(EQ_T&&EQ_T.stocks&&EQ_T.stocks[code]){
+    const weeks=EQ_T.weeks, arr=EQ_T.stocks[code];
+    const sPct=arr.map(w=>{const t=w[1]+w[3];return t?w[1]/t*100:null;});
+    const lPct=arr.map(w=>{const t=w[1]+w[3];return t?w[3]/t*100:null;});
+    eqChart=new Chart(document.getElementById('ch_eq'),{type:'line',
+      data:{labels:weeks,datasets:[
+        {label:'散戶持股佔比%',data:sPct,borderColor:'#2b7cd3',borderWidth:1.6,pointRadius:0,tension:0.2,spanGaps:true},
+        {label:'大戶持股佔比%',data:lPct,borderColor:'#e0533d',borderWidth:1.6,pointRadius:0,tension:0.2,spanGaps:true}]},
+      options:{responsive:true,plugins:{legend:{position:'bottom'}},
+        scales:{x:{ticks:{autoSkip:true,maxTicksLimit:8,font:{size:10}}},y:{ticks:{font:{size:10},callback:v=>v+'%'}}}}});
+  }
+}
 function query(){
   const code=document.getElementById('q_code').value.trim();
   const msg=document.getElementById('q_msg');
@@ -57,6 +101,7 @@ function query(){
   msg.textContent='查詢中…';
   document.getElementById('inst_title').textContent=
     '法人買賣超（近 60 日）— '+code+(NAMES[code]?' '+NAMES[code]:'');
+  renderEquity(code);
   // 融資融券快照
   const mb=document.getElementById('margin_box');
   if(MARGIN&&MARGIN.stocks&&MARGIN.stocks[code]){
@@ -118,7 +163,7 @@ document.getElementById('q_code').addEventListener('keydown',e=>{if(e.key==='Ent
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-07 收盤 ｜ 本頁建置 2026-10-07 21:07</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-13 收盤 ｜ 本頁建置 2026-10-14 20:49</div>
 </div></footer>
 </body>
 </html>
