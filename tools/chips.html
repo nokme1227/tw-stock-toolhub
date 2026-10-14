@@ -102,7 +102,8 @@ async function renderEquity(code){
         {label:'散戶持股佔比%',data:sPct,borderColor:'#2b7cd3',borderWidth:1.6,pointRadius:0,tension:0.2,spanGaps:true},
         {label:'大戶持股佔比%',data:lPct,borderColor:'#e0533d',borderWidth:1.6,pointRadius:0,tension:0.2,spanGaps:true}]},
       options:{responsive:true,plugins:{legend:{position:'bottom'}},
-        scales:{x:{ticks:{autoSkip:true,maxTicksLimit:8,font:{size:10}}},y:{ticks:{font:{size:10},callback:v=>v+'%'}}}}});
+        scales:{x:{ticks:{autoSkip:true,maxTicksLimit:8,font:{size:10}}},
+          y:{min:0,max:100,ticks:{font:{size:10},callback:v=>v+'%'}}}}});
   }
 }
 function query(){
@@ -174,7 +175,7 @@ document.getElementById('q_code').addEventListener('keydown',e=>{if(e.key==='Ent
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-13 收盤 ｜ 本頁建置 2026-10-14 21:13</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-13 收盤 ｜ 本頁建置 2026-10-14 22:02</div>
 </div></footer>
 </body>
 </html>
