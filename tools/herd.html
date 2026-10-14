@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>羊群動向榜｜台股研究工具站</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>台股研究工具站</h1>
+<p>台股基本面研究工具 · 總覽＋工具目錄</p>
+</div></header>
+<div class="wrap">
+
+<nav class="back"><a href="../index.html">← 回工具總覽</a></nav>
+<div class="card">
+<h2 style="margin-top:0">羊群動向榜</h2>
+<p class="meta">散戶（持股 50 張以下，集保 1–8 級）人數的<strong>單週變化</strong>排行。</p>
+<p class="meta">🐑 <b>羊群移入</b>：散戶人數激增，籌碼散落——注意大戶倒貨風險。<br>
+🐺 <b>羊群移出</b>：散戶人數大減，籌碼集中——易漲難跌的候選。</p>
+<p class="meta" id="h_meta">載入中…</p>
+</div>
+<div class="card">
+<h3 style="margin-top:0">🐑 羊群移入 Top 50（散戶增加）</h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>#</th><th class="l">代號</th><th class="l">名稱</th><th>本週散戶</th><th>上週散戶</th><th>變化</th><th>變化率</th></tr></thead>
+<tbody id="h_in"><tr><td colspan="7">—</td></tr></tbody>
+</table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">🐺 羊群移出 Top 50（散戶減少）</h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>#</th><th class="l">代號</th><th class="l">名稱</th><th>本週散戶</th><th>上週散戶</th><th>變化</th><th>變化率</th></tr></thead>
+<tbody id="h_out"><tr><td colspan="7">—</td></tr></tbody>
+</table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">方法與限制</h3>
+<p class="meta">散戶定義：集保股權分散表 1–8 級（50 張以下）。變化率＝（本週人數−上週人數）÷上週人數。<br>
+過濾：上週基數 &lt;1,000 人不列入；單週變化率超出 −90%～+500% 視為來源異常剔除。<br>
+數據：TDCC 集保每週快照（經 GitHub 鏡像），每週六更新。本頁無即時抓取，開啟不消耗 API 額度。<br>
+⚠️ 僅供籌碼研究參考，不構成投資建議；散戶增減與股價無必然因果。</p>
+</div>
+<script>
+const fmt=n=>n==null?'—':Math.round(n).toLocaleString();
+const sgn=(n,suf)=>n==null?'—':(n>0?'+':'')+Math.round(n).toLocaleString()+suf;
+function row(r,i,up){
+  const c=up?'#b91c1c':'#166534';
+  return '<tr><td>'+(i+1)+'</td><td class="l">'+r.code+'</td><td class="l">'+(r.name||'')+'</td>'
+    +'<td>'+fmt(r.holders)+'</td><td>'+fmt(r.prev)+'</td>'
+    +'<td style="color:'+c+'">'+sgn(r.delta,'')+'</td>'
+    +'<td style="color:'+c+'">'+sgn(r.rate,'%')+'</td></tr>';
+}
+fetch('../assets/data/herd_latest.json').then(r=>r.json()).then(j=>{
+  document.getElementById('h_meta').textContent=
+    '統計區間：'+j.prev_week+' → '+j.week_date+'（每週六更新，本次建置 '+j.updated+'）';
+  document.getElementById('h_in').innerHTML=j.inflow.map((r,i)=>row(r,i,true)).join('');
+  document.getElementById('h_out').innerHTML=j.outflow.map((r,i)=>row(r,i,false)).join('');
+}).catch(()=>{document.getElementById('h_meta').textContent='資料載入失敗。';});
+</script>
+</div>
+<footer class="site"><div class="wrap">
+<div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-13 收盤 ｜ 本頁建置 2026-10-14 20:15</div>
+</div></footer>
+</body>
+</html>
