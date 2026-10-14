@@ -63,18 +63,20 @@
 </style>
 <script src="../assets/chart.js"></script>
 <script>
-let NAMES={}, H6S={}, BRF=null, REP_IDX={};
+let NAMES={}, H6S={}, H6MONTH='', BRF=null, REP_IDX={};
 let revChart=null, epsChart=null;
-fetch('../assets/data/huang6_latest.json').then(r=>r.json()).then(j=>{
+const H6READY=fetch('../assets/data/huang6_latest.json').then(r=>r.json()).then(j=>{
+  H6MONTH=j.month||'';
   j.stocks.forEach(s=>{NAMES[s.code]=s.name; H6S[s.code]=s;});
 }).catch(()=>{});
 fetch('../assets/data/briefing.json').then(r=>r.json()).then(j=>{BRF=j.briefings||{};}).catch(()=>{});
 fetch('../assets/data/reports_index.json').then(r=>r.json()).then(j=>{REP_IDX=j;}).catch(()=>{});
 async function fshard(kind,c){
+  // fund_<X>.json 合併檔：revenue/income/balance/dividend 一次取回
   try{
-    const r=await fetch('../assets/data/'+kind+'_'+c[0].toUpperCase()+'.json');
+    const r=await fetch('../assets/data/fund_'+c[0].toUpperCase()+'.json');
     if(!r.ok) return null;
-    const j=await r.json(); return (j.stocks||{})[c]||null;
+    const j=await r.json(); return ((j.stocks||{})[c]||{})[kind]||null;
   }catch(e){ return null; }
 }
 const yi=x=>x==null?'—':(x/1e8).toFixed(1);
@@ -91,6 +93,7 @@ async function load(code){
   const msg=document.getElementById('s_msg');
   if(!/^\d{4}$/.test(code)){msg.textContent='請輸入 4 位數字代號。';return;}
   document.getElementById('s_code').value=code;
+  await H6READY;
   document.getElementById('st_title').textContent=code+(NAMES[code]?' '+NAMES[code]:'');
   msg.textContent='載入中…';
   const [rev,inc,bal,div]=await Promise.all(
@@ -129,7 +132,7 @@ async function load(code){
   // 資產負債
   const bb=document.getElementById('bal_box');
   if(bal&&bal.length){
-    const q=bal[bal.length-1], dr=q[2]?q[1]/q[2]*100:null;
+    const q=bal[bal.length-1], dr=q[1]?q[2]/q[1]*100:null;
     bb.innerHTML='<table><thead><tr><th class="l">項目</th><th>金額(億)</th></tr></thead><tbody>'
       +'<tr><td class="l">資產總計（'+q[0]+'）</td><td class="num">'+yi(q[1])+'</td></tr>'
       +'<tr><td class="l">負債總計</td><td class="num">'+yi(q[2])+'</td></tr>'
@@ -143,8 +146,9 @@ async function load(code){
     : '<tr><td class="l" colspan="3">查無股利資料（上櫃暫缺）。</td></tr>';
   // 六大指標
   const hb=document.getElementById('h6_box'), s=H6S[code];
+  const sv=x=>x==null?'—':x;
   hb.innerHTML=s
-    ? '<p>總分 <b>'+s.total+'</b>（'+s.month+'）｜營 '+s.d1+'／益 '+s.d2+'／獲 '+s.d3+'／Ｅ '+s.d4+'／存 '+s.d5+'／自 '+s.d6+'</p><p class="meta">分數來自黃國華六大指標追蹤表。</p>'
+    ? '<p>總分 <b>'+s.total+'</b>（'+H6MONTH+'）｜營 '+sv(s.sub['營'])+'／益 '+sv(s.sub['益'])+'／獲 '+sv(s.sub['獲'])+'／Ｅ '+sv(s.sub['Ｅ'])+'／存 '+sv(s.sub['存'])+'／自 '+sv(s.sub['自'])+'</p><p class="meta">分數來自黃國華六大指標追蹤表。</p>'
     : '<p class="meta">查無六大指標評分。</p>';
   // 法說會
   const brb=document.getElementById('br_box'), bl=BRF&&BRF[code];
@@ -178,7 +182,7 @@ document.getElementById('s_code').addEventListener('keydown',e=>{if(e.key==='Ent
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-13 收盤 ｜ 本頁建置 2026-10-14 23:30</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-13 收盤 ｜ 本頁建置 2026-10-14 23:52</div>
 </div></footer>
 </body>
 </html>
