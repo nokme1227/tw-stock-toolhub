@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>個股總覽｜台股研究工具站</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>台股研究工具站</h1>
+<p>台股基本面研究工具 · 總覽＋工具目錄</p>
+</div></header>
+<div class="wrap">
+
+<nav class="back"><a href="../index.html">← 回工具總覽</a></nav>
+<div class="card">
+<h2 style="margin-top:0">個股總覽 <span id="st_title"></span></h2>
+<div class="filters">
+<div><label>股票代號</label><input id="s_code" type="text" inputmode="numeric" maxlength="4" placeholder="如 2330"></div>
+<div><label>&nbsp;</label><button class="btn" id="s_go" type="button">查詢</button></div>
+</div>
+<p class="meta" id="s_msg">在網址加 ?code=2330 可直接開啟個股。</p>
+<div class="tabs">
+<button data-t="fund" class="on" type="button">基本面</button>
+<button data-t="chip" type="button">籌碼</button>
+<button data-t="level" type="button">位階</button>
+<button data-t="report" type="button">報告</button>
+</div>
+</div>
+<div id="tab-fund">
+<div class="card"><h3 style="margin-top:0">月營收</h3><canvas id="ch_rev" height="120"></canvas>
+<div class="tbl-wrap"><table><thead><tr><th class="l">年月</th><th>營收(億)</th><th>MoM</th><th>YoY</th></tr></thead>
+<tbody id="rev_rows"><tr><td class="l" colspan="4">—</td></tr></tbody></table></div></div>
+<div class="card"><h3 style="margin-top:0">季損益</h3><canvas id="ch_eps" height="110"></canvas>
+<div class="tbl-wrap"><table><thead><tr><th class="l">季度</th><th>營收(億)</th><th>毛利(億)</th><th>營業利益(億)</th><th>淨利(億)</th><th>EPS</th></tr></thead>
+<tbody id="inc_rows"><tr><td class="l" colspan="6">—</td></tr></tbody></table></div></div>
+<div class="card"><h3 style="margin-top:0">資產負債（當季）</h3><div id="bal_box"><p class="meta">—</p></div></div>
+<div class="card"><h3 style="margin-top:0">股利</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">年度</th><th>現金(元/股)</th><th>股票(元/股)</th></tr></thead>
+<tbody id="div_rows"><tr><td class="l" colspan="3">—</td></tr></tbody></table></div></div>
+<div class="card"><h3 style="margin-top:0">六大指標評分</h3><div id="h6_box"><p class="meta">—</p></div></div>
+<div class="card"><h3 style="margin-top:0">法說會</h3><div id="br_box"><p class="meta">—</p></div></div>
+</div>
+<div id="tab-chip" hidden>
+<div class="card"><h3 style="margin-top:0">籌碼面</h3>
+<p class="meta" id="chip_sum">載入中…</p>
+<p><a class="btn" id="go_chips" href="chips.html">開啟籌碼工具（自動帶入代號）</a></p>
+<p class="meta">含法人買賣超、融資融券、集保股權分散 15 級距。</p></div>
+</div>
+<div id="tab-level" hidden>
+<div class="card"><h3 style="margin-top:0">股價位階</h3>
+<p><a class="btn" id="go_five" href="fiveline.html">開啟樂活五線譜（自動帶入代號）</a></p>
+<p class="meta">OLS 趨勢線＋殘差 σ 五線譜、樂活通道、情緒標籤。</p></div>
+</div>
+<div id="tab-report" hidden>
+<div class="card"><h3 style="margin-top:0">深度報告</h3><div id="rep_box"><p class="meta">—</p></div></div>
+</div>
+<style>
+.tabs{display:flex;gap:8px;margin:12px 0 4px;flex-wrap:wrap}
+.tabs button{padding:8px 18px;border:1px solid #ddd;background:#f5f5f5;border-radius:8px;cursor:pointer;font-size:.95rem}
+.tabs button.on{background:#1a73e8;color:#fff;border-color:#1a73e8}
+</style>
+<script src="../assets/chart.js"></script>
+<script>
+let NAMES={}, H6S={}, BRF=null, REP_IDX={};
+let revChart=null, epsChart=null;
+fetch('../assets/data/huang6_latest.json').then(r=>r.json()).then(j=>{
+  j.stocks.forEach(s=>{NAMES[s.code]=s.name; H6S[s.code]=s;});
+}).catch(()=>{});
+fetch('../assets/data/briefing.json').then(r=>r.json()).then(j=>{BRF=j.briefings||{};}).catch(()=>{});
+fetch('../assets/data/reports_index.json').then(r=>r.json()).then(j=>{REP_IDX=j;}).catch(()=>{});
+async function fshard(kind,c){
+  try{
+    const r=await fetch('../assets/data/'+kind+'_'+c[0].toUpperCase()+'.json');
+    if(!r.ok) return null;
+    const j=await r.json(); return (j.stocks||{})[c]||null;
+  }catch(e){ return null; }
+}
+const yi=x=>x==null?'—':(x/1e8).toFixed(1);
+const pc=x=>x==null?'—':(x>=0?'+':'')+Number(x).toFixed(1)+'%';
+const pc2=x=>x==null?'—':(x>=0?'+':'')+Number(x).toFixed(2)+'%';
+function setTab(t){
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
+  ['fund','chip','level','report'].forEach(k=>{
+    document.getElementById('tab-'+k).hidden = (k!==t);
+  });
+}
+document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.t)));
+async function load(code){
+  const msg=document.getElementById('s_msg');
+  if(!/^\d{4}$/.test(code)){msg.textContent='請輸入 4 位數字代號。';return;}
+  document.getElementById('s_code').value=code;
+  document.getElementById('st_title').textContent=code+(NAMES[code]?' '+NAMES[code]:'');
+  msg.textContent='載入中…';
+  const [rev,inc,bal,div]=await Promise.all(
+    ['revenue','income','balance','dividend'].map(k=>fshard(k,code)));
+  // 月營收
+  if(rev&&rev.length){
+    const lab=rev.map(r=>r[0]), bv=rev.map(r=>r[1]/1e8), yv=rev.map(r=>r[2]);
+    if(revChart)revChart.destroy();
+    revChart=new Chart(document.getElementById('ch_rev'),{data:{labels:lab,
+      datasets:[{type:'bar',label:'營收(億)',data:bv,backgroundColor:'#2b7cd3'},
+        {type:'line',label:'YoY%',data:yv,borderColor:'#e0533d',yAxisID:'y1',pointRadius:0,tension:0.2,spanGaps:true}]},
+      options:{responsive:true,scales:{x:{ticks:{autoSkip:true,maxTicksLimit:10,font:{size:10}}},
+        y:{ticks:{font:{size:10}}},y1:{position:'right',grid:{drawOnChartArea:false},ticks:{font:{size:10},callback:v=>v+'%'}}}}});
+    document.getElementById('rev_rows').innerHTML=rev.slice(-12).reverse().map(r=>{
+      const m=r[0], mm=m.slice(0,4)+'/'+m.slice(4);
+      return '<tr><td class="l num">'+mm+'</td><td class="num">'+yi(r[1])+'</td><td class="num">—</td><td class="num">'+pc(r[2])+'</td></tr>';
+    }).join('');
+  }else{
+    document.getElementById('rev_rows').innerHTML='<tr><td class="l" colspan="4">查無月營收資料。</td></tr>';
+  }
+  // 季損益
+  if(inc&&inc.length){
+    const lab=inc.map(r=>r[0]), ev=inc.map(r=>r[6]?null:r[5]);
+    if(epsChart)epsChart.destroy();
+    epsChart=new Chart(document.getElementById('ch_eps'),{type:'line',
+      data:{labels:lab,datasets:[{label:'EPS(元)',data:ev,borderColor:'#7a9e43',pointRadius:2,tension:0.2,spanGaps:true}]},
+      options:{responsive:true,plugins:{legend:{position:'bottom'}},
+        scales:{x:{ticks:{font:{size:10}}},y:{ticks:{font:{size:10}}}}}});
+    document.getElementById('inc_rows').innerHTML=inc.slice(-8).reverse().map(r=>
+      '<tr><td class="l num">'+r[0]+(r[6]?'（累計）':'')+'</td><td class="num">'+yi(r[1])+'</td><td class="num">'+yi(r[2])+'</td>'
+      +'<td class="num">'+yi(r[3])+'</td><td class="num">'+yi(r[4])+'</td><td class="num">'+(r[5]==null?'—':r[5])+'</td></tr>'
+    ).join('');
+  }else{
+    document.getElementById('inc_rows').innerHTML='<tr><td class="l" colspan="6">查無季損益資料。</td></tr>';
+  }
+  // 資產負債
+  const bb=document.getElementById('bal_box');
+  if(bal&&bal.length){
+    const q=bal[bal.length-1], dr=q[2]?q[1]/q[2]*100:null;
+    bb.innerHTML='<table><thead><tr><th class="l">項目</th><th>金額(億)</th></tr></thead><tbody>'
+      +'<tr><td class="l">資產總計（'+q[0]+'）</td><td class="num">'+yi(q[1])+'</td></tr>'
+      +'<tr><td class="l">負債總計</td><td class="num">'+yi(q[2])+'</td></tr>'
+      +'<tr><td class="l">權益總計</td><td class="num">'+yi(q[3])+'</td></tr>'
+      +'<tr><td class="l">負債比</td><td class="num">'+(dr==null?'—':dr.toFixed(1)+'%')+'</td></tr>'
+      +'</tbody></table>';
+  }else{ bb.innerHTML='<p class="meta">查無資產負債資料。</p>'; }
+  // 股利
+  document.getElementById('div_rows').innerHTML=(div&&div.length)
+    ? div.slice().reverse().map(r=>'<tr><td class="l num">'+r[0]+'</td><td class="num">'+(r[1]==null?'—':r[1])+'</td><td class="num">'+(r[2]==null?'—':r[2])+'</td></tr>').join('')
+    : '<tr><td class="l" colspan="3">查無股利資料（上櫃暫缺）。</td></tr>';
+  // 六大指標
+  const hb=document.getElementById('h6_box'), s=H6S[code];
+  hb.innerHTML=s
+    ? '<p>總分 <b>'+s.total+'</b>（'+s.month+'）｜營 '+s.d1+'／益 '+s.d2+'／獲 '+s.d3+'／Ｅ '+s.d4+'／存 '+s.d5+'／自 '+s.d6+'</p><p class="meta">分數來自黃國華六大指標追蹤表。</p>'
+    : '<p class="meta">查無六大指標評分。</p>';
+  // 法說會
+  const brb=document.getElementById('br_box'), bl=BRF&&BRF[code];
+  brb.innerHTML=(bl&&bl.length)
+    ? '<ul>'+bl.slice(0,5).map(b=>'<li>'+b[1]+'｜'+b[0]+(NAMES[code]?'':'')+'<br><span class="meta">'+b[2]+'</span></li>').join('')+'</ul>'
+    : '<p class="meta">近期無法說會公告。</p>';
+  // 籌碼 tab 摘要
+  document.getElementById('chip_sum').textContent='代號 '+code+(NAMES[code]?' '+NAMES[code]:'')+' 的籌碼數據（法人／融資券／集保）在籌碼工具頁查看。';
+  document.getElementById('go_chips').href='chips.html?code='+code;
+  document.getElementById('go_five').href='fiveline.html?code='+code;
+  // 報告 tab
+  const rb=document.getElementById('rep_box');
+  rb.innerHTML=REP_IDX[code]
+    ? '<p><a class="btn" href="reports/'+code+'.html" target="_blank" rel="noopener">開啟 '+code+' '+(NAMES[code]||'')+' 深度報告</a></p>'
+    : '<p class="meta">尚無此檔的深度報告。</p>';
+  msg.textContent='資料就緒（月營收 '+(rev?rev.length:0)+' 個月、損益 '+(inc?inc.length:0)+' 季）。';
+}
+function go(){
+  const c=document.getElementById('s_code').value.trim();
+  if(!/^\d{4}$/.test(c)){document.getElementById('s_msg').textContent='請輸入 4 位數字代號。';return;}
+  history.replaceState(null,'','?code='+c);
+  load(c);
+}
+document.getElementById('s_go').addEventListener('click',go);
+document.getElementById('s_code').addEventListener('keydown',e=>{if(e.key==='Enter')go();});
+(function(){
+  const c=(new URLSearchParams(location.search).get('code')||'').trim();
+  if(/^\d{4}$/.test(c)) load(c);
+})();
+</script>
+</div>
+<footer class="site"><div class="wrap">
+<div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-13 收盤 ｜ 本頁建置 2026-10-14 23:30</div>
+</div></footer>
+</body>
+</html>
