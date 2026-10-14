@@ -142,7 +142,7 @@ async function load(code){
   }else{ bb.innerHTML='<p class="meta">查無資產負債資料。</p>'; }
   // 股利
   document.getElementById('div_rows').innerHTML=(div&&div.length)
-    ? div.slice().reverse().map(r=>'<tr><td class="l num">'+r[0]+'</td><td class="num">'+(r[1]==null?'—':r[1])+'</td><td class="num">'+(r[2]==null?'—':r[2])+'</td></tr>').join('')
+    ? div.slice().reverse().map(r=>'<tr><td class="l num">'+r[0]+'</td><td class="num">'+(r[1]==null?'—':Number(r[1]).toFixed(2))+'</td><td class="num">'+(r[2]==null?'—':Number(r[2]).toFixed(2))+'</td></tr>').join('')
     : '<tr><td class="l" colspan="3">查無股利資料（上櫃暫缺）。</td></tr>';
   // 六大指標
   const hb=document.getElementById('h6_box'), s=H6S[code];
@@ -182,7 +182,7 @@ document.getElementById('s_code').addEventListener('keydown',e=>{if(e.key==='Ent
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-13 收盤 ｜ 本頁建置 2026-10-14 23:52</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-13 收盤 ｜ 本頁建置 2026-10-15 00:04</div>
 </div></footer>
 </body>
 </html>
