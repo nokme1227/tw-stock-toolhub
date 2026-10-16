@@ -71,10 +71,18 @@ const H6READY=fetch('../assets/data/huang6_latest.json').then(r=>r.json()).then(
 }).catch(()=>{});
 fetch('../assets/data/briefing.json').then(r=>r.json()).then(j=>{BRF=j.briefings||{};}).catch(()=>{});
 fetch('../assets/data/reports_index.json').then(r=>r.json()).then(j=>{REP_IDX=j;}).catch(()=>{});
+let FUND_IDX=null;
 async function fshard(kind,c){
-  // fund_<X>.json 合併檔：revenue/income/balance/dividend 一次取回
+  // fund_XX.json 容量分片：先查索引再取對應片
   try{
-    const r=await fetch('../assets/data/fund_'+c[0].toUpperCase()+'.json');
+    if(!FUND_IDX){
+      const r=await fetch('../assets/data/fund_index.json');
+      if(!r.ok) return null;
+      FUND_IDX=await r.json();
+    }
+    const i=FUND_IDX[c];
+    if(i==null) return null;
+    const r=await fetch('../assets/data/fund_'+String(i).padStart(2,'0')+'.json');
     if(!r.ok) return null;
     const j=await r.json(); return ((j.stocks||{})[c]||{})[kind]||null;
   }catch(e){ return null; }
@@ -182,7 +190,7 @@ document.getElementById('s_code').addEventListener('keydown',e=>{if(e.key==='Ent
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-13 收盤 ｜ 本頁建置 2026-10-15 00:04</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-15 收盤 ｜ 本頁建置 2026-10-16 14:26</div>
 </div></footer>
 </body>
 </html>
