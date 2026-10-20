@@ -54,9 +54,7 @@ const GRP={'Foreign_Investor':'外資','Foreign_Dealer_Self':'外資','Investmen
 const NAME_ZH={'外資':'外資','投信':'投信','自營商':'自營商'};
 const COLORS={'外資':'#e0533d','投信':'#2b7cd3','自營商':'#7a9e43'};
 let NAMES={}, MARGIN=null, chart=null, EQ={}, eqChart=null;
-fetch('../assets/data/huang6_latest.json').then(r=>r.json()).then(j=>{
-  j.stocks.forEach(s=>{NAMES[s.code]=s.name;});
-}).catch(()=>{});
+fetch('../assets/data/huang6_names.json').then(r=>r.json()).then(j=>{NAMES=j;}).catch(()=>{});
 fetch('../assets/data/margin_latest.json').then(r=>r.json()).then(j=>{MARGIN=j;}).catch(()=>{});
 function kfmt(x){return x==null?'—':(x>=0?'+':'')+Math.round(x).toLocaleString();}
 async function eqShard(code){
@@ -177,7 +175,7 @@ if(/^\d{4}$/.test(c)){document.getElementById('q_code').value=c;query();}})();
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-13 收盤 ｜ 本頁建置 2026-10-14 23:34</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-15 收盤 ｜ 本頁建置 2026-10-20 13:42</div>
 </div></footer>
 </body>
 </html>
