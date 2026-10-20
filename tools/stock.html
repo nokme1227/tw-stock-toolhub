@@ -65,10 +65,13 @@
 <script>
 let NAMES={}, H6S={}, H6MONTH='', BRF=null, REP_IDX={};
 let revChart=null, epsChart=null;
-const H6READY=fetch('../assets/data/huang6_latest.json').then(r=>r.json()).then(j=>{
-  H6MONTH=j.month||'';
-  j.stocks.forEach(s=>{NAMES[s.code]=s.name; H6S[s.code]=s;});
-}).catch(()=>{});
+const H6READY=fetch('../assets/data/huang6_names.json').then(r=>r.json()).then(j=>{NAMES=j;}).catch(()=>{});
+async function h6shard(c){
+  const sh=c[0].toUpperCase();
+  try{ const r=await fetch('../assets/data/huang6_'+sh+'.json'); if(!r.ok) return;
+    const j=await r.json(); H6MONTH=j.month||'';
+    (j.stocks||[]).forEach(s=>{H6S[s.code]=s;}); }catch(e){}
+}
 fetch('../assets/data/briefing.json').then(r=>r.json()).then(j=>{BRF=j.briefings||{};}).catch(()=>{});
 fetch('../assets/data/reports_index.json').then(r=>r.json()).then(j=>{REP_IDX=j;}).catch(()=>{});
 let FUND_IDX=null;
@@ -101,7 +104,7 @@ async function load(code){
   const msg=document.getElementById('s_msg');
   if(!/^\d{4}$/.test(code)){msg.textContent='請輸入 4 位數字代號。';return;}
   document.getElementById('s_code').value=code;
-  await H6READY;
+  await H6READY; await h6shard(code);
   document.getElementById('st_title').textContent=code+(NAMES[code]?' '+NAMES[code]:'');
   msg.textContent='載入中…';
   const [rev,inc,bal,div]=await Promise.all(
@@ -190,7 +193,7 @@ document.getElementById('s_code').addEventListener('keydown',e=>{if(e.key==='Ent
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-15 收盤 ｜ 本頁建置 2026-10-16 14:26</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-15 收盤 ｜ 本頁建置 2026-10-20 13:42</div>
 </div></footer>
 </body>
 </html>
