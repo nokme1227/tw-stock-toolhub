@@ -75,7 +75,7 @@ const CHARTS={}, ZOOMS={};
 const EMO_L={'p2':'極度貪婪','p1':'貪婪','m0':'趨勢線','m1':'恐懼','m2':'極度恐懼'};
 const EMO_C={'p2':'#e0533d','p1':'#f0a35e','m0':'#555555','m1':'#7fb069','m2':'#2b7cd3'};
 const EMO_TXT={'極度貪婪':'#e0533d','貪婪':'#f0a35e','中性':'#6b7280','恐懼':'#7fb069','極度恐懼':'#2b7cd3'};
-fetch('../assets/data/huang6_latest.json').then(r=>r.json()).then(j=>{j.stocks.forEach(s=>{NAMES[s.code]=s.name;});}).catch(()=>{});
+fetch('../assets/data/huang6_names.json').then(r=>r.json()).then(j=>{NAMES=j;}).catch(()=>{});
 document.getElementById('f_end').value=new Date().toISOString().slice(0,10);
 document.querySelectorAll('#f_pills button').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('#f_pills button').forEach(x=>x.classList.remove('on'));
@@ -390,7 +390,7 @@ if(c){document.getElementById('f_code').value=c;fquery();}})();
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-13 收盤 ｜ 本頁建置 2026-10-14 23:34</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-10-15 收盤 ｜ 本頁建置 2026-10-20 13:42</div>
 </div></footer>
 </body>
 </html>
