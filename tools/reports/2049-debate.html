@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上銀(2049) 多空辯論報告（試點）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei", sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #1a1a2e 50%, #24243e 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+            padding: 12px;
+            line-height: 1.6;
+        }
+        .container { max-width: 920px; margin: 0 auto; }
+        .header { text-align: center; padding: 28px 0 18px; border-bottom: 1px solid rgba(78,205,196,0.2); margin-bottom: 22px; }
+        .header h1 { font-size: 2.0em; margin-bottom: 6px; color: #4ecdc4; }
+        .header .subtitle { color: #999; font-size: 0.9em; }
+        .header .pilot-note { color: #f0ad4e; font-size: 0.82em; margin-top: 8px; }
+        .card {
+            background: rgba(255,255,255,0.04);
+            border-radius: 18px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .card h2 { color: #4ecdc4; margin-bottom: 14px; font-size: 1.1em; border-bottom: 1px solid rgba(78,205,196,0.15); padding-bottom: 10px; }
+        .card.bull h2 { color: #ff6b6b; border-bottom-color: rgba(255,107,107,0.25); }
+        .card.bear h2 { color: #51cf66; border-bottom-color: rgba(81,207,102,0.25); }
+        .card.risk h2 { color: #f0ad4e; border-bottom-color: rgba(240,173,78,0.25); }
+        .price-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .price-item { background: rgba(255,255,255,0.06); padding: 14px 10px; border-radius: 12px; text-align: center; }
+        .price-item .label { color: #888; font-size: 0.78em; display: block; margin-bottom: 4px; }
+        .price-item .value { font-size: 1.25em; font-weight: 700; color: #fff; }
+        .price-item .sub { color: #888; font-size: 0.72em; display: block; margin-top: 2px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.92em; }
+        th { color: #999; text-align: left; padding: 8px 6px; border-bottom: 1px solid rgba(255,255,255,0.12); font-weight: 600; }
+        td { padding: 8px 6px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .arg { margin-bottom: 14px; }
+        .arg:last-child { margin-bottom: 0; }
+        .arg .title { font-weight: 700; color: #fff; margin-bottom: 2px; }
+        .card.bull .arg .title { color: #ff8787; }
+        .card.bear .arg .title { color: #69db7c; }
+        .arg .body { color: #ccc; font-size: 0.95em; }
+        .arg .ev { color: #4ecdc4; font-size: 0.82em; }
+        .verdict { font-size: 1.05em; color: #fff; }
+        .verdict .tag { display: inline-block; background: rgba(240,173,78,0.18); color: #f0ad4e; border: 1px solid rgba(240,173,78,0.4); border-radius: 20px; padding: 2px 14px; font-weight: 700; margin-bottom: 10px; }
+        .foot { color: #666; font-size: 0.78em; line-height: 1.7; padding: 6px 4px 20px; }
+        .foot b { color: #888; }
+        @media (max-width: 640px) {
+            .price-grid { grid-template-columns: repeat(2, 1fr); }
+            .header h1 { font-size: 1.6em; }
+            .card { padding: 18px 16px; }
+            table { font-size: 0.85em; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>上銀 (2049) 多空辯論報告</h1>
+        <div class="subtitle">TradingAgents 架構試點：多方／空方結構化辯論＋風險清單</div>
+        <div class="pilot-note">⚠ 試點格式：本頁為格式驗證用，KT 確認後再決定是否推廣到其他個股。本頁不構成投資建議。</div>
+    </div>
+
+    <div class="card">
+        <h2>📊 數據快照（數據層・已驗證）</h2>
+        <div class="price-grid">
+            <div class="price-item"><span class="label">現價</span><span class="value">299.0</span><span class="sub">2026-10-22 收盤（站上最新）</span></div>
+            <div class="price-item"><span class="label">六大指標總分</span><span class="value">3.17</span><span class="sub">202609・與上月持平</span></div>
+            <div class="price-item"><span class="label">預估價區間</span><span class="value">282 ～ 498</span><span class="sub">現價位於區間下緣＋6%</span></div>
+            <div class="price-item"><span class="label">預估全年 EPS</span><span class="value">7.9 元</span><span class="sub">TTM 6.59 元・1.20 倍</span></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>📋 驗證數據表（數據層）</h2>
+        <table>
+            <tr><th>項目</th><th>數據</th><th>來源／截至</th></tr>
+            <tr><td>六大指標子分</td><td>營 3・益 2・獲 4・Ｅ 4・存 3・自 3（弱項：益）</td><td>財務評價 202609</td></tr>
+            <tr><td>總分走勢</td><td>2.33（02月）→ 2.17（04月）→ 2.33（05月）→ 2.50（06月）→ 2.50（07月）→ 3.17（08月）→ 3.17（09月）</td><td>huang6.db</td></tr>
+            <tr><td>月營收</td><td>202509：20.90 億 → 202609：27.20 億，近 12 個月逐月上升；202609 YoY ＋30.1%</td><td>fundamental.db</td></tr>
+            <tr><td>季財報 2026Q2</td><td>營收 75.08 億・毛利率 34.2%・營益率 13.8%・淨利 8.16 億・EPS 2.39 元（Q1：1.64 元，季增 46%）</td><td>fundamental.db</td></tr>
+            <tr><td>TTM EPS</td><td>6.59 元（2025Q3 1.26＋Q4 1.30＋2026Q1 1.64＋Q2 2.39）</td><td>fundamental.db 計算</td></tr>
+            <tr><td>股利</td><td>114 年度現金股利 2.0 元・股票股利 0；以現價計殖利率約 0.67%</td><td>fundamental.db</td></tr>
+            <tr><td>產業</td><td>電機機械－模具零件（202609 新分類；先前為機械零組件－滑軌）</td><td>財務評價 202609</td></tr>
+        </table>
+        <p style="color:#888;font-size:0.8em;margin-top:10px;">註：財務評價快照檔的殖利率欄位為 2.44%，與 fundamental.db 現金股利換算結果（0.67%）定義不同，本頁採 fundamental.db 為準，差異誠實揭露、不混用。</p>
+    </div>
+
+    <div class="card bull">
+        <h2>🔴 多方論點（觀點層）</h2>
+        <div class="arg">
+            <div class="title">1. 營收動能是實質復甦，不是單月曇花</div>
+            <div class="body">月營收從 202509 的 20.90 億連續 12 個月上升到 27.20 億，202609 YoY ＋30.1%。這種逐月墊高的形態比單季爆發更可信，營收子分 3 分有數據支撐。</div>
+            <div class="ev">證據：月營收連續 12 個月上升・YoY ＋30.1%</div>
+        </div>
+        <div class="arg">
+            <div class="title">2. 獲利跟上營收，Q2 是跳升不是微增</div>
+            <div class="body">2026Q2 EPS 2.39 元，較 Q1 的 1.64 元季增 46%，獲利子分 4 分、Ｅ子分 4 分，顯示營收成長有轉化為獲利，而非增收不增利。</div>
+            <div class="ev">證據：Q2 EPS 2.39・季增 46%・獲 4 分・Ｅ 4 分</div>
+        </div>
+        <div class="arg">
+            <div class="title">3. 位置仍在預估區間下緣，下檔有估值墊</div>
+            <div class="body">現價 299 元只比預估低點 282 元高 6%，距預估高點 498 元還有約 66% 空間。總分 3.17 已屬高分段，估值與體質沒有互相矛盾。</div>
+            <div class="ev">證據：現價／預估低點 1.06・總分 3.17</div>
+        </div>
+        <div class="arg">
+            <div class="title">4. 體質無惡化訊號</div>
+            <div class="body">存貨子分 3 分、自由現金子分 3 分，皆維持中段以上；復甦過程中沒有出現存貨暴增或現金流轉負的典型反轉訊號。</div>
+            <div class="ev">證據：存 3 分・自 3 分</div>
+        </div>
+    </div>
+
+    <div class="card bear">
+        <h2>🟢 空方論點（觀點層）</h2>
+        <div class="arg">
+            <div class="title">1. 益是唯一弱項：毛利高、營益低，中間被吃掉了</div>
+            <div class="body">Q2 毛利率 34.2%，營益率卻只有 13.8%，兩者差距超過 20 個百分點，代表營業費用或匯率侵蝕嚴重。益子分 2 分是六項中最低，這是體質上最明確的裂縫。</div>
+            <div class="ev">證據：益 2 分・毛利率 34.2%・營益率 13.8%</div>
+        </div>
+        <div class="arg">
+            <div class="title">2. 總分動能已經停滯</div>
+            <div class="body">總分 202608 從 2.50 跳升到 3.17 後，202609 持平不再升。連升中斷意味著復甦斜率放緩，追高者買的是「已經反映的復甦」，不是「進行中的復甦」。</div>
+            <div class="ev">證據：總分 3.17 持平・連升中斷</div>
+        </div>
+        <div class="arg">
+            <div class="title">3. 殖利率幾乎沒有保護</div>
+            <div class="body">114 年度現金股利僅 2.0 元，以現價計殖利率約 0.67%。萬一估值修正，沒有股息墊可以接，下檔全靠預估低點 282 元的心理支撐。</div>
+            <div class="ev">證據：現金股利 2.0 元・殖利率約 0.67%</div>
+        </div>
+        <div class="arg">
+            <div class="title">4. 復甦成色有低基期墊高之嫌</div>
+            <div class="body">TTM EPS 6.59 元裡含了 2025Q2 僅 0.38 元的異常低基期；若扣除該季，獲利復甦的斜率會溫和許多。預估全年 EPS 7.9 元要求下半年兩季合計貢獻約 3.87 元（上半年已實現 4.03 元），兌現壓力不小。</div>
+            <div class="ev">證據：2025Q2 EPS 0.38・下半年需貢獻約 3.87 元</div>
+        </div>
+    </div>
+
+    <div class="card risk">
+        <h2>⚠ 風險清單</h2>
+        <div class="arg">
+            <div class="title">・預估 EPS 兌現風險</div>
+            <div class="body">全年預估 7.9 元 vs TTM 6.59 元（1.20 倍），在合理範圍內但仍需 Q3、Q4 驗證；若 Q3 EPS 低於約 1.9 元，預估區間將面臨下修。</div>
+        </div>
+        <div class="arg">
+            <div class="title">・營益率若不回升，益子分可能再降</div>
+            <div class="body">費用或匯率若持續侵蝕，總分 3.17 的高分地位會鬆動，進而影響復甦成長名單與安全邊際頁的入選資格。</div>
+        </div>
+        <div class="arg">
+            <div class="title">・工具機景氣循環風險</div>
+            <div class="body">上銀屬景氣循環股，月營收連升 12 個月後，任何一月轉負都會同時衝擊營收子分與市場情緒。</div>
+        </div>
+        <div class="arg">
+            <div class="title">・股價數據截至 2026-10-22</div>
+            <div class="body">站上最新收盤為 10-22（週一 10-26 收盤尚未上站）；現價位置判斷以 10-22 為準，閱讀時請留意日期落差。</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🧭 綜合判斷（觀點層）</h2>
+        <div class="verdict">
+            <span class="tag">偏多觀察・不追高</span>
+            <p>多方證據（營收 12 連升、Q2 EPS 季增 46%、位置貼近預估低點）強於空方，但空方的兩點是實質的：益弱＋殖利率低，且總分動能已停滯。這不是「閉眼買」的形態，而是「值得追蹤、等驗證」的形態。</p>
+            <p style="margin-top:10px;"><b>關鍵驗證點：</b>10 月營收（11 月中公布）是否延續 27 億水準；2026Q3 財報（11 月中）營益率是否回升、EPS 是否達到約 1.9 元以上。若兩者皆達標，多方論點成立；若營益率續降，則空方第 1、2 點加重。</p>
+        </div>
+    </div>
+
+    <div class="foot">
+        <p><b>數據來源：</b>六大指標與預估價＝財務評價快照（202609，經 huang6.db）；月營收、季財報、股利＝ fundamental.db（OpenAPI／FinMind）；現價＝站上 quotes.json（2026-10-22 收盤）。</p>
+        <p><b>分層聲明：</b>「驗證數據表」為已驗證數據；「多方／空方論點」「綜合判斷」為觀點層推論，可能錯誤，僅供研究參考，不構成投資建議。</p>
+        <p><b>試點說明：</b>本頁借用 TradingAgents「多空辯論」結構，數據層與觀點層分離；由 Muse 離線撰寫、烘焙為靜態頁，工具站本身維持純靜態、零外部依賴。</p>
+    </div>
+</div>
+</body>
+</html>
