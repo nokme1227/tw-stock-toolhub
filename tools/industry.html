@@ -33,5 +33,7 @@ fetch('../assets/data/industry_latest.json').then(r=>r.json()).then(j=>{
     '<td class="num">'+fs(x.avg_disc)+'%</td><td class="num">'+x.high_count+'</td><td class="num">'+fs(x.avg_total_chg)+'</td></tr>').join('');
 });
 </script>
+<p class="meta">本站總訪問量 <span id="busuanzi_value_site_pv"></span> 次 ｜ 本站訪客數 <span id="busuanzi_value_site_uv"></span> 人（不蒜子計數，自安裝日起算）</p>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </body>
 </html>
