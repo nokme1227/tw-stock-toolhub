@@ -18,7 +18,8 @@
 <p class="meta" id="meta">資料來源：月營收序列（最新月 <span id="m"></span>）。YoY＝最新月營收／去年同月營收−1；
 MoM＝最新月／上月−1；連續成長月數＝從最新月往回數 YoY&gt;0 連續幾個月；
 創 36 個月新高＝最新月營收為近 36 個月最高且資料月數≥12 個月；
-YoY 由負轉正＝最新月 YoY&gt;0 且上月 YoY&lt;0。YoY、MoM 皆由營收序列自行計算。</p>
+YoY 由負轉正＝最新月 YoY&gt;0 且上月 YoY&lt;0。YoY、MoM 皆由營收序列自行計算。
+YoY 相關榜單僅列去年同月營收≥1,000 萬元者（排除基期過低造成的失真百分比）；創 36 個月新高榜為營收絕對值比較，不設此門檻；代號查詢不受此限。</p>
 <div class="filters">
 <div><label>代號查詢</label><input id="f_q" type="text" placeholder="如 2330"></div>
 </div>
@@ -53,14 +54,15 @@ function cells(s){return '<td class="l num"><a href="stock.html?code='+s[0]+'">'
 fetch('../assets/data/revenue_latest.json').then(r=>r.json()).then(j=>{
   DATA=j.stocks;
   document.getElementById('m').textContent=j.month;
-  const yoy=DATA.filter(s=>s[3]!=null).sort((a,b)=>b[3]-a[3]).slice(0,50);
+  const yoyBaseOk=s=>s[9]!=null&&s[9]>=10000000;
+  const yoy=DATA.filter(s=>s[3]!=null&&yoyBaseOk(s)).sort((a,b)=>b[3]-a[3]).slice(0,50);
   document.getElementById('r_yoy').innerHTML=yoy.map(s=>'<tr>'+cells(s)+'<td class="num">'+s[5]+'</td></tr>').join('');
-  const stk=DATA.slice().sort((a,b)=>b[5]-a[5]||(b[3]||-1e9)-(a[3]||-1e9)).slice(0,50);
+  const stk=DATA.filter(yoyBaseOk).slice().sort((a,b)=>b[5]-a[5]||(b[3]||-1e9)-(a[3]||-1e9)).slice(0,50);
   document.getElementById('r_streak').innerHTML=stk.map(s=>'<tr>'+cells(s)+'<td class="num">'+s[5]+'</td></tr>').join('');
   const nw=DATA.filter(s=>s[6]===1).sort((a,b)=>(b[3]||-1e9)-(a[3]||-1e9));
   document.getElementById('c_new').textContent='共 '+nw.length+' 檔';
   document.getElementById('r_new').innerHTML=nw.map(s=>'<tr>'+cells(s)+'<td class="num">'+s[5]+'</td></tr>').join('');
-  const tn=DATA.filter(s=>s[7]===1).sort((a,b)=>(b[3]||-1e9)-(a[3]||-1e9));
+  const tn=DATA.filter(s=>s[7]===1&&yoyBaseOk(s)).sort((a,b)=>(b[3]||-1e9)-(a[3]||-1e9));
   document.getElementById('c_turn').textContent='共 '+tn.length+' 檔';
   document.getElementById('r_turn').innerHTML=tn.map(s=>'<tr>'+cells(s)+'<td class="num">'+fmtP(s[8])+'</td></tr>').join('');
 });
