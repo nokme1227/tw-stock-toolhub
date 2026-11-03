@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>月營收動能榜｜台股研究工具站</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>台股研究工具站</h1>
+<p>台股基本面研究工具 · 總覽＋工具目錄</p>
+</div></header>
+<div class="wrap">
+<nav class="back"><a href="../index.html">← 回工具總覽</a></nav>
+<div class="card">
+<h2 style="margin-top:0">月營收動能榜</h2>
+<p class="meta" id="meta">資料來源：月營收序列（最新月 <span id="m"></span>）。YoY＝最新月營收／去年同月營收−1；
+MoM＝最新月／上月−1；連續成長月數＝從最新月往回數 YoY&gt;0 連續幾個月；
+創 36 個月新高＝最新月營收為近 36 個月最高且資料月數≥12 個月；
+YoY 由負轉正＝最新月 YoY&gt;0 且上月 YoY&lt;0。YoY、MoM 皆由營收序列自行計算。</p>
+<div class="filters">
+<div><label>代號查詢</label><input id="f_q" type="text" placeholder="如 2330"></div>
+</div>
+<p class="meta" id="qres"></p>
+</div>
+<div class="card">
+<h3 style="margin-top:0">近月 YoY 最高 Top 50</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">代號</th><th class="l">名稱</th><th>最新月營收（億）</th><th>YoY</th><th>MoM</th><th>連續成長（月）</th></tr></thead><tbody id="r_yoy"></tbody></table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">連續 YoY 正成長最久 Top 50</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">代號</th><th class="l">名稱</th><th>最新月營收（億）</th><th>YoY</th><th>MoM</th><th>連續成長（月）</th></tr></thead><tbody id="r_streak"></tbody></table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">創 36 個月新高</h3>
+<p class="meta" id="c_new"></p>
+<div class="tbl-wrap"><table><thead><tr><th class="l">代號</th><th class="l">名稱</th><th>最新月營收（億）</th><th>YoY</th><th>MoM</th><th>連續成長（月）</th></tr></thead><tbody id="r_new"></tbody></table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">YoY 由負轉正</h3>
+<p class="meta" id="c_turn"></p>
+<div class="tbl-wrap"><table><thead><tr><th class="l">代號</th><th class="l">名稱</th><th>最新月營收（億）</th><th>YoY</th><th>MoM</th><th>上月 YoY</th></tr></thead><tbody id="r_turn"></tbody></table></div>
+<p class="meta">註：未過濾流動性；僅含最新月有數據者；名稱缺者僅顯示代號；10 月營收 11 月中公布後更新。個股詳細月營收請見個股總覽。</p>
+</div>
+</div>
+<script>
+let DATA=[];
+const fmtYi=v=>v==null?'—':(v/1e8).toFixed(2);
+const fmtP=v=>v==null?'—':(v>=0?'+':'')+v.toFixed(2)+'%';
+function cells(s){return '<td class="l num"><a href="stock.html?code='+s[0]+'">'+s[0]+'</a></td><td class="l">'+(s[1]||'')+'</td>'+
+  '<td class="num">'+fmtYi(s[2])+'</td><td class="num">'+fmtP(s[3])+'</td><td class="num">'+fmtP(s[4])+'</td>';}
+fetch('../assets/data/revenue_latest.json').then(r=>r.json()).then(j=>{
+  DATA=j.stocks;
+  document.getElementById('m').textContent=j.month;
+  const yoy=DATA.filter(s=>s[3]!=null).sort((a,b)=>b[3]-a[3]).slice(0,50);
+  document.getElementById('r_yoy').innerHTML=yoy.map(s=>'<tr>'+cells(s)+'<td class="num">'+s[5]+'</td></tr>').join('');
+  const stk=DATA.slice().sort((a,b)=>b[5]-a[5]||(b[3]||-1e9)-(a[3]||-1e9)).slice(0,50);
+  document.getElementById('r_streak').innerHTML=stk.map(s=>'<tr>'+cells(s)+'<td class="num">'+s[5]+'</td></tr>').join('');
+  const nw=DATA.filter(s=>s[6]===1).sort((a,b)=>(b[3]||-1e9)-(a[3]||-1e9));
+  document.getElementById('c_new').textContent='共 '+nw.length+' 檔';
+  document.getElementById('r_new').innerHTML=nw.map(s=>'<tr>'+cells(s)+'<td class="num">'+s[5]+'</td></tr>').join('');
+  const tn=DATA.filter(s=>s[7]===1).sort((a,b)=>(b[3]||-1e9)-(a[3]||-1e9));
+  document.getElementById('c_turn').textContent='共 '+tn.length+' 檔';
+  document.getElementById('r_turn').innerHTML=tn.map(s=>'<tr>'+cells(s)+'<td class="num">'+fmtP(s[8])+'</td></tr>').join('');
+});
+document.getElementById('f_q').addEventListener('input',e=>{
+  const q=e.target.value.trim();
+  const el=document.getElementById('qres');
+  if(!q){el.textContent='';return;}
+  const s=DATA.find(x=>x[0]===q);
+  el.textContent=s?('代號 '+s[0]+' '+(s[1]||'')+'：營收 '+fmtYi(s[2])+' 億，YoY '+fmtP(s[3])+'，MoM '+fmtP(s[4])+'，連續成長 '+s[5]+' 個月'+(s[6]?'，創 36 個月新高':'')+(s[7]?'，YoY 由負轉正':'')):'查無 '+q;
+});
+</script>
+</body>
+</html>

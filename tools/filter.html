@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>自選篩選器｜台股研究工具站</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>台股研究工具站</h1>
+<p>台股基本面研究工具 · 總覽＋工具目錄</p>
+</div></header>
+<div class="wrap">
+<nav class="back"><a href="../index.html">← 回工具總覽</a></nav>
+<div class="card">
+<h2 style="margin-top:0">自選篩選器</h2>
+<p class="meta">在六大指標分片上做多條件篩選：總分、趨勢、子項最低分、折價、近 20 日均量、產業。折價定義同復甦篩選：(預估低點 − 現價)／預估低點。</p>
+<div class="filters">
+<div><label>總分下限</label><input id="f_min" type="number" min="0" max="4" step="0.01" value="0"></div>
+<div><label>總分上限</label><input id="f_max" type="number" min="0" max="4" step="0.01" value="4"></div>
+<div><label>趨勢</label><select id="f_trend"><option value="">全部</option><option>Up</option><option>Dn</option></select></div>
+<div><label>產業</label><select id="f_ind"><option value="">全部</option></select></div>
+<div><label>代號／名稱搜尋</label><input id="f_q" type="text" placeholder="如 2330 或 台積電"></div>
+</div>
+<div class="filters">
+<div><label>營 最低分</label><input id="f_營" type="number" min="0" max="4" step="1" placeholder="—"></div>
+<div><label>益 最低分</label><input id="f_益" type="number" min="0" max="4" step="1" placeholder="—"></div>
+<div><label>獲 最低分</label><input id="f_獲" type="number" min="0" max="4" step="1" placeholder="—"></div>
+<div><label>Ｅ 最低分</label><input id="f_Ｅ" type="number" min="0" max="4" step="1" placeholder="—"></div>
+<div><label>存 最低分</label><input id="f_存" type="number" min="0" max="4" step="1" placeholder="—"></div>
+<div><label>自 最低分</label><input id="f_自" type="number" min="0" max="4" step="1" placeholder="—"></div>
+</div>
+<div class="filters">
+<div><label>折價下限（%）</label><input id="f_dmin" type="number" step="1" placeholder="—"></div>
+<div><label>折價上限（%）</label><input id="f_dmax" type="number" step="1" placeholder="—"></div>
+<div><label>均量下限（張）</label><input id="f_vmin" type="number" step="1" placeholder="—"></div>
+</div>
+<p class="meta" id="count"></p>
+</div>
+<div class="tbl-wrap"><table><thead><tr><th class="l">代號</th><th class="l">名稱</th><th>總分</th><th class="l">趨勢</th><th class="l">六子項（營益獲Ｅ存自）</th><th class="l">估價區間</th><th>現價</th><th>折價</th><th>均量（張）</th><th class="l">產業</th></tr></thead><tbody id="rows"></tbody></table></div>
+<p class="meta">註：均量取自財務評價檔近 20 日均量（10/30 版本）；無現價或無估價者折價顯示 —，設折價條件時排除；均量缺值者設均量條件時排除。
+本頁不含殖利率篩選：庫裡殖利率欄位為舊管線殘留、口徑無法驗證，待釐清後再上。結果上限顯示 200 檔。</p>
+</div>
+<script>
+let DATA=[];
+const SUBS=['營','益','獲','Ｅ','存','自'];
+function subBadge(v){return v==null?'<span class="sub na">—</span>':'<span class="sub">'+v+'</span>';}
+function trendBadge(t){return t==='Up'?'<span class="badge b-up">Up</span>':t==='Dn'?'<span class="badge b-dn">Dn</span>':(t||'—');}
+function apply(){
+  const mn=parseFloat(document.getElementById('f_min').value||'0');
+  const mx=parseFloat(document.getElementById('f_max').value||'4');
+  const tr=document.getElementById('f_trend').value;
+  const ind=document.getElementById('f_ind').value;
+  const q=document.getElementById('f_q').value.trim();
+  const mins={};SUBS.forEach(k=>{const v=document.getElementById('f_'+k).value;if(v!=='')mins[k]=parseFloat(v);});
+  const dmin=document.getElementById('f_dmin').value, dmax=document.getElementById('f_dmax').value;
+  const vmin=document.getElementById('f_vmin').value;
+  const rows=DATA.filter(s=>{
+    if(s.total<mn||s.total>mx)return false;
+    if(tr&&s.trend!==tr)return false;
+    if(ind&&s.ind!==ind)return false;
+    if(q&&!(s.code.includes(q)||s.name.includes(q)))return false;
+    for(const k of SUBS){if(k in mins&&(s.sub[k]==null||s.sub[k]<mins[k]))return false;}
+    if(dmin!==''&&(s.disc==null||s.disc<parseFloat(dmin)))return false;
+    if(dmax!==''&&(s.disc==null||s.disc>parseFloat(dmax)))return false;
+    if(vmin!==''&&(s.vol==null||s.vol<parseFloat(vmin)))return false;
+    return true;
+  }).sort((a,b)=>b.total-a.total||(b.disc||-1e9)-(a.disc||-1e9));
+  document.getElementById('count').textContent='符合 '+rows.length+' 檔（共 '+DATA.length+' 檔）'+(rows.length>200?'，僅顯示前 200 檔':'');
+  const show=rows.slice(0,200);
+  document.getElementById('rows').innerHTML=show.map(s=>{
+    const est=(s.est_low!=null&&s.est_high!=null)?s.est_low.toFixed(2)+'–'+s.est_high.toFixed(2):'—';
+    return '<tr><td class="l num"><a href="stock.html?code='+s.code+'">'+s.code+'</a></td><td class="l">'+s.name+'</td>'+
+    '<td class="num"><b>'+s.total.toFixed(2)+'</b></td><td class="l">'+trendBadge(s.trend)+(s.arrow?' '+s.arrow:'')+'</td>'+
+    '<td class="l">'+SUBS.map(k=>subBadge(s.sub[k])).join('')+'</td>'+
+    '<td class="l num">'+est+'</td><td class="num">'+(s.px!=null?s.px.toFixed(1):'—')+'</td>'+
+    '<td class="num">'+(s.disc!=null?s.disc.toFixed(1)+'%':'—')+'</td>'+
+    '<td class="num">'+(s.vol!=null?Math.round(s.vol):'—')+'</td><td class="l">'+(s.ind||'')+'</td></tr>';
+  }).join('');
+}
+['f_min','f_max','f_trend','f_ind','f_q','f_營','f_益','f_獲','f_Ｅ','f_存','f_自','f_dmin','f_dmax','f_vmin'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',apply);
+});
+Promise.all([
+  Promise.all(['0','1','2','3','4','5','6','7','8','9','Y'].map(sh=>
+    fetch('../assets/data/huang6_'+sh+'.json').then(r=>r.ok?r.json():{stocks:[]}).catch(()=>({stocks:[]})))) ,
+  fetch('../assets/data/filter_extra.json').then(r=>r.json()),
+  fetch('../assets/data/quotes.json').then(r=>r.json())
+]).then(([shards,extra,quotes])=>{
+  const ex=extra.extra||{}, px=quotes.prices||{};
+  shards.forEach(j=>(j.stocks||[]).forEach(s=>{
+    const e=ex[s.code]||[null,null];
+    const p=px[s.code];
+    const disc=(s.est_low!=null&&p!=null)?(s.est_low-p)/s.est_low*100:null;
+    DATA.push({code:s.code,name:s.name,total:s.total,trend:s.trend,arrow:s.arrow,sub:s.sub,
+      est_low:s.est_low,est_high:s.est_high,px:p??null,disc:disc,vol:e[0],ind:e[1]});
+  }));
+  const inds=[...new Set(DATA.map(s=>s.ind).filter(Boolean))].sort();
+  document.getElementById('f_ind').innerHTML='<option value="">全部</option>'+inds.map(i=>'<option>'+i+'</option>').join('');
+  apply();
+});
+</script>
+</body>
+</html>

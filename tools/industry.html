@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>產業強弱榜｜台股研究工具站</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>台股研究工具站</h1>
+<p>台股基本面研究工具 · 總覽＋工具目錄</p>
+</div></header>
+<div class="wrap">
+<nav class="back"><a href="../index.html">← 回工具總覽</a></nav>
+<div class="card">
+<h2 style="margin-top:0">產業強弱榜</h2>
+<p class="meta" id="meta"></p>
+<div class="tbl-wrap"><table><thead><tr><th class="l">大分類</th><th>檔數</th><th>平均總分</th><th>平均折價</th><th>高分檔數（≥3.0）</th><th>平均總分月變動</th></tr></thead><tbody id="rows"></tbody></table></div>
+<p class="meta">定義：大分類＝產業字串以「-」切分的第一段；僅列 10 檔以上組別（檔數太少的小組平均數無意義，未列組數與檔數見上）。
+折價定義同復甦篩選：(預估低點 − 現價)／預估低點，現價取收盤價；無估價或無現價者不納入平均折價。
+平均總分月變動＝本組本月平均總分 − 上月平均總分（組內檔數不同亦直接相減）。
+本榜不列殖利率：庫裡殖利率欄位為舊管線殘留、口徑無法驗證，寧可缺也不列錯數。</p>
+</div>
+</div>
+<script>
+fetch('../assets/data/industry_latest.json').then(r=>r.json()).then(j=>{
+  document.getElementById('meta').textContent='六大指標月份 '+j.month+'（上月 '+j.prev_month+'）｜現價 '+j.quote_date+' 收盤｜共 '+j.industries.length+' 組，另有 '+j.excluded_groups+' 組（'+j.excluded_stocks+' 檔）因檔數不足 10 檔未列。按平均總分降序。';
+  const f=v=>v==null?'—':v.toFixed(2);
+  const fs=v=>v==null?'—':(v>=0?'+':'')+v.toFixed(2);
+  document.getElementById('rows').innerHTML=j.industries.map(x=>
+    '<tr><td class="l">'+x.ind+'</td><td class="num">'+x.count+'</td><td class="num"><b>'+f(x.avg_total)+'</b></td>'+
+    '<td class="num">'+fs(x.avg_disc)+'%</td><td class="num">'+x.high_count+'</td><td class="num">'+fs(x.avg_total_chg)+'</td></tr>').join('');
+});
+</script>
+</body>
+</html>
