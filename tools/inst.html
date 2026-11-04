@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>法人連買榜｜台股研究工具站</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>台股研究工具站</h1>
+<p>台股基本面研究工具 · 總覽＋工具目錄</p>
+</div></header>
+<div class="wrap">
+<nav class="back"><a href="../index.html">← 回工具總覽</a></nav>
+<div class="card">
+<h2 style="margin-top:0">法人連買榜</h2>
+<p class="meta" id="meta">資料來源：證交所每日三大法人表（外資及陸資合計、投信），上市限定。連買／連賣天數以交易日連續計算，缺資料日即中斷；上榜門檻為連續 ≥3 天；每榜最多 50 檔。近 5 日累計與最新日數值為淨買賣超（張），負值代表賣超。法人連續買賣只代表大錢進出方向，不構成投資建議。</p>
+<p class="meta" id="cov"></p>
+</div>
+<div class="card">
+<h3 style="margin-top:0">外資連買榜</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">代號</th><th class="l">名稱</th><th>連買（天）</th><th>近 5 日累計淨買賣超（張）</th><th>最新日淨買賣超（張）</th></tr></thead><tbody id="r_fb"></tbody></table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">投信連買榜</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">代號</th><th class="l">名稱</th><th>連買（天）</th><th>近 5 日累計淨買賣超（張）</th><th>最新日淨買賣超（張）</th></tr></thead><tbody id="r_tb"></tbody></table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">外資連賣榜</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">代號</th><th class="l">名稱</th><th>連賣（天）</th><th>近 5 日累計淨買賣超（張）</th><th>最新日淨買賣超（張）</th></tr></thead><tbody id="r_fs"></tbody></table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">投信連賣榜</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">代號</th><th class="l">名稱</th><th>連賣（天）</th><th>近 5 日累計淨買賣超（張）</th><th>最新日淨買賣超（張）</th></tr></thead><tbody id="r_ts"></tbody></table></div>
+<p class="meta">註：上櫃無公開逐日全市場法人表，本榜 v1 僅含上市；法人買賣超為盤後公布，本榜每日盤後更新。個股詳細籌碼請見籌碼頁與個股總覽。</p>
+</div>
+</div>
+<script>
+const fmtN=v=>v==null?'—':v.toLocaleString();
+const link=s=>'<td class="l num"><a href="stock.html?code='+s[0]+'">'+s[0]+'</a></td><td class="l">'+(s[1]||'')+'</td><td class="num">'+s[2]+'</td>';
+fetch('../assets/data/inst_latest.json').then(r=>r.json()).then(j=>{
+  document.getElementById('cov').textContent='截至 '+j.asof+'（近 '+j.days+' 個交易日）。';
+  const s=j.sections;
+  const render=(id,arr)=>{document.getElementById(id).innerHTML=arr.map(x=>'<tr>'+link(x)+'<td class="num">'+fmtN(x[3])+'</td><td class="num">'+fmtN(x[4])+'</td></tr>').join('');};
+  render('r_fb',s.foreign_buy); render('r_tb',s.trust_buy);
+  render('r_fs',s.foreign_sell); render('r_ts',s.trust_sell);
+});
+</script>
+<p class="meta">本站總訪問量 <span id="busuanzi_value_site_pv"></span> 次 ｜ 本站訪客數 <span id="busuanzi_value_site_uv"></span> 人（不蒜子計數，自安裝日起算）</p>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
