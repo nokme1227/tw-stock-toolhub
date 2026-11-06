@@ -1,0 +1,144 @@
+{
+ "asof": "2026-11-05",
+ "score_month": "202609",
+ "fear_asof": "2026-11-05",
+ "div_asof": "2026-11-06",
+ "items": [
+  {
+   "code": "2395",
+   "name": "研華",
+   "close": 596.0,
+   "score": 3.5,
+   "score_month": "202609",
+   "trend": "Up",
+   "tech": [
+    {
+     "flag": "rsi_cold",
+     "label": "RSI超賣",
+     "value": 20.2,
+     "value_label": "RSI"
+    }
+   ],
+   "inst": {},
+   "next_exdiv": null,
+   "fear": null
+  },
+  {
+   "code": "2049",
+   "name": "上銀",
+   "close": 284.5,
+   "score": 3.17,
+   "score_month": "202609",
+   "trend": "Up",
+   "tech": [],
+   "inst": {},
+   "next_exdiv": null,
+   "fear": null
+  },
+  {
+   "code": "7769",
+   "name": "鴻勁",
+   "close": 3980.0,
+   "score": 3.67,
+   "score_month": "202609",
+   "trend": null,
+   "tech": [
+    {
+     "flag": "volume",
+     "label": "量能放大",
+     "value": 1.6,
+     "value_label": "量比"
+    },
+    {
+     "flag": "rsi_cold",
+     "label": "RSI超賣",
+     "value": 21.4,
+     "value_label": "RSI"
+    }
+   ],
+   "inst": {},
+   "next_exdiv": null,
+   "fear": {
+    "zone": "extreme_fear",
+    "zone_zh": "極度恐懼"
+   }
+  },
+  {
+   "code": "2308",
+   "name": "台達電",
+   "close": 1130.0,
+   "score": 3.17,
+   "score_month": "202609",
+   "trend": "Dn",
+   "tech": [
+    {
+     "flag": "rsi_cold",
+     "label": "RSI超賣",
+     "value": 10.8,
+     "value_label": "RSI"
+    }
+   ],
+   "inst": {
+    "foreign": {
+     "dir": "sell",
+     "days": 6,
+     "cum5": -19504,
+     "latest": -2025
+    }
+   },
+   "next_exdiv": null,
+   "fear": {
+    "zone": "fear",
+    "zone_zh": "恐懼"
+   }
+  },
+  {
+   "code": "2345",
+   "name": "智邦",
+   "close": 1380.0,
+   "score": 3.33,
+   "score_month": "202609",
+   "trend": "Dn",
+   "tech": [
+    {
+     "flag": "rsi_cold",
+     "label": "RSI超賣",
+     "value": 12.4,
+     "value_label": "RSI"
+    }
+   ],
+   "inst": {
+    "trust": {
+     "dir": "sell",
+     "days": 7,
+     "cum5": -576,
+     "latest": -30
+    }
+   },
+   "next_exdiv": null,
+   "fear": {
+    "zone": "fear",
+    "zone_zh": "恐懼"
+   }
+  },
+  {
+   "code": "3665",
+   "name": "貿聯-KY",
+   "close": 1470.0,
+   "score": 2.67,
+   "score_month": "202609",
+   "trend": null,
+   "tech": [
+    {
+     "flag": "rsi_cold",
+     "label": "RSI超賣",
+     "value": 10.4,
+     "value_label": "RSI"
+    }
+   ],
+   "inst": {},
+   "next_exdiv": null,
+   "fear": null
+  }
+ ]
+}

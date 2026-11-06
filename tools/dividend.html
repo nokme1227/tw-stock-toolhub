@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>除權息行事曆｜台股研究工具站</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>台股研究工具站</h1>
+<p>台股基本面研究工具 · 總覽＋工具目錄</p>
+</div></header>
+<div class="wrap">
+<nav class="back"><a href="../index.html">← 回工具總覽</a></nav>
+<div class="card">
+<h2 style="margin-top:0">除權息行事曆</h2>
+<p class="meta" id="meta">資料來源：證交所除權除息預告表（TWT48U_ALL）＋櫃買中心除權除息預告表（tpex_exright_prepost），上市＋上櫃。預告表只列未來約三週內已公告的事件，超出範圍者尚未公告；現金股利「待公告」者不列入殖利率排行。殖利率＝單次預告現金股利／最新收盤，非年化殖利率（ETF 月配息單次數字偏低屬正常）。不構成投資建議。</p>
+<p class="meta" id="cov"></p>
+</div>
+<div class="card">
+<h3 style="margin-top:0">本週除權息（7 天內）</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">除權息日</th><th class="l">代號</th><th class="l">名稱</th><th>市場</th><th>類別</th><th>現金股利</th><th>殖利率</th></tr></thead><tbody id="r_week"></tbody></table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">未來 30 天一覽</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">除權息日</th><th class="l">代號</th><th class="l">名稱</th><th>市場</th><th>類別</th><th>現金股利</th><th>無償配股率</th><th>殖利率</th></tr></thead><tbody id="r_30"></tbody></table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">高殖利率排行（未來事件，Top 20）</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">除權息日</th><th class="l">代號</th><th class="l">名稱</th><th>市場</th><th>類別</th><th>現金股利</th><th>殖利率</th></tr></thead><tbody id="r_yld"></tbody></table></div>
+<p class="meta">註：只列已公告現金股利且算得出殖利率者；ETF 月配息與債券 ETF 的單次殖利率不能直接跟年配息個股比。想在除息前買進領息者，請留意除息日當天股價會扣掉息值、且股利所得要課稅。</p>
+</div>
+<div class="card">
+<h3 style="margin-top:0">代號查詢</h3>
+<div class="filters">
+<div><label>代號或名稱</label><input id="q" type="text" placeholder="輸入代號如 2330 或名稱如 台積電"></div>
+<div><label>&nbsp;</label><button class="btn" id="go" type="button">查詢</button></div>
+</div>
+<div class="tbl-wrap"><table><thead><tr><th class="l">除權息日</th><th class="l">代號</th><th class="l">名稱</th><th>市場</th><th>類別</th><th>現金股利</th><th>無償配股率</th><th>殖利率</th></tr></thead><tbody id="r_q"></tbody></table></div>
+</div>
+</div>
+<script>
+const fmtCash=v=>v==null?'待公告':v;
+const fmtY=v=>v==null?'—':v.toFixed(2)+'%';
+const fmtR=v=>v==null?'—':(v*100).toFixed(2)+'%';
+const row=r=>'<tr><td class="l num">'+r.date+'</td><td class="l num"><a href="stock.html?code='+r.code+'">'+r.code+'</a></td><td class="l">'+r.name+'</td><td>'+r.market+'</td><td>'+r.type+'</td><td class="num">'+fmtCash(r.cash)+'</td><td class="num">'+fmtY(r.yld)+'</td></tr>';
+const rowFull=r=>'<tr><td class="l num">'+r.date+'</td><td class="l num"><a href="stock.html?code='+r.code+'">'+r.code+'</a></td><td class="l">'+r.name+'</td><td>'+r.market+'</td><td>'+r.type+'</td><td class="num">'+fmtCash(r.cash)+'</td><td class="num">'+fmtR(r.stock_ratio)+'</td><td class="num">'+fmtY(r.yld)+'</td></tr>';
+let ALL=[];
+fetch('../assets/data/dividend_latest.json').then(r=>r.json()).then(j=>{
+  document.getElementById('cov').textContent='截至 '+j.asof+'：上市 '+j.counts.twse+' 筆／上櫃 '+j.counts.tpex+' 筆，共 '+j.counts.total+' 筆；可算殖利率 '+j.counts.with_yield+' 筆。收盤價截至 '+(j.price_asof||j.asof)+'。';
+  ALL=j.rows; const today=j.asof;
+  const addDays=(d,n)=>{const x=new Date(d+'T00:00:00');x.setDate(x.getDate()+n);return x.toISOString().slice(0,10);};
+  const week=ALL.filter(r=>r.date>=today&&r.date<=addDays(today,7));
+  const m30=ALL.filter(r=>r.date>=today&&r.date<=addDays(today,30));
+  const yld=ALL.filter(r=>r.date>=today&&r.yld!=null).sort((a,b)=>b.yld-a.yld).slice(0,20);
+  document.getElementById('r_week').innerHTML=week.length?week.map(row).join(''):'<tr><td colspan="7">本週無除權息預告</td></tr>';
+  document.getElementById('r_30').innerHTML=m30.length?m30.map(rowFull).join(''):'<tr><td colspan="8">未來 30 天無除權息預告</td></tr>';
+  document.getElementById('r_yld').innerHTML=yld.length?yld.map(row).join(''):'<tr><td colspan="7">尚無可排行的未來事件</td></tr>';
+  const run=()=>{const q=document.getElementById('q').value.trim();
+    const hit=!q?[]:ALL.filter(r=>r.code.includes(q)||(r.name||'').includes(q));
+    document.getElementById('r_q').innerHTML=!q?'<tr><td colspan="8">請輸入代號或名稱</td></tr>':(hit.length?hit.map(rowFull).join(''):'<tr><td colspan="8">預告表內查無此代號（可能尚未公告）</td></tr>');};
+  document.getElementById('go').addEventListener('click',run);
+  document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter')run();});
+});
+</script>
+<p class="meta">本站總訪問量 <span id="busuanzi_value_site_pv"></span> 次 ｜ 本站訪客數 <span id="busuanzi_value_site_uv"></span> 人（不蒜子計數，自安裝日起算）</p>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>自選股提醒｜台股研究工具站</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>台股研究工具站</h1>
+<p>台股基本面研究工具 · 總覽＋工具目錄</p>
+</div></header>
+<div class="wrap">
+<nav class="back"><a href="../index.html">← 回工具總覽</a></nav>
+<div class="card">
+<h2 style="margin-top:0">自選股提醒</h2>
+<p class="meta">關注股一頁總覽：現價、六大指標、技術旗標、法人連買賣、下次除權息、恐懼區狀態。每日盤後 21:10 檢查一次，只有新觸發時才在對話裡提醒（技術新進旗標、法人方向翻轉、3 天內除權息、法定截止日將至）；沒有新觸發就不出聲。恐懼區進出由五線譜掃描負責通報，這裡只顯示狀態。名單調整請告訴 Muse（增刪代號）。不構成投資建議。</p>
+<p class="meta" id="cov"></p>
+</div>
+<div class="card">
+<div class="tbl-wrap"><table><thead><tr><th class="l">代號</th><th class="l">名稱</th><th>現價</th><th>六大指標</th><th class="l">技術旗標</th><th class="l">法人連買賣</th><th class="l">下次除權息</th><th>恐懼區</th></tr></thead><tbody id="r_wl"></tbody></table></div>
+<p class="meta">註：技術旗標按技術動能榜同口徑對關注股直接重算（多頭排列、創 60 日新高、量能放大、RSI(14) 過熱／超賣），不受榜單前 50 名截斷影響；法人天數以交易日連續計算；恐懼區狀態取自最新完整五線譜掃描。</p>
+</div>
+</div>
+<script>
+const arrow=t=>t==='Up'?' ↑':(t==='Down'?' ↓':'');
+fetch('../assets/data/watchlist_latest.json').then(r=>r.json()).then(j=>{
+  document.getElementById('cov').textContent='行情截至 '+j.asof+'；六大指標 '+j.score_month+'；除權息截至 '+(j.div_asof||j.asof)+'；恐懼區掃描截至 '+(j.fear_asof||'—')+'。';
+  document.getElementById('r_wl').innerHTML=j.items.map(it=>{
+    const tech=(it.tech||[]).map(t=>t.label+(t.value!=null?'（'+t.value+(t.value_label==='RSI'?'':(t.value_label==='量比'?' 倍':'%'))+'）':'')).join('、')||'—';
+    const inst=Object.entries(it.inst||{}).map(([k,v])=>((k==='foreign'?'外資':'投信')+(v.dir==='buy'?'連買':'連賣')+v.days+'天')).join('、')||'—';
+    const ex=it.next_exdiv?(it.next_exdiv.date+'（'+it.next_exdiv.type+'，剩 '+it.next_exdiv.days_left+' 天）'):'—';
+    const score=it.score!=null?it.score+arrow(it.trend)+'（'+(it.score_month||'')+'）':'—';
+    return '<tr><td class="l num"><a href="stock.html?code='+it.code+'">'+it.code+'</a></td><td class="l">'+(it.name||'')+'</td><td class="num">'+(it.close!=null?it.close:'—')+'</td><td class="num">'+score+'</td><td class="l">'+tech+'</td><td class="l">'+inst+'</td><td class="l">'+ex+'</td><td>'+(it.fear?it.fear.zone_zh:'—')+'</td></tr>';
+  }).join('');
+});
+</script>
+<p class="meta">本站總訪問量 <span id="busuanzi_value_site_pv"></span> 次 ｜ 本站訪客數 <span id="busuanzi_value_site_uv"></span> 人（不蒜子計數，自安裝日起算）</p>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

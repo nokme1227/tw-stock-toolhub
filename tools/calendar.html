@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>財報／營收公布行事曆｜台股研究工具站</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>台股研究工具站</h1>
+<p>台股基本面研究工具 · 總覽＋工具目錄</p>
+</div></header>
+<div class="wrap">
+<nav class="back"><a href="../index.html">← 回工具總覽</a></nav>
+<div class="card">
+<h2 style="margin-top:0">財報／營收公布行事曆</h2>
+<p class="meta">法定公布截止日倒數：月營收每月 10 日前公告上月營收；季財報 Q1 5/15、Q2 8/14、Q3 11/14、年報（含 Q4）3/31。這是法定截止日，不是各公司實際公布日——實際公布日以公開資訊觀測站為準，個別公司常提早公布。倒數的意義是「資料最晚何時齊全、辯論與分數何時可重跑」。不構成投資建議。</p>
+<p class="meta" id="cov"></p>
+</div>
+<div class="card">
+<h3 style="margin-top:0">下一個截止日</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">事項</th><th class="l">截止日</th><th>剩餘天數</th></tr></thead><tbody id="r_next"></tbody></table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">月營收法定時程（未來 4 期）</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">營收月份</th><th class="l">截止日</th><th>剩餘天數</th></tr></thead><tbody id="r_rev"></tbody></table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">季財報法定時程（未來 4 期）</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">財報期別</th><th class="l">截止日</th><th>剩餘天數</th></tr></thead><tbody id="r_earn"></tbody></table></div>
+<p class="meta">註：2026 年 Q3 財報截止日為 11/14（週六），實務上多數公司會在截止日前一至二週公布；10 月營收截止日為 11/10。兩者一到，六大指標分數與多空辯論就可重跑。</p>
+</div>
+</div>
+<script>
+const dleft=n=>n===0?'今天':(n===1?'明天':n+' 天');
+fetch('../assets/data/calendar_latest.json').then(r=>r.json()).then(j=>{
+  document.getElementById('cov').textContent='截至 '+j.asof+'。';
+  const nr=j.next_revenue, ne=j.next_earnings;
+  document.getElementById('r_next').innerHTML=
+    '<tr><td class="l">'+nr.label+'公布截止</td><td class="l num">'+nr.deadline+'</td><td class="num">'+dleft(nr.days_left)+'</td></tr>'+
+    '<tr><td class="l">'+ne.label+'公布截止</td><td class="l num">'+ne.deadline+'</td><td class="num">'+dleft(ne.days_left)+'</td></tr>';
+  document.getElementById('r_rev').innerHTML=j.revenue_schedule.map(x=>'<tr><td class="l">'+x.label+'</td><td class="l num">'+x.deadline+'</td><td class="num">'+dleft(x.days_left)+'</td></tr>').join('');
+  document.getElementById('r_earn').innerHTML=j.earnings_schedule.map(x=>'<tr><td class="l">'+x.label+'</td><td class="l num">'+x.deadline+'</td><td class="num">'+dleft(x.days_left)+'</td></tr>').join('');
+});
+</script>
+<p class="meta">本站總訪問量 <span id="busuanzi_value_site_pv"></span> 次 ｜ 本站訪客數 <span id="busuanzi_value_site_uv"></span> 人（不蒜子計數，自安裝日起算）</p>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
