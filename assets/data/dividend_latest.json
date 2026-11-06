@@ -1,54 +1,18 @@
 {
  "asof": "2026-11-06",
- "price_asof": "2026-11-05",
- "extra_price_asof": "2026-11-05",
+ "price_asof": "2026-11-06",
+ "extra_price_asof": "2026-11-06",
  "sources": {
   "twse": "TWT48U_ALL(openapi)",
   "tpex": "tpex_exright_prepost"
  },
  "counts": {
   "twse": 55,
-  "tpex": 70,
-  "total": 125,
-  "with_yield": 27
+  "tpex": 67,
+  "total": 122,
+  "with_yield": 24
  },
  "rows": [
-  {
-   "date": "2026-10-27",
-   "code": "00888",
-   "name": "永豐台灣ESG",
-   "market": "上櫃",
-   "type": "息",
-   "cash": 1.5,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": 0.0,
-   "yld": 5.29
-  },
-  {
-   "date": "2026-10-27",
-   "code": "00958B",
-   "name": "永豐ESG銀行債15+",
-   "market": "上櫃",
-   "type": "息",
-   "cash": 0.041,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": 0.0,
-   "yld": 0.44
-  },
-  {
-   "date": "2026-10-27",
-   "code": "3691",
-   "name": "碩禾",
-   "market": "上櫃",
-   "type": "權",
-   "cash": 0.0,
-   "stock_ratio": null,
-   "sub_ratio": 0.10883356,
-   "sub_price": 80.0,
-   "yld": null
-  },
   {
    "date": "2026-10-28",
    "code": "00726B",
@@ -83,7 +47,7 @@
    "stock_ratio": 0.09999999,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 2.29
+   "yld": 2.33
   },
   {
    "date": "2026-11-03",
@@ -95,7 +59,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.88
+   "yld": 2.01
   },
   {
    "date": "2026-11-03",
@@ -107,7 +71,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 0.62
+   "yld": 0.64
   },
   {
    "date": "2026-11-03",
@@ -131,7 +95,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.52
+   "yld": 0.53
   },
   {
    "date": "2026-11-03",
@@ -191,7 +155,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.23
+   "yld": null
   },
   {
    "date": "2026-11-04",
@@ -203,7 +167,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 0.41
+   "yld": 0.43
   },
   {
    "date": "2026-11-04",
@@ -227,7 +191,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.5
+   "yld": 0.52
   },
   {
    "date": "2026-11-04",
@@ -251,7 +215,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 3.48
+   "yld": 3.59
   },
   {
    "date": "2026-11-04",
@@ -263,7 +227,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 2.07
+   "yld": 2.06
   },
   {
    "date": "2026-11-05",
@@ -275,7 +239,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.4
+   "yld": 1.5
   },
   {
    "date": "2026-11-05",
@@ -287,7 +251,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.66
+   "yld": 1.68
   },
   {
    "date": "2026-11-06",
@@ -299,7 +263,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.0
+   "yld": 1.07
   },
   {
    "date": "2026-11-06",
@@ -347,7 +311,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 2.43
+   "yld": 2.58
   },
   {
    "date": "2026-11-13",
@@ -1295,7 +1259,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.57
+   "yld": 1.66
   },
   {
    "date": "2026-11-18",
@@ -1319,7 +1283,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.93
+   "yld": 1.94
   },
   {
    "date": "2026-11-19",
@@ -1511,7 +1475,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.06
+   "yld": 1.17
   }
  ]
 }
