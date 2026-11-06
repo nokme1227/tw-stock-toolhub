@@ -34,8 +34,13 @@
 <tbody id="rev_rows"><tr><td class="l" colspan="4">—</td></tr></tbody></table></div></div>
 <div class="card"><h3 style="margin-top:0">季損益</h3><canvas id="ch_eps" height="110"></canvas>
 <div class="tbl-wrap"><table><thead><tr><th class="l">季度</th><th>營收(億)</th><th>毛利(億)</th><th>營業利益(億)</th><th>淨利(億)</th><th>EPS</th></tr></thead>
-<tbody id="inc_rows"><tr><td class="l" colspan="6">—</td></tr></tbody></table></div></div>
+<tbody id="inc_rows"><tr><td class="l" colspan="6">—</td></tr></tbody></table></div>
+<p class="meta">金融業（金控／銀行／保險／證券／票券）無營業毛利／營業利益科目，該欄顯示為 —；保險、證券業毛利欄以營業收入減營業成本計。</p></div>
 <div class="card"><h3 style="margin-top:0">資產負債（當季）</h3><div id="bal_box"><p class="meta">—</p></div></div>
+<div class="card"><h3 style="margin-top:0">現金流量（單季）</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">季度</th><th>營運(億)</th><th>投資(億)</th><th>籌資(億)</th><th>期末現金(億)</th><th>淨變動(億)</th></tr></thead>
+<tbody id="cf_rows"><tr><td class="l" colspan="6">—</td></tr></tbody></table></div>
+<p class="meta">現金流來自 FinMind，流量欄為單季（累計轉換）；金融業無資本支出欄，自由現金流不適用。尚無資料的個股顯示「查無現金流量資料」。</p></div>
 <div class="card"><h3 style="margin-top:0">股利</h3>
 <div class="tbl-wrap"><table><thead><tr><th class="l">年度</th><th>現金(元/股)</th><th>股票(元/股)</th></tr></thead>
 <tbody id="div_rows"><tr><td class="l" colspan="3">—</td></tr></tbody></table></div></div>
@@ -107,8 +112,8 @@ async function load(code){
   await H6READY; await h6shard(code);
   document.getElementById('st_title').textContent=code+(NAMES[code]?' '+NAMES[code]:'');
   msg.textContent='載入中…';
-  const [rev,inc,bal,div]=await Promise.all(
-    ['revenue','income','balance','dividend'].map(k=>fshard(k,code)));
+  const [rev,inc,bal,div,cf]=await Promise.all(
+    ['revenue','income','balance','dividend','cashflow'].map(k=>fshard(k,code)));
   // 月營收
   if(rev&&rev.length){
     const lab=rev.map(r=>r[0]), bv=rev.map(r=>r[1]/1e8), yv=rev.map(r=>r[2]);
@@ -120,7 +125,7 @@ async function load(code){
         y:{ticks:{font:{size:10}}},y1:{position:'right',grid:{drawOnChartArea:false},ticks:{font:{size:10},callback:v=>v+'%'}}}}});
     document.getElementById('rev_rows').innerHTML=rev.slice(-12).reverse().map(r=>{
       const m=r[0], mm=m.slice(0,4)+'/'+m.slice(4);
-      return '<tr><td class="l num">'+mm+'</td><td class="num">'+yi(r[1])+'</td><td class="num">—</td><td class="num">'+pc(r[2])+'</td></tr>';
+      return '<tr><td class="l num">'+mm+'</td><td class="num">'+yi(r[1])+'</td><td class="num">'+pc(r[3])+'</td><td class="num">'+pc(r[2])+'</td></tr>';
     }).join('');
   }else{
     document.getElementById('rev_rows').innerHTML='<tr><td class="l" colspan="4">查無月營收資料。</td></tr>';
@@ -151,6 +156,13 @@ async function load(code){
       +'<tr><td class="l">負債比</td><td class="num">'+(dr==null?'—':dr.toFixed(1)+'%')+'</td></tr>'
       +'</tbody></table>';
   }else{ bb.innerHTML='<p class="meta">查無資產負債資料。</p>'; }
+  // 現金流量
+  document.getElementById('cf_rows').innerHTML=(cf&&cf.length)
+    ? cf.slice(-8).reverse().map(r=>
+      '<tr><td class="l num">'+r[0]+(r[6]?'（累計）':'')+'</td><td class="num">'+yi(r[1])+'</td><td class="num">'+yi(r[2])+'</td>'
+      +'<td class="num">'+yi(r[3])+'</td><td class="num">'+yi(r[4])+'</td><td class="num">'+yi(r[5])+'</td></tr>'
+    ).join('')
+    : '<tr><td class="l" colspan="6">查無現金流量資料（全市場回填進行中）。</td></tr>';
   // 股利
   document.getElementById('div_rows').innerHTML=(div&&div.length)
     ? div.slice().reverse().map(r=>'<tr><td class="l num">'+r[0]+'</td><td class="num">'+(r[1]==null?'—':Number(r[1]).toFixed(2))+'</td><td class="num">'+(r[2]==null?'—':Number(r[2]).toFixed(2))+'</td></tr>').join('')
@@ -193,9 +205,9 @@ document.getElementById('s_code').addEventListener('keydown',e=>{if(e.key==='Ent
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-11-03 收盤 ｜ 本頁建置 2026-11-03 20:41</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-11-05 收盤 ｜ 本頁建置 2026-11-06 10:12</div>
+<div class="meta">本站總訪問量 <span id="busuanzi_value_site_pv"></span> 次 ｜ 本站訪客數 <span id="busuanzi_value_site_uv"></span> 人（不蒜子計數，自安裝日起算）</div>
 </div></footer>
-<p class="meta">本站總訪問量 <span id="busuanzi_value_site_pv"></span> 次 ｜ 本站訪客數 <span id="busuanzi_value_site_uv"></span> 人（不蒜子計數，自安裝日起算）</p>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </body>
 </html>
