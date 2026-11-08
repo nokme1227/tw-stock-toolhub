@@ -16,13 +16,50 @@
 <nav class="back"><a href="../../index.html">← 回工具總覽</a></nav>
 <div class="card">
 <h2 style="margin-top:0">個股分析報告</h2>
-<p class="meta">v10.2 報告管線產出。點「開啟報告」在新分頁查看完整 HTML 報告。</p>
+<p class="meta">v10.2 報告管線產出。點「開啟報告」在新分頁查看完整 HTML 報告；「登錄」為報告首次上線日期。</p>
 </div>
-<div class="tools"><div class="card tool-card"><h3>1301 台塑</h3><p></p><a class="btn" href="1301.html" target="_blank" rel="noopener">開啟報告</a></div><div class="card tool-card"><h3>1402 遠東新</h3><p></p><a class="btn" href="1402.html" target="_blank" rel="noopener">開啟報告</a></div><div class="card tool-card"><h3>1723 中碳</h3><p></p><a class="btn" href="1723.html" target="_blank" rel="noopener">開啟報告</a></div><div class="card tool-card"><h3>2049-debate 2049-debate</h3><p></p><a class="btn" href="2049-debate.html" target="_blank" rel="noopener">開啟報告</a></div><div class="card tool-card"><h3>2049 上銀</h3><p></p><a class="btn" href="2049.html" target="_blank" rel="noopener">開啟報告</a></div><div class="card tool-card"><h3>2395 研華</h3><p></p><a class="btn" href="2395.html" target="_blank" rel="noopener">開啟報告</a></div></div>
+<div class="tools"><div class="card tool-card" data-code="1301"><h3>1301 台塑</h3><p></p><p class="meta">登錄：2026-10-27</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="1301.html" target="_blank" rel="noopener">開啟報告</a><button class="btn btn-del" type="button" data-code="1301" data-name="台塑">刪除</button></div></div><div class="card tool-card" data-code="1402"><h3>1402 遠東新</h3><p></p><p class="meta">登錄：2026-10-07</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="1402.html" target="_blank" rel="noopener">開啟報告</a><button class="btn btn-del" type="button" data-code="1402" data-name="遠東新">刪除</button></div></div><div class="card tool-card" data-code="1723"><h3>1723 中碳</h3><p></p><p class="meta">登錄：2026-10-08</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="1723.html" target="_blank" rel="noopener">開啟報告</a><button class="btn btn-del" type="button" data-code="1723" data-name="中碳">刪除</button></div></div><div class="card tool-card" data-code="2049"><h3>2049 上銀</h3><p></p><p class="meta">登錄：2026-10-07</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="2049.html" target="_blank" rel="noopener">開啟報告</a><button class="btn btn-del" type="button" data-code="2049" data-name="上銀">刪除</button></div></div><div class="card tool-card" data-code="2395"><h3>2395 研華</h3><p></p><p class="meta">登錄：2026-10-07</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="2395.html" target="_blank" rel="noopener">開啟報告</a><button class="btn btn-del" type="button" data-code="2395" data-name="研華">刪除</button></div></div></div>
+<div id="del-modal" style="position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:50">
+<div class="card" style="max-width:420px;margin:16px">
+<h3 style="margin-top:0">確定刪除報告？</h3>
+<p id="del-modal-text"></p>
+<p class="meta">刪除後會從清單移除（記錄於此瀏覽器）；檔案本身仍保留，徹底移除請由站長從網站檔案庫刪檔。</p>
+<div style="display:flex;gap:8px;justify-content:flex-end">
+<button class="btn" id="del-cancel" type="button">取消</button>
+<button class="btn btn-del" id="del-confirm" type="button">確定刪除</button>
+</div>
+</div>
+</div>
+<script>
+(function(){
+  var KEY='deletedReports';
+  function getDeleted(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}}
+  function hideDeleted(){var d=getDeleted();document.querySelectorAll('.tool-card[data-code]').forEach(function(c){if(d.indexOf(c.getAttribute('data-code'))>=0)c.style.display='none'})}
+  var modal=document.getElementById('del-modal'), target=null;
+  document.querySelectorAll('.btn-del[data-code]').forEach(function(b){
+    b.addEventListener('click',function(){
+      target=b.getAttribute('data-code');
+      document.getElementById('del-modal-text').textContent='確定要刪除「'+target+' '+b.getAttribute('data-name')+'」的報告嗎？';
+      modal.style.display='flex';
+    });
+  });
+  document.getElementById('del-cancel').addEventListener('click',function(){modal.style.display='none';target=null});
+  modal.addEventListener('click',function(e){if(e.target===modal){modal.style.display='none';target=null}});
+  document.getElementById('del-confirm').addEventListener('click',function(){
+    if(!target)return;
+    var d=getDeleted(); if(d.indexOf(target)<0)d.push(target);
+    try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}
+    var card=document.querySelector('.tool-card[data-code="'+target+'"]');
+    if(card)card.style.display='none';
+    modal.style.display='none'; target=null;
+  });
+  hideDeleted();
+})();
+</script>
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-11-06 收盤 ｜ 本頁建置 2026-11-06 20:40</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-11-06 收盤 ｜ 本頁建置 2026-11-08 22:57</div>
 <div class="meta">本站總訪問量 <span id="busuanzi_value_site_pv"></span> 次 ｜ 本站訪客數 <span id="busuanzi_value_site_uv"></span> 人（不蒜子計數，自安裝日起算）</div>
 </div></footer>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
