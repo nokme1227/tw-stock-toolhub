@@ -115,14 +115,20 @@ function linreg(cl){
   return {a,b,sig,r2:sstot>0?1-ssres/sstot:0,cv:mean>0?sig/mean:0,mean,n};
 }
 function detectSplits(rows){
+  // 容差 ±12%（KT 2026-11-09 批准，取代舊 2%，與本地掃描同步）：
+  // 拆股／面額變更首日漲跌停仍可偵測（5904 比值 9.09、2327 比值 3.845 皆在 ±12% 內；
+  // 2% 容差時兩案皆漏）。正常連續兩日收盤比值 ≤1.111，遠離 k=2 下緣 1.79，誤判風險極低。
+  // 注意：此函數只找候選事件，不過濾；股利造成的比值跳變由 adjustTW
+  // 以 divImplied 排除，因為除息日遇休市時價格跳變會順延（3293 2024-07-26）。
   const out=[];
+  const nearK=(ratio,k)=>ratio>=k/1.12&&ratio<=k*1.12;
   for(let i=1;i<rows.length;i++){
     const prev=rows[i-1].close,op=rows[i].open;
     if(!(prev>0&&op>0))continue;
     const ratio=prev/op;
     for(const k of [2,3,4,5,10,20]){
-      if(Math.abs(ratio-k)/k<0.02){out.push({date:rows[i].date,v:1/k});break;}
-      if(Math.abs(1/ratio-k)/k<0.02){out.push({date:rows[i].date,v:k});break;}
+      if(nearK(ratio,k)){out.push({date:rows[i].date,v:1/k});break;}
+      if(nearK(1/ratio,k)){out.push({date:rows[i].date,v:k});break;}
     }
   }
   return out;
@@ -136,7 +142,34 @@ function adjustTW(rows,divs){
     if(d.CashExDividendTradingDate&&+d.CashEarningsDistribution>0)acts.push({date:d.CashExDividendTradingDate,type:'c',v:+d.CashEarningsDistribution});
     if(d.StockExDividendTradingDate&&+d.StockEarningsDistribution>0)acts.push({date:d.StockExDividendTradingDate,type:'s',v:+d.StockEarningsDistribution});
   });
-  detectSplits(rows).forEach(s=>acts.push({date:s.date,type:'split',v:s.v}));
+  // 股利可解釋的理論比值：除息日落在 [d-7天, d] 內的現金／股票股利換算值。
+  // 價格下跌型候選若與理論值誤差 <12%，視為除權息，不當拆股（除息日遇休市會順延）。
+  function divImplied(d){
+    const d0=new Date(d+'T00:00:00'); d0.setDate(d0.getDate()-7);
+    const d0s=d0.toISOString().slice(0,10);
+    let imp=1;
+    divs.forEach(x=>{
+      if(x.CashExDividendTradingDate&&+x.CashEarningsDistribution>0){
+        const ed=x.CashExDividendTradingDate;
+        if(ed>=d0s&&ed<=d){const c=refClose(ed); if(c>+x.CashEarningsDistribution)imp*=c/(c-+x.CashEarningsDistribution);}
+      }
+      if(x.StockExDividendTradingDate&&+x.StockEarningsDistribution>0){
+        const ed=x.StockExDividendTradingDate;
+        if(ed>=d0s&&ed<=d)imp*=1+ +x.StockEarningsDistribution/10;
+      }
+    });
+    return imp;
+  }
+  detectSplits(rows).forEach(s=>{
+    if(s.v>=1){acts.push({date:s.date,type:'split',v:s.v});return;}
+    const idx=dates.indexOf(s.date);
+    if(idx>0){
+      const ratio=byDate[dates[idx-1]]/byDate[s.date];
+      const imp=divImplied(s.date);
+      if(imp>1&&Math.abs(ratio-imp)/imp<0.12)return;
+    }
+    acts.push({date:s.date,type:'split',v:s.v});
+  });
   acts.sort((x,y)=>x.date<y.date?1:x.date>y.date?-1:0);
   let factor=1,ai=0;
   const out=new Array(rows.length);
@@ -390,7 +423,7 @@ if(c){document.getElementById('f_code').value=c;fquery();}})();
 </div>
 <footer class="site"><div class="wrap">
 <div>⚠️ 本工具為公開資料整理，不構成投資建議；過去表現不代表未來。</div>
-<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-11-04 收盤 ｜ 本頁建置 2026-11-04 20:41</div>
+<div class="meta">資料截至：黃國華六大指標 202609 ｜ 行情 2026-11-09 收盤 ｜ 本頁建置 2026-11-09 23:23</div>
 <div class="meta">本站總訪問量 <span id="busuanzi_value_site_pv"></span> 次 ｜ 本站訪客數 <span id="busuanzi_value_site_uv"></span> 人（不蒜子計數，自安裝日起算）</div>
 </div></footer>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
