@@ -1,78 +1,18 @@
 {
- "asof": "2026-11-06",
- "price_asof": "2026-11-06",
- "extra_price_asof": "2026-11-06",
+ "asof": "2026-11-09",
+ "price_asof": "2026-11-09",
+ "extra_price_asof": "2026-11-09",
  "sources": {
   "twse": "TWT48U_ALL(openapi)",
   "tpex": "tpex_exright_prepost"
  },
  "counts": {
-  "twse": 55,
-  "tpex": 67,
-  "total": 122,
-  "with_yield": 24
+  "twse": 48,
+  "tpex": 64,
+  "total": 112,
+  "with_yield": 14
  },
  "rows": [
-  {
-   "date": "2026-10-28",
-   "code": "00726B",
-   "name": "國泰新興投等債",
-   "market": "上櫃",
-   "type": "息",
-   "cash": 0.46,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": 0.0,
-   "yld": 1.42
-  },
-  {
-   "date": "2026-10-28",
-   "code": "00990B",
-   "name": "國泰收益非投等債",
-   "market": "上櫃",
-   "type": "息",
-   "cash": 0.08,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": 0.0,
-   "yld": 0.8
-  },
-  {
-   "date": "2026-10-28",
-   "code": "2063",
-   "name": "世鎧",
-   "market": "上櫃",
-   "type": "權息",
-   "cash": 0.5000208,
-   "stock_ratio": 0.09999999,
-   "sub_ratio": null,
-   "sub_price": 0.0,
-   "yld": 2.33
-  },
-  {
-   "date": "2026-11-03",
-   "code": "00406A",
-   "name": "主動中信台灣收益",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.138,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 2.01
-  },
-  {
-   "date": "2026-11-03",
-   "code": "00939",
-   "name": "統一台灣高息動能",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.15,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 0.64
-  },
   {
    "date": "2026-11-03",
    "code": "00950B",
@@ -107,7 +47,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.49
+   "yld": 0.5
   },
   {
    "date": "2026-11-03",
@@ -135,18 +75,6 @@
   },
   {
    "date": "2026-11-03",
-   "code": "00984D",
-   "name": "主動聯博全球非投",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.085,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 0.87
-  },
-  {
-   "date": "2026-11-03",
    "code": "00986B",
    "name": "FT金融債10+",
    "market": "上櫃",
@@ -156,30 +84,6 @@
    "sub_ratio": null,
    "sub_price": 0.0,
    "yld": null
-  },
-  {
-   "date": "2026-11-04",
-   "code": "00946",
-   "name": "群益科技高息成長",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.058,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 0.43
-  },
-  {
-   "date": "2026-11-04",
-   "code": "00953B",
-   "name": "群益優選非投等債",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.067,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 0.69
   },
   {
    "date": "2026-11-04",
@@ -194,42 +98,6 @@
    "yld": 0.52
   },
   {
-   "date": "2026-11-04",
-   "code": "00985B",
-   "name": "群益ESG投等債0-5",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.053,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 0.51
-  },
-  {
-   "date": "2026-11-04",
-   "code": "020036",
-   "name": "元大金融配息N",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.4,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 3.59
-  },
-  {
-   "date": "2026-11-04",
-   "code": "8467",
-   "name": "波力-KY",
-   "market": "上市",
-   "type": "息",
-   "cash": 2.0,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 2.06
-  },
-  {
    "date": "2026-11-05",
    "code": "3289",
    "name": "宜特",
@@ -239,7 +107,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.5
+   "yld": 1.4
   },
   {
    "date": "2026-11-05",
@@ -251,7 +119,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.68
+   "yld": 1.66
   },
   {
    "date": "2026-11-06",
@@ -263,7 +131,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.07
+   "yld": 1.01
   },
   {
    "date": "2026-11-06",
@@ -283,11 +151,11 @@
    "name": "元大台灣價值高息",
    "market": "上市",
    "type": "息",
-   "cash": null,
+   "cash": 0.06,
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": null
+   "yld": 0.5
   },
   {
    "date": "2026-11-11",
@@ -311,7 +179,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 2.58
+   "yld": 2.35
   },
   {
    "date": "2026-11-13",
@@ -1259,7 +1127,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.66
+   "yld": 1.51
   },
   {
    "date": "2026-11-18",
@@ -1283,7 +1151,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.94
+   "yld": 1.93
   },
   {
    "date": "2026-11-19",
@@ -1418,6 +1286,18 @@
    "yld": null
   },
   {
+   "date": "2026-11-20",
+   "code": "4562",
+   "name": "穎漢",
+   "market": "上市",
+   "type": "權",
+   "cash": 0.0,
+   "stock_ratio": null,
+   "sub_ratio": 0.14906449,
+   "sub_price": null,
+   "yld": null
+  },
+  {
    "date": "2026-11-24",
    "code": "00901",
    "name": "永豐智能車供應鏈",
@@ -1475,7 +1355,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.17
+   "yld": 1.07
   }
  ]
 }

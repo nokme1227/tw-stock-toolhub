@@ -1,27 +1,21 @@
 {
- "asof": "2026-11-06",
+ "asof": "2026-11-09",
  "score_month": "202609",
- "fear_asof": "2026-11-05",
- "div_asof": "2026-11-06",
+ "fear_asof": "2026-11-06",
+ "div_asof": "2026-11-09",
  "items": [
   {
    "code": "2395",
    "name": "研華",
-   "close": 552.0,
+   "close": 583.0,
    "score": 3.5,
    "score_month": "202609",
    "trend": "Up",
    "tech": [
     {
-     "flag": "volume",
-     "label": "量能放大",
-     "value": 2.88,
-     "value_label": "量比"
-    },
-    {
      "flag": "rsi_cold",
      "label": "RSI超賣",
-     "value": 17.7,
+     "value": 29.1,
      "value_label": "RSI"
     }
    ],
@@ -32,50 +26,23 @@
   {
    "code": "2049",
    "name": "上銀",
-   "close": 274.5,
+   "close": 287.0,
    "score": 3.17,
    "score_month": "202609",
    "trend": "Up",
-   "tech": [
-    {
-     "flag": "volume",
-     "label": "量能放大",
-     "value": 2.16,
-     "value_label": "量比"
-    }
-   ],
-   "inst": {
-    "foreign": {
-     "dir": "sell",
-     "days": 6,
-     "cum5": -1928,
-     "latest": -129
-    }
-   },
+   "tech": [],
+   "inst": {},
    "next_exdiv": null,
    "fear": null
   },
   {
    "code": "7769",
    "name": "鴻勁",
-   "close": 3675.0,
+   "close": 4040.0,
    "score": 3.67,
    "score_month": "202609",
    "trend": null,
-   "tech": [
-    {
-     "flag": "volume",
-     "label": "量能放大",
-     "value": 1.92,
-     "value_label": "量比"
-    },
-    {
-     "flag": "rsi_cold",
-     "label": "RSI超賣",
-     "value": 23.3,
-     "value_label": "RSI"
-    }
-   ],
+   "tech": [],
    "inst": {},
    "next_exdiv": null,
    "fear": {
@@ -86,30 +53,24 @@
   {
    "code": "2308",
    "name": "台達電",
-   "close": 1055.0,
+   "close": 1160.0,
    "score": 3.17,
    "score_month": "202609",
    "trend": "Dn",
    "tech": [
     {
-     "flag": "volume",
-     "label": "量能放大",
-     "value": 2.36,
-     "value_label": "量比"
-    },
-    {
      "flag": "rsi_cold",
      "label": "RSI超賣",
-     "value": 11.9,
+     "value": 22.2,
      "value_label": "RSI"
     }
    ],
    "inst": {
     "foreign": {
      "dir": "sell",
-     "days": 7,
-     "cum5": -12201,
-     "latest": -3651
+     "days": 8,
+     "cum5": -11161,
+     "latest": -1625
     }
    },
    "next_exdiv": null,
@@ -121,7 +82,7 @@
   {
    "code": "2345",
    "name": "智邦",
-   "close": 1280.0,
+   "close": 1405.0,
    "score": 3.33,
    "score_month": "202609",
    "trend": "Dn",
@@ -129,7 +90,7 @@
     {
      "flag": "rsi_cold",
      "label": "RSI超賣",
-     "value": 12.4,
+     "value": 20.8,
      "value_label": "RSI"
     }
    ],
@@ -143,27 +104,31 @@
   {
    "code": "3665",
    "name": "貿聯-KY",
-   "close": 1325.0,
+   "close": 1420.0,
    "score": 2.67,
    "score_month": "202609",
    "trend": null,
    "tech": [
     {
-     "flag": "volume",
-     "label": "量能放大",
-     "value": 1.57,
-     "value_label": "量比"
-    },
-    {
      "flag": "rsi_cold",
      "label": "RSI超賣",
-     "value": 11.2,
+     "value": 19.8,
      "value_label": "RSI"
     }
    ],
-   "inst": {},
+   "inst": {
+    "trust": {
+     "dir": "buy",
+     "days": 6,
+     "cum5": 1501,
+     "latest": 652
+    }
+   },
    "next_exdiv": null,
-   "fear": null
+   "fear": {
+    "zone": "extreme_fear",
+    "zone_zh": "極度恐懼"
+   }
   }
  ]
 }
