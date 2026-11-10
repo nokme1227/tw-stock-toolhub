@@ -1,16 +1,16 @@
 {
- "asof": "2026-11-09",
- "price_asof": "2026-11-09",
- "extra_price_asof": "2026-11-09",
+ "asof": "2026-11-10",
+ "price_asof": "2026-11-10",
+ "extra_price_asof": "2026-11-10",
  "sources": {
   "twse": "TWT48U_ALL(openapi)",
   "tpex": "tpex_exright_prepost"
  },
  "counts": {
-  "twse": 48,
-  "tpex": 64,
-  "total": 112,
-  "with_yield": 14
+  "twse": 49,
+  "tpex": 65,
+  "total": 114,
+  "with_yield": 17
  },
  "rows": [
   {
@@ -35,7 +35,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.53
+   "yld": 0.52
   },
   {
    "date": "2026-11-03",
@@ -47,7 +47,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.5
+   "yld": 0.49
   },
   {
    "date": "2026-11-03",
@@ -83,7 +83,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": null
+   "yld": 0.23
   },
   {
    "date": "2026-11-04",
@@ -95,7 +95,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.52
+   "yld": 0.51
   },
   {
    "date": "2026-11-05",
@@ -107,7 +107,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.4
+   "yld": 1.36
   },
   {
    "date": "2026-11-05",
@@ -131,7 +131,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.01
+   "yld": 0.96
   },
   {
    "date": "2026-11-06",
@@ -155,7 +155,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 0.5
+   "yld": 0.49
   },
   {
    "date": "2026-11-11",
@@ -179,7 +179,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 2.35
+   "yld": 2.36
   },
   {
    "date": "2026-11-13",
@@ -1127,7 +1127,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.51
+   "yld": 1.48
   },
   {
    "date": "2026-11-18",
@@ -1151,7 +1151,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.93
+   "yld": 1.92
   },
   {
    "date": "2026-11-19",
@@ -1355,7 +1355,31 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.07
+   "yld": 0.98
+  },
+  {
+   "date": "2026-12-30",
+   "code": "1707",
+   "name": "葡萄王",
+   "market": "上市",
+   "type": "息",
+   "cash": 1.9,
+   "stock_ratio": null,
+   "sub_ratio": null,
+   "sub_price": null,
+   "yld": 2.4
+  },
+  {
+   "date": "2027-01-05",
+   "code": "5483",
+   "name": "中美晶",
+   "market": "上櫃",
+   "type": "息",
+   "cash": 2.8,
+   "stock_ratio": null,
+   "sub_ratio": null,
+   "sub_price": 0.0,
+   "yld": 1.74
   }
  ]
 }
