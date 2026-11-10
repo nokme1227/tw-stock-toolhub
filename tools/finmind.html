@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FinMind 新增資料｜台股研究工具站</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>台股研究工具站</h1>
+<p>台股基本面研究工具 · 總覽＋工具目錄</p>
+</div></header>
+<div class="wrap">
+<nav class="back"><a href="../index.html">← 回工具總覽</a></nav>
+<div class="card">
+<h2 style="margin-top:0">FinMind 新增資料</h2>
+<p class="meta">FinMind 免費層新增資料集（P0 全市場＋P1 重點 36 檔：六檔持股＋自選＋恐懼區名單）。資料來源 FinMind API v4，建置端抓取、頁面不直抓、不含 token。不構成投資建議。</p>
+<p class="meta" id="cov"></p>
+<p class="meta" id="ynote"></p>
+</div>
+<div class="card">
+<h3 style="margin-top:0">重點股估值與外資持股（最新日）</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">代號</th><th class="l">名稱</th><th>殖利率%</th><th>PER</th><th>PBR</th><th>外資比%</th><th>市值(億)</th></tr></thead><tbody id="r_stocks"></tbody></table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">重點股最新股利</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">代號</th><th class="l">名稱</th><th class="l">年度</th><th>現金股利</th><th>股票股利</th><th class="l">除息日</th></tr></thead><tbody id="r_div"></tbody></table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">報酬指數（最新）</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">指數</th><th>日期</th><th>點位</th></tr></thead><tbody id="r_tri"></tbody></table></div>
+<p class="meta">報酬指數為含息指數；回測基準日後可改用此數列，取代不含息的加權價格指數。</p>
+</div>
+<div class="card">
+<h3 style="margin-top:0">整體法人買賣超（最新日，億元）</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">法人</th><th>買進</th><th>賣出</th><th>淨買賣超</th></tr></thead><tbody id="r_inst"></tbody></table></div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">分割／面額變更（最近）</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">代號</th><th class="l">日期</th><th class="l">類型</th><th>分割前</th><th>分割後</th></tr></thead><tbody id="r_split"></tbody></table></div>
+<p class="meta">權威分割事件，用來驗證五線譜的拆股偵測（目前容忍 ±12%＋股利理論比防禦）。</p>
+</div>
+<div class="card">
+<h3 style="margin-top:0">下市清單（最近 10 筆，共 <span id="delist_n"></span> 檔）</h3>
+<div class="tbl-wrap"><table><thead><tr><th class="l">代號</th><th class="l">名稱</th><th class="l">下市日</th></tr></thead><tbody id="r_delist"></tbody></table></div>
+</div>
+</div>
+<script>
+const fmt=(v,d=2)=>v===null||v===undefined?'—':Number(v).toFixed(d);
+const bfmt=v=>v===null||v===undefined?'—':(v/1e8).toFixed(0);
+fetch('../assets/data/finmind_extra_latest.json').then(r=>r.json()).then(j=>{
+  document.getElementById('cov').textContent='截至 '+j.asof+'。來源：'+j.source+'。';
+  document.getElementById('ynote').textContent=j.yield_note;
+  const rows=Object.entries(j.stocks).sort((a,b)=>a[0].localeCompare(b[0]));
+  document.getElementById('r_stocks').innerHTML=rows.map(([c,s])=>'<tr><td class="l num">'+c+'</td><td class="l">'+(s.name||'')+'</td><td class="num">'+fmt(s.dividend_yield)+'</td><td class="num">'+fmt(s.per)+'</td><td class="num">'+fmt(s.pbr)+'</td><td class="num">'+fmt(s.foreign_ratio)+'</td><td class="num">'+(s.market_cap_100m??'—')+'</td></tr>').join('');
+  document.getElementById('r_div').innerHTML=rows.filter(([,s])=>s.cash_div!==null&&s.cash_div!==undefined).map(([c,s])=>'<tr><td class="l num">'+c+'</td><td class="l">'+(s.name||'')+'</td><td class="l">'+(s.div_year||'')+'</td><td class="num">'+fmt(s.cash_div)+'</td><td class="num">'+fmt(s.stock_div)+'</td><td class="l num">'+(s.cash_ex_date||'')+'</td></tr>').join('');
+  document.getElementById('r_tri').innerHTML=Object.entries(j.p0.total_return).map(([k,v])=>'<tr><td class="l">'+k+'</td><td class="l num">'+v.date+'</td><td class="num">'+fmt(v.price)+'</td></tr>').join('');
+  document.getElementById('r_inst').innerHTML=j.p0.total_inst_latest.rows.map(x=>'<tr><td class="l">'+x.name+'</td><td class="num">'+bfmt(x.buy)+'</td><td class="num">'+bfmt(x.sell)+'</td><td class="num">'+bfmt(x.net)+'</td></tr>').join('');
+  const sp=[...j.p0.split_recent.map(x=>({code:x.code,date:x.date,type:x.type,before:x.before,after:x.after})),...j.p0.par_change_recent.map(x=>({code:x.code,date:x.date,type:'面額變更',before:x.before,after:x.after}))].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,10);
+  document.getElementById('r_split').innerHTML=sp.map(x=>'<tr><td class="l num">'+x.code+'</td><td class="l num">'+x.date+'</td><td class="l">'+x.type+'</td><td class="num">'+fmt(x.before)+'</td><td class="num">'+fmt(x.after)+'</td></tr>').join('');
+  document.getElementById('delist_n').textContent=j.p0.delisting_count;
+  document.getElementById('r_delist').innerHTML=j.p0.delisting_latest.map(x=>'<tr><td class="l num">'+x.code+'</td><td class="l">'+x.name+'</td><td class="l num">'+x.date+'</td></tr>').join('');
+});
+</script>
+<p class="meta">本站總訪問量 <span id="busuanzi_value_site_pv"></span> 次 ｜ 本站訪客數 <span id="busuanzi_value_site_uv"></span> 人（不蒜子計數，自安裝日起算）</p>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

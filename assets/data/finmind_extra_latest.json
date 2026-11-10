@@ -1,0 +1,833 @@
+{
+ "asof": "2026-11-10",
+ "source": "FinMind API v4（免費層）",
+ "yield_note": "殖利率＝最近年度每股股利／收盤價，與 TWSE 本益比／殖利率表同口徑；2330 已對核 TWSE（11/09 0.98%）與 FinMind（11/10 0.96%），差異來自收盤價不同日。",
+ "stocks": {
+  "1301": {
+   "name": "台塑",
+   "per_date": "2026-11-10",
+   "dividend_yield": 0.72,
+   "per": 42.62,
+   "pbr": 0.77,
+   "foreign_ratio": 34.52,
+   "shares_issued": 6365740781,
+   "close": 69.9,
+   "market_cap_100m": 4449.7,
+   "div_date": "2026-07-06",
+   "div_year": "114年",
+   "cash_div": 0.5,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-06-30"
+  },
+  "1504": {
+   "name": "東元",
+   "per_date": "2026-11-10",
+   "dividend_yield": 3.13,
+   "per": 23.12,
+   "pbr": 1.56,
+   "foreign_ratio": 7.3,
+   "shares_issued": 2376440684,
+   "close": 63.8,
+   "market_cap_100m": 1516.2,
+   "div_date": "2026-06-23",
+   "div_year": "114年",
+   "cash_div": 2.0,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-06-17"
+  },
+  "1513": {
+   "name": "中興電",
+   "per_date": "2026-11-10",
+   "dividend_yield": 4.1,
+   "per": 16.48,
+   "pbr": 3.48,
+   "foreign_ratio": 13.18,
+   "shares_issued": 503112515,
+   "close": 146.5,
+   "market_cap_100m": 737.1,
+   "div_date": "2026-07-15",
+   "div_year": "114年",
+   "cash_div": 6.0,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-09"
+  },
+  "1519": {
+   "name": "華城",
+   "per_date": "2026-11-10",
+   "dividend_yield": 2.44,
+   "per": 32.23,
+   "pbr": 16.9,
+   "foreign_ratio": 16.78,
+   "shares_issued": 347468929,
+   "close": 492.5,
+   "market_cap_100m": 1711.3,
+   "div_date": "2026-08-11",
+   "div_year": "114年",
+   "cash_div": 11.0,
+   "stock_div": 1.0,
+   "cash_ex_date": "2026-08-05"
+  },
+  "2049": {
+   "name": "上銀",
+   "per_date": "2026-11-10",
+   "dividend_yield": 0.69,
+   "per": 33.05,
+   "pbr": 2.54,
+   "foreign_ratio": 39.61,
+   "shares_issued": 353792240,
+   "close": 291.5,
+   "market_cap_100m": 1031.3,
+   "div_date": "2026-07-14",
+   "div_year": "114年",
+   "cash_div": 2.0,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-08"
+  },
+  "2103": {
+   "name": "台橡",
+   "per_date": "2026-11-10",
+   "dividend_yield": 1.15,
+   "per": 8.25,
+   "pbr": 0.87,
+   "foreign_ratio": 25.72,
+   "shares_issued": 825709978,
+   "close": 23.5,
+   "market_cap_100m": 194.0,
+   "div_date": "2026-06-30",
+   "div_year": "114年",
+   "cash_div": 0.27,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-06-24"
+  },
+  "2308": {
+   "name": "台達電",
+   "per_date": "2026-11-10",
+   "dividend_yield": 0.91,
+   "per": 38.29,
+   "pbr": 10.41,
+   "foreign_ratio": 59.15,
+   "shares_issued": 2597543329,
+   "close": 1275.0,
+   "market_cap_100m": 33118.7,
+   "div_date": "2026-06-23",
+   "div_year": "114年",
+   "cash_div": 11.6,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-06-17"
+  },
+  "2317": {
+   "name": "鴻海",
+   "per_date": "2026-11-10",
+   "dividend_yield": 2.97,
+   "per": 15.92,
+   "pbr": 1.78,
+   "foreign_ratio": 39.93,
+   "shares_issued": 14028648626,
+   "close": 241.5,
+   "market_cap_100m": 33879.2,
+   "div_date": "2026-07-08",
+   "div_year": "114年",
+   "cash_div": 7.17179227,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-02"
+  },
+  "2330": {
+   "name": "台積電",
+   "per_date": "2026-11-10",
+   "dividend_yield": 0.96,
+   "per": 26.49,
+   "pbr": 9.21,
+   "foreign_ratio": 68.1,
+   "shares_issued": 25932370067,
+   "close": 2285.0,
+   "market_cap_100m": 592554.7,
+   "div_date": "2026-09-22",
+   "div_year": "115年第1季",
+   "cash_div": 7.00000137,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-09-16"
+  },
+  "2345": {
+   "name": "智邦",
+   "per_date": "2026-11-10",
+   "dividend_yield": 0.97,
+   "per": 24.27,
+   "pbr": 12.51,
+   "foreign_ratio": 55.83,
+   "shares_issued": 561117897,
+   "close": 1545.0,
+   "market_cap_100m": 8669.3,
+   "div_date": "2026-08-05",
+   "div_year": "114年",
+   "cash_div": 15.0,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-30"
+  },
+  "2354": {
+   "name": "鴻準",
+   "per_date": "2026-11-10",
+   "dividend_yield": 2.72,
+   "per": 23.39,
+   "pbr": 0.69,
+   "foreign_ratio": 14.01,
+   "shares_issued": 1414485192,
+   "close": 55.2,
+   "market_cap_100m": 780.8,
+   "div_date": "2026-07-08",
+   "div_year": "114年",
+   "cash_div": 1.5,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-02"
+  },
+  "2382": {
+   "name": "廣達",
+   "per_date": "2026-11-10",
+   "dividend_yield": 5.23,
+   "per": 13.01,
+   "pbr": 4.72,
+   "foreign_ratio": 22.55,
+   "shares_issued": 4107627432,
+   "close": 298.5,
+   "market_cap_100m": 12261.3,
+   "div_date": "2026-07-22",
+   "div_year": "114年後半年度",
+   "cash_div": 15.6,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-16"
+  },
+  "2385": {
+   "name": "群光",
+   "per_date": "2026-11-10",
+   "dividend_yield": 8.2,
+   "per": 9.85,
+   "pbr": 1.44,
+   "foreign_ratio": 25.12,
+   "shares_issued": 765721188,
+   "close": 87.8,
+   "market_cap_100m": 672.3,
+   "div_date": "2026-06-21",
+   "div_year": "114年",
+   "cash_div": 7.2,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-06-15"
+  },
+  "2395": {
+   "name": "研華",
+   "per_date": "2026-11-10",
+   "dividend_yield": 1.88,
+   "per": 30.03,
+   "pbr": 8.23,
+   "foreign_ratio": 36.16,
+   "shares_issued": 868254487,
+   "close": 593.0,
+   "market_cap_100m": 5148.7,
+   "div_date": "2026-07-25",
+   "div_year": "114年",
+   "cash_div": 9.1659569,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-17"
+  },
+  "2404": {
+   "name": "漢唐",
+   "per_date": "2026-11-10",
+   "dividend_yield": 4.22,
+   "per": 14.3,
+   "pbr": 10.0,
+   "foreign_ratio": 36.26,
+   "shares_issued": 190586698,
+   "close": 948.0,
+   "market_cap_100m": 1806.8,
+   "div_date": "2026-07-24",
+   "div_year": "114年",
+   "cash_div": 40.0,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-16"
+  },
+  "2409": {
+   "name": "友達",
+   "per_date": "2026-11-10",
+   "dividend_yield": 1.44,
+   "per": 115.42,
+   "pbr": 1.35,
+   "foreign_ratio": 10.35,
+   "shares_issued": 7547098972,
+   "close": 27.7,
+   "market_cap_100m": 2090.5,
+   "div_date": "2026-08-06",
+   "div_year": "114年",
+   "cash_div": 0.4,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-30"
+  },
+  "2449": {
+   "name": "京元電子",
+   "per_date": "2026-11-10",
+   "dividend_yield": 0.66,
+   "per": 30.21,
+   "pbr": 4.44,
+   "foreign_ratio": 22.92,
+   "shares_issued": 1283882318,
+   "close": 227.5,
+   "market_cap_100m": 2920.8,
+   "div_date": "2026-08-03",
+   "div_year": "114年",
+   "cash_div": 1.0,
+   "stock_div": 0.5,
+   "cash_ex_date": "2026-07-28"
+  },
+  "2467": {
+   "name": "志聖",
+   "per_date": "2026-11-10",
+   "dividend_yield": 1.74,
+   "per": 25.99,
+   "pbr": 3.3,
+   "foreign_ratio": 19.93,
+   "shares_issued": 156855348,
+   "close": 315.5,
+   "market_cap_100m": 494.9,
+   "div_date": "2026-06-27",
+   "div_year": "114年",
+   "cash_div": 5.5,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-06-18"
+  },
+  "2474": {
+   "name": "可成",
+   "per_date": "2026-11-10",
+   "dividend_yield": 5.48,
+   "per": 14.64,
+   "pbr": 0.75,
+   "foreign_ratio": 12.37,
+   "shares_issued": 538821068,
+   "close": 187.5,
+   "market_cap_100m": 1010.3,
+   "div_date": "2026-07-12",
+   "div_year": "114年後半年度",
+   "cash_div": 7.11386897,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-06"
+  },
+  "2610": {
+   "name": "華航",
+   "per_date": "2026-11-10",
+   "dividend_yield": 3.55,
+   "per": 9.54,
+   "pbr": 1.34,
+   "foreign_ratio": 18.96,
+   "shares_issued": 6117941273,
+   "close": 22.8,
+   "market_cap_100m": 1394.9,
+   "div_date": "2026-07-18",
+   "div_year": "114年",
+   "cash_div": 0.81445782,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-10"
+  },
+  "2812": {
+   "name": "台中銀",
+   "per_date": "2026-11-10",
+   "dividend_yield": 6.2,
+   "per": 11.55,
+   "pbr": 1.15,
+   "foreign_ratio": 8.33,
+   "shares_issued": 6425074858,
+   "close": 17.1,
+   "market_cap_100m": 1098.7,
+   "div_date": "2026-08-10",
+   "div_year": "114年",
+   "cash_div": 0.39,
+   "stock_div": 0.67,
+   "cash_ex_date": "2026-08-04"
+  },
+  "3005": {
+   "name": "神基",
+   "per_date": "2026-11-10",
+   "dividend_yield": 6.35,
+   "per": 12.71,
+   "pbr": 2.62,
+   "foreign_ratio": 16.52,
+   "shares_issued": 624310150,
+   "close": 107.0,
+   "market_cap_100m": 668.0,
+   "div_date": "2026-03-31",
+   "div_year": "114年",
+   "cash_div": 6.78905624,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-03-25"
+  },
+  "3019": {
+   "name": "亞光",
+   "per_date": "2026-11-10",
+   "dividend_yield": 3.52,
+   "per": 18.46,
+   "pbr": 2.31,
+   "foreign_ratio": 9.37,
+   "shares_issued": 279243901,
+   "close": 130.5,
+   "market_cap_100m": 364.4,
+   "div_date": "2026-06-30",
+   "div_year": "114年",
+   "cash_div": 4.6,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-06-24"
+  },
+  "3030": {
+   "name": "德律",
+   "per_date": "2026-11-10",
+   "dividend_yield": 3.1,
+   "per": 16.35,
+   "pbr": 5.01,
+   "foreign_ratio": 9.9,
+   "shares_issued": 236216000,
+   "close": 225.5,
+   "market_cap_100m": 532.7,
+   "div_date": "2026-06-19",
+   "div_year": "114年",
+   "cash_div": 7.0,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-06-11"
+  },
+  "3293": {
+   "name": "鈊象",
+   "per_date": "2026-11-10",
+   "dividend_yield": 4.67,
+   "per": 16.82,
+   "pbr": 11.65,
+   "foreign_ratio": 36.1,
+   "shares_issued": 281801560,
+   "close": 771.0,
+   "market_cap_100m": 2172.7,
+   "div_date": "2026-07-14",
+   "div_year": "114年後半年度",
+   "cash_div": 36.0,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-08"
+  },
+  "3665": {
+   "name": "貿聯-KY",
+   "per_date": "2026-11-10",
+   "dividend_yield": 0.99,
+   "per": 28.09,
+   "pbr": 6.02,
+   "foreign_ratio": 49.94,
+   "shares_issued": 195078405,
+   "close": 1530.0,
+   "market_cap_100m": 2984.7,
+   "div_date": "2026-07-21",
+   "div_year": "114年",
+   "cash_div": 15.18493889,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-15"
+  },
+  "3706": {
+   "name": "神達",
+   "per_date": "2026-11-10",
+   "dividend_yield": 5.63,
+   "per": 12.7,
+   "pbr": 1.24,
+   "foreign_ratio": 9.41,
+   "shares_issued": 1459933715,
+   "close": 71.1,
+   "market_cap_100m": 1038.0,
+   "div_date": "2026-09-15",
+   "div_year": "114年",
+   "cash_div": 3.0,
+   "stock_div": 1.0,
+   "cash_ex_date": "2026-09-09"
+  },
+  "5269": {
+   "name": "祥碩",
+   "per_date": "2026-11-10",
+   "dividend_yield": 4.03,
+   "per": 12.0,
+   "pbr": 2.33,
+   "foreign_ratio": 10.6,
+   "shares_issued": 74156359,
+   "close": 1125.0,
+   "market_cap_100m": 834.3,
+   "div_date": "2026-07-27",
+   "div_year": "114年",
+   "cash_div": 45.37669932,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-21"
+  },
+  "6442": {
+   "name": "光聖",
+   "per_date": "2026-11-10",
+   "dividend_yield": 0.99,
+   "per": 33.58,
+   "pbr": 6.82,
+   "foreign_ratio": 32.05,
+   "shares_issued": 81817552,
+   "close": 1135.0,
+   "market_cap_100m": 928.6,
+   "div_date": "2026-07-21",
+   "div_year": "114年",
+   "cash_div": 11.25866649,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-15"
+  },
+  "6515": {
+   "name": "穎崴",
+   "per_date": "2026-11-10",
+   "dividend_yield": 1.33,
+   "per": 60.9,
+   "pbr": 15.73,
+   "foreign_ratio": 24.61,
+   "shares_issued": 36038042,
+   "close": 3720.0,
+   "market_cap_100m": 1340.6,
+   "div_date": "2026-07-25",
+   "div_year": "114年",
+   "cash_div": 24.71876023,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-17"
+  },
+  "6781": {
+   "name": "AES-KY",
+   "per_date": "2026-11-10",
+   "dividend_yield": 2.45,
+   "per": 18.47,
+   "pbr": 3.77,
+   "foreign_ratio": 70.69,
+   "shares_issued": 85418780,
+   "close": 781.0,
+   "market_cap_100m": 667.1,
+   "div_date": "2026-07-15",
+   "div_year": "114年",
+   "cash_div": 19.1,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-09"
+  },
+  "6919": {
+   "name": "康霈*",
+   "per_date": "2026-11-10",
+   "dividend_yield": 0.0,
+   "per": 0.0,
+   "pbr": 12.52,
+   "foreign_ratio": 11.75,
+   "shares_issued": 1557200860,
+   "close": 70.5,
+   "market_cap_100m": 1097.8,
+   "div_date": "2023-11-04",
+   "div_year": "不適用",
+   "cash_div": 0.0,
+   "stock_div": 0.0,
+   "cash_ex_date": null
+  },
+  "7750": {
+   "name": "新代",
+   "per_date": "2026-11-10",
+   "dividend_yield": 1.06,
+   "per": 25.95,
+   "pbr": 8.05,
+   "foreign_ratio": 16.11,
+   "shares_issued": 71843000,
+   "close": 1510.0,
+   "market_cap_100m": 1084.8,
+   "div_date": "2026-04-10",
+   "div_year": "114年",
+   "cash_div": 16.0,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-04-01"
+  },
+  "7769": {
+   "name": "鴻勁",
+   "per_date": "2026-11-10",
+   "dividend_yield": 1.54,
+   "per": 36.99,
+   "pbr": 12.01,
+   "foreign_ratio": 19.33,
+   "shares_issued": 179930000,
+   "close": 4220.0,
+   "market_cap_100m": 7593.0,
+   "div_date": "2026-08-06",
+   "div_year": "114年",
+   "cash_div": 54.99174679,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-07-30"
+  },
+  "8210": {
+   "name": "勤誠",
+   "per_date": "2026-11-10",
+   "dividend_yield": 2.47,
+   "per": 14.86,
+   "pbr": 5.25,
+   "foreign_ratio": 6.22,
+   "shares_issued": 125619146,
+   "close": 567.0,
+   "market_cap_100m": 712.3,
+   "div_date": "2026-07-01",
+   "div_year": "114年",
+   "cash_div": 14.0,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-06-25"
+  },
+  "8464": {
+   "name": "億豐",
+   "per_date": "2026-11-10",
+   "dividend_yield": 4.58,
+   "per": 14.9,
+   "pbr": 3.34,
+   "foreign_ratio": 40.74,
+   "shares_issued": 293020200,
+   "close": 349.5,
+   "market_cap_100m": 1024.1,
+   "div_date": "2026-03-31",
+   "div_year": "114年",
+   "cash_div": 16.0,
+   "stock_div": 0.0,
+   "cash_ex_date": "2026-03-25"
+  }
+ },
+ "p0": {
+  "delisting_count": 726,
+  "delisting_latest": [
+   {
+    "code": "8183",
+    "name": "精星",
+    "date": "2026-10-01"
+   },
+   {
+    "code": "5371",
+    "name": "中光電",
+    "date": "2026-09-03"
+   },
+   {
+    "code": "2867",
+    "name": "三商壽",
+    "date": "2026-09-01"
+   },
+   {
+    "code": "4130",
+    "name": "健亞",
+    "date": "2026-07-28"
+   },
+   {
+    "code": "6806",
+    "name": "森崴能源",
+    "date": "2026-06-23"
+   },
+   {
+    "code": "3426",
+    "name": "台興",
+    "date": "2026-06-08"
+   },
+   {
+    "code": "4987",
+    "name": "科誠",
+    "date": "2026-05-29"
+   },
+   {
+    "code": "00883B",
+    "name": "中信ESG投資級債",
+    "date": "2026-05-06"
+   },
+   {
+    "code": "3454",
+    "name": "晶睿",
+    "date": "2026-03-27"
+   },
+   {
+    "code": "6747",
+    "name": "亨泰光",
+    "date": "2025-12-04"
+   }
+  ],
+  "split_recent": [
+   {
+    "code": "6949",
+    "date": "2026-09-07",
+    "type": "面額變更",
+    "before": 1490.0,
+    "after": 74.5
+   },
+   {
+    "code": "4747",
+    "date": "2026-08-31",
+    "type": "面額變更",
+    "before": 56.5,
+    "after": 28.25
+   },
+   {
+    "code": "5904",
+    "date": "2026-08-10",
+    "type": "面額變更",
+    "before": 720.0,
+    "after": 72.0
+   },
+   {
+    "code": "00685L",
+    "date": "2026-07-07",
+    "type": "分割",
+    "before": 306.0,
+    "after": 12.75
+   },
+   {
+    "code": "00674R",
+    "date": "2026-04-22",
+    "type": "反分割",
+    "before": 5.18,
+    "after": 25.9
+   },
+   {
+    "code": "3086",
+    "date": "2026-04-20",
+    "type": "面額變更",
+    "before": 325.0,
+    "after": 32.5
+   },
+   {
+    "code": "8937",
+    "date": "2026-04-13",
+    "type": "面額變更",
+    "before": 145.5,
+    "after": 36.38
+   },
+   {
+    "code": "00631L",
+    "date": "2026-03-31",
+    "type": "",
+    "before": 443.15,
+    "after": 20.14
+   },
+   {
+    "code": "8932",
+    "date": "2026-03-09",
+    "type": "面額變更",
+    "before": 199.5,
+    "after": 99.75
+   },
+   {
+    "code": "7780",
+    "date": "2026-01-19",
+    "type": "面額變更",
+    "before": 185.0,
+    "after": 18.5
+   }
+  ],
+  "par_change_recent": [
+   {
+    "code": "2327",
+    "name": "國巨",
+    "date": "2025-08-25",
+    "before": 546.0,
+    "after": 136.5
+   },
+   {
+    "code": "6919",
+    "name": "康霈*",
+    "date": "2025-07-21",
+    "before": 1215.0,
+    "after": 121.5
+   },
+   {
+    "code": "4763",
+    "name": "材料-KY",
+    "date": "2025-06-30",
+    "before": 885.0,
+    "after": 88.5
+   },
+   {
+    "code": "5314",
+    "name": "世紀",
+    "date": "2025-03-31",
+    "before": 1390.0,
+    "after": 69.5
+   },
+   {
+    "code": "5278",
+    "name": "尚凡",
+    "date": "2024-12-09",
+    "before": 319.5,
+    "after": 31.95
+   },
+   {
+    "code": "8476",
+    "name": "台境",
+    "date": "2024-11-11",
+    "before": 58.8,
+    "after": 29.4
+   },
+   {
+    "code": "6763",
+    "name": "綠界科技",
+    "date": "2024-09-09",
+    "before": 491.0,
+    "after": 49.1
+   },
+   {
+    "code": "8932",
+    "name": "智通",
+    "date": "2024-09-09",
+    "before": 169.5,
+    "after": 84.75
+   },
+   {
+    "code": "3093",
+    "name": "港建",
+    "date": "2022-12-12",
+    "before": 109.5,
+    "after": 27.38
+   },
+   {
+    "code": "5536",
+    "name": "聖暉",
+    "date": "2022-09-19",
+    "before": 206.0,
+    "after": 103.0
+   }
+  ],
+  "total_return": {
+   "TAIEX": {
+    "date": "2026-11-10",
+    "price": 98767.01
+   },
+   "TPEx": {
+    "date": "2026-11-10",
+    "price": 619.37
+   }
+  },
+  "total_inst_latest": {
+   "date": "2026-11-10",
+   "rows": [
+    {
+     "name": "Dealer_Hedging",
+     "buy": 33012803693,
+     "sell": 45009671134,
+     "net": -11996867441
+    },
+    {
+     "name": "Dealer_self",
+     "buy": 8231070590,
+     "sell": 13770196935,
+     "net": -5539126345
+    },
+    {
+     "name": "Foreign_Dealer_Self",
+     "buy": 0,
+     "sell": 0,
+     "net": 0
+    },
+    {
+     "name": "Foreign_Investor",
+     "buy": 386091795543,
+     "sell": 420208485449,
+     "net": -34116689906
+    },
+    {
+     "name": "Investment_Trust",
+     "buy": 50364151226,
+     "sell": 10473083709,
+     "net": 39891067517
+    },
+    {
+     "name": "total",
+     "buy": 477699821052,
+     "sell": 489461437227,
+     "net": -11761616175
+    }
+   ]
+  }
+ }
+}
