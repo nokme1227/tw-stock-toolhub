@@ -1,16 +1,16 @@
 {
- "asof": "2026-11-10",
- "price_asof": "2026-11-10",
- "extra_price_asof": "2026-11-10",
+ "asof": "2026-11-11",
+ "price_asof": "2026-11-11",
+ "extra_price_asof": "2026-11-11",
  "sources": {
   "twse": "TWT48U_ALL(openapi)",
   "tpex": "tpex_exright_prepost"
  },
  "counts": {
-  "twse": 49,
+  "twse": 48,
   "tpex": 65,
-  "total": 114,
-  "with_yield": 17
+  "total": 113,
+  "with_yield": 19
  },
  "rows": [
   {
@@ -23,7 +23,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.45
+   "yld": 0.46
   },
   {
    "date": "2026-11-03",
@@ -35,7 +35,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.52
+   "yld": 0.53
   },
   {
    "date": "2026-11-03",
@@ -47,7 +47,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.49
+   "yld": 0.5
   },
   {
    "date": "2026-11-03",
@@ -83,7 +83,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.23
+   "yld": null
   },
   {
    "date": "2026-11-04",
@@ -107,7 +107,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.36
+   "yld": 1.34
   },
   {
    "date": "2026-11-05",
@@ -120,30 +120,6 @@
    "sub_ratio": null,
    "sub_price": 0.0,
    "yld": 1.66
-  },
-  {
-   "date": "2026-11-06",
-   "code": "00400A",
-   "name": "主動國泰動能高息",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.12,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 0.96
-  },
-  {
-   "date": "2026-11-06",
-   "code": "2414",
-   "name": "精技",
-   "market": "上市",
-   "type": "權",
-   "cash": 0.0,
-   "stock_ratio": null,
-   "sub_ratio": 0.12365842,
-   "sub_price": 46.0,
-   "yld": null
   },
   {
    "date": "2026-11-10",
@@ -179,7 +155,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 2.36
+   "yld": 2.28
   },
   {
    "date": "2026-11-13",
@@ -358,7 +334,7 @@
    "cash": 0.0,
    "stock_ratio": null,
    "sub_ratio": 0.09439378,
-   "sub_price": null,
+   "sub_price": 140.0,
    "yld": null
   },
   {
@@ -379,11 +355,11 @@
    "name": "兆豐藍籌30",
    "market": "上市",
    "type": "息",
-   "cash": null,
+   "cash": 2.0,
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": null
+   "yld": 2.8
   },
   {
    "date": "2026-11-17",
@@ -715,11 +691,11 @@
    "name": "兆豐永續高息等權",
    "market": "上市",
    "type": "息",
-   "cash": null,
+   "cash": 0.23,
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": null
+   "yld": 1.42
   },
   {
    "date": "2026-11-17",
@@ -775,11 +751,11 @@
    "name": "兆豐電子高息等權",
    "market": "上市",
    "type": "息",
-   "cash": null,
+   "cash": 0.35,
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": null
+   "yld": 1.82
   },
   {
    "date": "2026-11-17",
@@ -835,11 +811,11 @@
    "name": "兆豐US優選投等債",
    "market": "上櫃",
    "type": "息",
-   "cash": null,
+   "cash": 0.065,
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": null
+   "yld": 0.5
   },
   {
    "date": "2026-11-17",
@@ -1127,7 +1103,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.48
+   "yld": 1.47
   },
   {
    "date": "2026-11-18",
@@ -1151,7 +1127,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.92
+   "yld": 1.93
   },
   {
    "date": "2026-11-19",
@@ -1346,6 +1322,18 @@
    "yld": null
   },
   {
+   "date": "2026-11-24",
+   "code": "6655",
+   "name": "科定",
+   "market": "上市",
+   "type": "息",
+   "cash": 2.6,
+   "stock_ratio": null,
+   "sub_ratio": null,
+   "sub_price": null,
+   "yld": null
+  },
+  {
    "date": "2026-12-29",
    "code": "6488",
    "name": "環球晶",
@@ -1355,7 +1343,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.98
+   "yld": 0.94
   },
   {
    "date": "2026-12-30",
@@ -1367,7 +1355,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 2.4
+   "yld": 2.41
   },
   {
    "date": "2027-01-05",
