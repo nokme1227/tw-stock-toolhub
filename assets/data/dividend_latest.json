@@ -1,16 +1,16 @@
 {
- "asof": "2026-11-11",
- "price_asof": "2026-11-11",
- "extra_price_asof": "2026-11-11",
+ "asof": "2026-11-12",
+ "price_asof": "2026-11-12",
+ "extra_price_asof": "2026-11-12",
  "sources": {
   "twse": "TWT48U_ALL(openapi)",
   "tpex": "tpex_exright_prepost"
  },
  "counts": {
-  "twse": 48,
-  "tpex": 65,
-  "total": 113,
-  "with_yield": 19
+  "twse": 51,
+  "tpex": 66,
+  "total": 117,
+  "with_yield": 24
  },
  "rows": [
   {
@@ -23,7 +23,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.46
+   "yld": 0.45
   },
   {
    "date": "2026-11-03",
@@ -83,7 +83,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": null
+   "yld": 0.23
   },
   {
    "date": "2026-11-04",
@@ -107,7 +107,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.34
+   "yld": 1.39
   },
   {
    "date": "2026-11-05",
@@ -119,7 +119,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.66
+   "yld": null
   },
   {
    "date": "2026-11-10",
@@ -155,7 +155,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 2.28
+   "yld": 2.51
   },
   {
    "date": "2026-11-13",
@@ -163,11 +163,11 @@
    "name": "主動摩根台灣鑫收",
    "market": "上市",
    "type": "息",
-   "cash": null,
+   "cash": 0.138,
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": null
+   "yld": 1.11
   },
   {
    "date": "2026-11-16",
@@ -359,7 +359,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 2.8
+   "yld": 2.88
   },
   {
    "date": "2026-11-17",
@@ -695,7 +695,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.42
+   "yld": 1.43
   },
   {
    "date": "2026-11-17",
@@ -755,7 +755,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.82
+   "yld": 1.85
   },
   {
    "date": "2026-11-17",
@@ -815,7 +815,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.5
+   "yld": 0.49
   },
   {
    "date": "2026-11-17",
@@ -1103,7 +1103,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.47
+   "yld": 1.57
   },
   {
    "date": "2026-11-18",
@@ -1114,7 +1114,7 @@
    "cash": 0.0,
    "stock_ratio": null,
    "sub_ratio": 0.01288606,
-   "sub_price": null,
+   "sub_price": 400.0,
    "yld": null
   },
   {
@@ -1127,7 +1127,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.93
+   "yld": 1.94
   },
   {
    "date": "2026-11-19",
@@ -1331,7 +1331,55 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
+   "yld": 1.95
+  },
+  {
+   "date": "2026-12-03",
+   "code": "1437",
+   "name": "勤益控",
+   "market": "上市",
+   "type": "息",
+   "cash": 0.624652,
+   "stock_ratio": null,
+   "sub_ratio": null,
+   "sub_price": null,
+   "yld": 2.08
+  },
+  {
+   "date": "2026-12-04",
+   "code": "7780",
+   "name": "大研生醫*",
+   "market": "上市",
+   "type": "息",
+   "cash": 0.141372,
+   "stock_ratio": null,
+   "sub_ratio": null,
+   "sub_price": null,
+   "yld": 0.95
+  },
+  {
+   "date": "2026-12-07",
+   "code": "2646",
+   "name": "星宇航空",
+   "market": "上市",
+   "type": "權",
+   "cash": 0.0,
+   "stock_ratio": null,
+   "sub_ratio": 0.09970967,
+   "sub_price": null,
    "yld": null
+  },
+  {
+   "date": "2026-12-10",
+   "code": "8942",
+   "name": "森鉅",
+   "market": "上櫃",
+   "type": "息",
+   "cash": 1.0,
+   "stock_ratio": null,
+   "sub_ratio": null,
+   "sub_price": 0.0,
+   "yld": 2.57
   },
   {
    "date": "2026-12-29",
@@ -1343,7 +1391,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.94
+   "yld": 0.96
   },
   {
    "date": "2026-12-30",
