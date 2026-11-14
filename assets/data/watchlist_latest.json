@@ -1,13 +1,13 @@
 {
- "asof": "2026-11-12",
+ "asof": "2026-11-13",
  "score_month": "202609",
- "fear_asof": "2026-11-11",
- "div_asof": "2026-11-12",
+ "fear_asof": "2026-11-12",
+ "div_asof": "2026-11-13",
  "items": [
   {
    "code": "2395",
    "name": "研華",
-   "close": 603.0,
+   "close": 608.0,
    "score": 3.5,
    "score_month": "202609",
    "trend": "Up",
@@ -19,18 +19,11 @@
   {
    "code": "2049",
    "name": "上銀",
-   "close": 315.0,
+   "close": 314.0,
    "score": 3.17,
    "score_month": "202609",
    "trend": "Up",
-   "tech": [
-    {
-     "flag": "volume",
-     "label": "量能放大",
-     "value": 1.78,
-     "value_label": "量比"
-    }
-   ],
+   "tech": [],
    "inst": {},
    "next_exdiv": null,
    "fear": null
@@ -38,7 +31,7 @@
   {
    "code": "7769",
    "name": "鴻勁",
-   "close": 4110.0,
+   "close": 4080.0,
    "score": 3.67,
    "score_month": "202609",
    "trend": null,
@@ -61,24 +54,27 @@
    "inst": {
     "trust": {
      "dir": "buy",
-     "days": 6,
-     "cum5": 1611,
-     "latest": 100
+     "days": 7,
+     "cum5": 1737,
+     "latest": 185
     },
     "foreign": {
      "dir": "sell",
-     "days": 11,
-     "cum5": -10829,
-     "latest": -1967
+     "days": 12,
+     "cum5": -8589,
+     "latest": -1411
     }
    },
    "next_exdiv": null,
-   "fear": null
+   "fear": {
+    "zone": "fear",
+    "zone_zh": "恐懼"
+   }
   },
   {
    "code": "2345",
    "name": "智邦",
-   "close": 1525.0,
+   "close": 1520.0,
    "score": 3.33,
    "score_month": "202609",
    "trend": "Dn",
@@ -86,18 +82,21 @@
    "inst": {
     "trust": {
      "dir": "buy",
-     "days": 5,
-     "cum5": 1896,
-     "latest": 46
+     "days": 6,
+     "cum5": 1797,
+     "latest": 293
     }
    },
    "next_exdiv": null,
-   "fear": null
+   "fear": {
+    "zone": "fear",
+    "zone_zh": "恐懼"
+   }
   },
   {
    "code": "3665",
    "name": "貿聯-KY",
-   "close": 1515.0,
+   "close": 1520.0,
    "score": 2.67,
    "score_month": "202609",
    "trend": null,
