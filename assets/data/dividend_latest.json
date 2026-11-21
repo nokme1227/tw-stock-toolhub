@@ -1,16 +1,16 @@
 {
- "asof": "2026-11-19",
- "price_asof": "2026-11-19",
- "extra_price_asof": "2026-11-19",
+ "asof": "2026-11-20",
+ "price_asof": "2026-11-20",
+ "extra_price_asof": "2026-11-20",
  "sources": {
   "twse": "TWT48U_ALL(openapi)",
   "tpex": "tpex_exright_prepost"
  },
  "counts": {
-  "twse": 57,
-  "tpex": 64,
-  "total": 121,
-  "with_yield": 97
+  "twse": 33,
+  "tpex": 66,
+  "total": 99,
+  "with_yield": 73
  },
  "rows": [
   {
@@ -35,7 +35,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 3.03
+   "yld": 3.31
   },
   {
    "date": "2026-11-16",
@@ -47,7 +47,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.35
+   "yld": 1.34
   },
   {
    "date": "2026-11-16",
@@ -95,7 +95,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 3.04
+   "yld": 3.14
   },
   {
    "date": "2026-11-16",
@@ -107,7 +107,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 4.02
+   "yld": 4.18
   },
   {
    "date": "2026-11-16",
@@ -119,7 +119,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.51
+   "yld": 0.52
   },
   {
    "date": "2026-11-16",
@@ -131,7 +131,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.78
+   "yld": 0.79
   },
   {
    "date": "2026-11-16",
@@ -156,54 +156,6 @@
    "sub_ratio": 0.09439378,
    "sub_price": 140.0,
    "yld": null
-  },
-  {
-   "date": "2026-11-17",
-   "code": "006208",
-   "name": "富邦台50",
-   "market": "上市",
-   "type": "息",
-   "cash": 3.88,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 1.91
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00690",
-   "name": "兆豐藍籌30",
-   "market": "上市",
-   "type": "息",
-   "cash": 2.0,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 3.37
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00692",
-   "name": "富邦公司治理",
-   "market": "上市",
-   "type": "息",
-   "cash": 1.721,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 2.24
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00730",
-   "name": "富邦臺灣優質高息",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.11,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 0.44
   },
   {
    "date": "2026-11-17",
@@ -323,7 +275,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.43
+   "yld": 0.44
   },
   {
    "date": "2026-11-17",
@@ -335,7 +287,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.36
+   "yld": 1.37
   },
   {
    "date": "2026-11-17",
@@ -435,18 +387,6 @@
   },
   {
    "date": "2026-11-17",
-   "code": "00878",
-   "name": "國泰永續高股息",
-   "market": "上市",
-   "type": "息",
-   "cash": 1.25,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 4.2
-  },
-  {
-   "date": "2026-11-17",
    "code": "00890B",
    "name": "凱基ESG BBB債15+",
    "market": "上櫃",
@@ -456,66 +396,6 @@
    "sub_ratio": null,
    "sub_price": 0.0,
    "yld": 0.48
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00891",
-   "name": "中信關鍵半導體",
-   "market": "上市",
-   "type": "息",
-   "cash": 1.55,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 5.86
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00892",
-   "name": "富邦台灣半導體",
-   "market": "上市",
-   "type": "息",
-   "cash": 4.0,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 14.6
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00894",
-   "name": "中信小資高價30",
-   "market": "上市",
-   "type": "息",
-   "cash": 1.0,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 2.92
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00900",
-   "name": "富邦特選高股息30",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.075,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 0.44
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00932",
-   "name": "兆豐永續高息等權",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.23,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 1.52
   },
   {
    "date": "2026-11-17",
@@ -531,18 +411,6 @@
   },
   {
    "date": "2026-11-17",
-   "code": "00934",
-   "name": "中信成長高股息",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.5,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 1.97
-  },
-  {
-   "date": "2026-11-17",
    "code": "00937B",
    "name": "群益ESG投等債20+",
    "market": "上櫃",
@@ -552,54 +420,6 @@
    "sub_ratio": null,
    "sub_price": 0.0,
    "yld": 0.51
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00938",
-   "name": "凱基優選30",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.35,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 1.46
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00943",
-   "name": "兆豐電子高息等權",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.35,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 2.01
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00944",
-   "name": "野村趨勢動能高息",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.109,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 0.58
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00945B",
-   "name": "凱基美國非投等債",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.097,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 0.67
   },
   {
    "date": "2026-11-17",
@@ -615,18 +435,6 @@
   },
   {
    "date": "2026-11-17",
-   "code": "00952",
-   "name": "凱基台灣AI50",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.12,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 0.89
-  },
-  {
-   "date": "2026-11-17",
    "code": "00957B",
    "name": "兆豐US優選投等債",
    "market": "上櫃",
@@ -636,66 +444,6 @@
    "sub_ratio": null,
    "sub_price": 0.0,
    "yld": 0.5
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00961",
-   "name": "FT臺灣永續高息",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.09,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 0.75
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00963",
-   "name": "中信全球高股息",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.1,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 0.82
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00964",
-   "name": "中信亞太高股息",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.2,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 1.53
-  },
-  {
-   "date": "2026-11-17",
-   "code": "009808",
-   "name": "華南永昌優選50",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.76,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 2.97
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00980A",
-   "name": "主動野村臺灣優選",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.688,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 4.1
   },
   {
    "date": "2026-11-17",
@@ -719,31 +467,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.69
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00981T",
-   "name": "平衡凱基雙核收息",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.082,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 0.74
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00982A",
-   "name": "主動群益台灣強棒",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.78,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 5.16
+   "yld": 0.7
   },
   {
    "date": "2026-11-17",
@@ -759,30 +483,6 @@
   },
   {
    "date": "2026-11-17",
-   "code": "00982D",
-   "name": "主動富邦動態入息",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.052,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 0.55
-  },
-  {
-   "date": "2026-11-17",
-   "code": "00983D",
-   "name": "主動富邦複合收益",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.061,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 0.62
-  },
-  {
-   "date": "2026-11-17",
    "code": "00987B",
    "name": "野村10+澳洲公債",
    "market": "上櫃",
@@ -791,7 +491,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.3
+   "yld": 1.31
   },
   {
    "date": "2026-11-18",
@@ -803,7 +503,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 2.01
+   "yld": 2.13
   },
   {
    "date": "2026-11-18",
@@ -839,7 +539,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.37
+   "yld": 1.38
   },
   {
    "date": "2026-11-18",
@@ -863,7 +563,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.69
+   "yld": 1.8
   },
   {
    "date": "2026-11-18",
@@ -875,7 +575,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 15.81
+   "yld": 16.31
   },
   {
    "date": "2026-11-18",
@@ -923,7 +623,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 2.04
+   "yld": 2.24
   },
   {
    "date": "2026-11-18",
@@ -947,7 +647,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.98
+   "yld": 2.01
   },
   {
    "date": "2026-11-19",
@@ -971,7 +671,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 3.82
+   "yld": 4.25
   },
   {
    "date": "2026-11-20",
@@ -983,7 +683,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 5.75
+   "yld": 6.44
   },
   {
    "date": "2026-11-20",
@@ -995,7 +695,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 3.03
+   "yld": 3.42
   },
   {
    "date": "2026-11-20",
@@ -1007,7 +707,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.06
+   "yld": 1.07
   },
   {
    "date": "2026-11-20",
@@ -1019,7 +719,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.42
+   "yld": 1.45
   },
   {
    "date": "2026-11-20",
@@ -1031,7 +731,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.17
+   "yld": 1.19
   },
   {
    "date": "2026-11-20",
@@ -1043,7 +743,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.31
+   "yld": 1.42
   },
   {
    "date": "2026-11-20",
@@ -1079,7 +779,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.71
+   "yld": 0.72
   },
   {
    "date": "2026-11-20",
@@ -1151,7 +851,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.86
+   "yld": 1.87
   },
   {
    "date": "2026-11-26",
@@ -1175,7 +875,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 4.6
+   "yld": 4.71
   },
   {
    "date": "2026-11-27",
@@ -1199,7 +899,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 2.0
+   "yld": 2.15
   },
   {
    "date": "2026-12-01",
@@ -1247,7 +947,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.5
+   "yld": 1.64
   },
   {
    "date": "2026-12-02",
@@ -1265,6 +965,18 @@
    "date": "2026-12-02",
    "code": "00950B",
    "name": "凱基A級公司債",
+   "market": "上櫃",
+   "type": "息",
+   "cash": null,
+   "stock_ratio": null,
+   "sub_ratio": null,
+   "sub_price": 0.0,
+   "yld": null
+  },
+  {
+   "date": "2026-12-02",
+   "code": "00966B",
+   "name": "統一ESG投等債15+",
    "market": "上櫃",
    "type": "息",
    "cash": null,
@@ -1355,7 +1067,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": null
+   "yld": 3.84
   },
   {
    "date": "2026-12-03",
@@ -1367,7 +1079,31 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 2.11
+   "yld": 2.23
+  },
+  {
+   "date": "2026-12-03",
+   "code": "6160",
+   "name": "欣技",
+   "market": "上櫃",
+   "type": "權",
+   "cash": 0.0,
+   "stock_ratio": null,
+   "sub_ratio": 0.16060945,
+   "sub_price": null,
+   "yld": null
+  },
+  {
+   "date": "2026-12-04",
+   "code": "2345",
+   "name": "智邦",
+   "market": "上市",
+   "type": "權",
+   "cash": 0.0,
+   "stock_ratio": null,
+   "sub_ratio": 0.01782156,
+   "sub_price": null,
+   "yld": null
   },
   {
    "date": "2026-12-04",
@@ -1379,7 +1115,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 0.35
+   "yld": 0.39
   },
   {
    "date": "2026-12-04",
@@ -1391,7 +1127,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.01
+   "yld": 1.08
   },
   {
    "date": "2026-12-07",
@@ -1415,7 +1151,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 2.7
+   "yld": 2.79
   },
   {
    "date": "2026-12-21",
@@ -1427,7 +1163,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 4.47
+   "yld": 4.57
   },
   {
    "date": "2026-12-29",
@@ -1439,7 +1175,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.22
+   "yld": 1.36
   },
   {
    "date": "2026-12-30",
@@ -1451,7 +1187,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 2.53
+   "yld": 2.64
   },
   {
    "date": "2027-01-05",
@@ -1463,7 +1199,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 2.16
+   "yld": 2.39
   }
  ]
 }
