@@ -1,57 +1,57 @@
 {
- "asof": "2026-11-24",
+ "asof": "2026-11-25",
  "next_revenue": {
   "deadline": "2026-12-10",
   "label": "2026年11月營收",
-  "days_left": 16
+  "days_left": 15
  },
  "next_earnings": {
   "deadline": "2027-03-31",
   "label": "2027年年報（含 Q4）",
-  "days_left": 127
+  "days_left": 126
  },
  "revenue_schedule": [
   {
    "deadline": "2026-12-10",
    "label": "2026年11月營收",
-   "days_left": 16
+   "days_left": 15
   },
   {
    "deadline": "2027-01-10",
    "label": "2026年12月營收",
-   "days_left": 47
+   "days_left": 46
   },
   {
    "deadline": "2027-02-10",
    "label": "2027年1月營收",
-   "days_left": 78
+   "days_left": 77
   },
   {
    "deadline": "2027-03-10",
    "label": "2027年2月營收",
-   "days_left": 106
+   "days_left": 105
   }
  ],
  "earnings_schedule": [
   {
    "deadline": "2027-03-31",
    "label": "2027年年報（含 Q4）",
-   "days_left": 127
+   "days_left": 126
   },
   {
    "deadline": "2027-05-15",
    "label": "2027年Q1 財報",
-   "days_left": 172
+   "days_left": 171
   },
   {
    "deadline": "2027-08-14",
    "label": "2027年Q2 財報",
-   "days_left": 263
+   "days_left": 262
   },
   {
    "deadline": "2027-11-14",
    "label": "2027年Q3 財報",
-   "days_left": 355
+   "days_left": 354
   }
  ],
  "rules": {

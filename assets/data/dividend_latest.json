@@ -1,16 +1,16 @@
 {
- "asof": "2026-11-24",
- "price_asof": "2026-11-24",
- "extra_price_asof": "2026-11-24",
+ "asof": "2026-11-25",
+ "price_asof": "2026-11-25",
+ "extra_price_asof": "2026-11-25",
  "sources": {
   "twse": "TWT48U_ALL(openapi)",
   "tpex": "tpex_exright_prepost"
  },
  "counts": {
-  "twse": 28,
+  "twse": 23,
   "tpex": 66,
-  "total": 94,
-  "with_yield": 73
+  "total": 89,
+  "with_yield": 70
  },
  "rows": [
   {
@@ -35,7 +35,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.4
+   "yld": 1.39
   },
   {
    "date": "2026-11-16",
@@ -71,7 +71,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 3.08
+   "yld": 3.13
   },
   {
    "date": "2026-11-16",
@@ -83,7 +83,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 4.09
+   "yld": 4.29
   },
   {
    "date": "2026-11-16",
@@ -107,7 +107,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.79
+   "yld": 0.8
   },
   {
    "date": "2026-11-16",
@@ -203,7 +203,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.41
+   "yld": 1.4
   },
   {
    "date": "2026-11-17",
@@ -275,7 +275,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.19
+   "yld": 1.18
   },
   {
    "date": "2026-11-17",
@@ -311,7 +311,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.26
+   "yld": 1.27
   },
   {
    "date": "2026-11-17",
@@ -323,7 +323,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.29
+   "yld": 1.28
   },
   {
    "date": "2026-11-17",
@@ -515,7 +515,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.74
+   "yld": 1.73
   },
   {
    "date": "2026-11-18",
@@ -527,7 +527,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.62
+   "yld": 0.61
   },
   {
    "date": "2026-11-18",
@@ -543,30 +543,6 @@
   },
   {
    "date": "2026-11-20",
-   "code": "0051",
-   "name": "元大中型100",
-   "market": "上市",
-   "type": "息",
-   "cash": 4.5,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 3.86
-  },
-  {
-   "date": "2026-11-20",
-   "code": "0055",
-   "name": "元大MSCI金融",
-   "market": "上市",
-   "type": "息",
-   "cash": 2.7,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 6.04
-  },
-  {
-   "date": "2026-11-20",
    "code": "006201",
    "name": "元大富櫃50",
    "market": "上櫃",
@@ -575,7 +551,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 3.0
+   "yld": 3.21
   },
   {
    "date": "2026-11-20",
@@ -591,18 +567,6 @@
   },
   {
    "date": "2026-11-20",
-   "code": "00771",
-   "name": "元大US高息特別股",
-   "market": "上市",
-   "type": "息",
-   "cash": 0.21,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 1.44
-  },
-  {
-   "date": "2026-11-20",
    "code": "00786B",
    "name": "元大10年IG銀行債",
    "market": "上櫃",
@@ -612,18 +576,6 @@
    "sub_ratio": null,
    "sub_price": 0.0,
    "yld": 1.18
-  },
-  {
-   "date": "2026-11-20",
-   "code": "00850",
-   "name": "元大臺灣ESG永續",
-   "market": "上市",
-   "type": "息",
-   "cash": 1.0,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": null,
-   "yld": 1.26
   },
   {
    "date": "2026-11-20",
@@ -659,19 +611,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.71
-  },
-  {
-   "date": "2026-11-20",
-   "code": "4562",
-   "name": "穎漢",
-   "market": "上市",
-   "type": "權",
-   "cash": 0.0,
-   "stock_ratio": null,
-   "sub_ratio": 0.14906449,
-   "sub_price": 23.0,
-   "yld": null
+   "yld": 0.72
   },
   {
    "date": "2026-11-24",
@@ -683,7 +623,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 23.42
+   "yld": 24.86
   },
   {
    "date": "2026-11-24",
@@ -695,7 +635,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 3.6
+   "yld": 3.84
   },
   {
    "date": "2026-11-24",
@@ -719,7 +659,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.78
+   "yld": 0.79
   },
   {
    "date": "2026-11-24",
@@ -731,7 +671,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.86
+   "yld": 1.92
   },
   {
    "date": "2026-11-26",
@@ -739,11 +679,11 @@
    "name": "國泰日本不動產",
    "market": "上市",
    "type": "息",
-   "cash": null,
+   "cash": 0.33,
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": null
+   "yld": 3.75
   },
   {
    "date": "2026-11-26",
@@ -755,7 +695,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 4.51
+   "yld": 4.41
   },
   {
    "date": "2026-11-27",
@@ -779,7 +719,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.98
+   "yld": 2.05
   },
   {
    "date": "2026-12-01",
@@ -827,7 +767,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.47
+   "yld": 1.53
   },
   {
    "date": "2026-12-02",
@@ -959,7 +899,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 2.11
+   "yld": 2.18
   },
   {
    "date": "2026-12-03",
@@ -995,7 +935,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 0.38
+   "yld": 0.42
   },
   {
    "date": "2026-12-04",
@@ -1007,7 +947,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.72
+   "yld": 0.78
   },
   {
    "date": "2026-12-04",
@@ -1019,7 +959,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.0
+   "yld": 1.02
   },
   {
    "date": "2026-12-07",
@@ -1067,7 +1007,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 3.32
+   "yld": 3.52
   },
   {
    "date": "2026-12-10",
@@ -1079,7 +1019,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 2.63
+   "yld": 2.74
   },
   {
    "date": "2026-12-18",
@@ -1103,7 +1043,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 4.51
+   "yld": 4.57
   },
   {
    "date": "2026-12-29",
@@ -1115,7 +1055,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.19
+   "yld": 1.26
   },
   {
    "date": "2026-12-30",
@@ -1127,7 +1067,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 2.47
+   "yld": 2.52
   },
   {
    "date": "2027-01-05",
@@ -1139,7 +1079,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.99
+   "yld": 2.1
   }
  ]
 }
