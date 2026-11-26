@@ -1,13 +1,13 @@
 {
- "asof": "2026-11-25",
+ "asof": "2026-11-26",
  "score_month": "202610",
- "fear_asof": "2026-11-24",
- "div_asof": "2026-11-25",
+ "fear_asof": "2026-11-25",
+ "div_asof": "2026-11-26",
  "items": [
   {
    "code": "2395",
    "name": "研華",
-   "close": 555.0,
+   "close": 589.0,
    "score": 3.5,
    "score_month": "202610",
    "trend": null,
@@ -19,7 +19,7 @@
   {
    "code": "2049",
    "name": "上銀",
-   "close": 263.5,
+   "close": 276.5,
    "score": 3.33,
    "score_month": "202610",
    "trend": null,
@@ -31,18 +31,11 @@
   {
    "code": "7769",
    "name": "鴻勁",
-   "close": 3065.0,
+   "close": 3150.0,
    "score": 3.5,
    "score_month": "202610",
    "trend": null,
-   "tech": [
-    {
-     "flag": "volume",
-     "label": "量能放大",
-     "value": 1.66,
-     "value_label": "量比"
-    }
-   ],
+   "tech": [],
    "inst": {},
    "next_exdiv": null,
    "fear": {
@@ -53,18 +46,11 @@
   {
    "code": "2308",
    "name": "台達電",
-   "close": 1055.0,
+   "close": 1120.0,
    "score": 3.33,
    "score_month": "202610",
    "trend": null,
-   "tech": [
-    {
-     "flag": "volume",
-     "label": "量能放大",
-     "value": 1.98,
-     "value_label": "量比"
-    }
-   ],
+   "tech": [],
    "inst": {},
    "next_exdiv": null,
    "fear": {
@@ -75,31 +61,24 @@
   {
    "code": "2345",
    "name": "智邦",
-   "close": 1475.0,
+   "close": 1620.0,
    "score": 3.17,
    "score_month": "202610",
    "trend": null,
-   "tech": [
-    {
-     "flag": "volume",
-     "label": "量能放大",
-     "value": 2.12,
-     "value_label": "量比"
-    }
-   ],
+   "tech": [],
    "inst": {
     "foreign": {
      "dir": "sell",
-     "days": 7,
-     "cum5": -3207,
-     "latest": -1344
+     "days": 8,
+     "cum5": -3986,
+     "latest": -1042
     }
    },
    "next_exdiv": {
     "date": "2026-12-04",
     "type": "權",
     "cash": 0.0,
-    "days_left": 9
+    "days_left": 8
    },
    "fear": {
     "zone": "fear",
@@ -109,30 +88,23 @@
   {
    "code": "3665",
    "name": "貿聯-KY",
-   "close": 1630.0,
+   "close": 1790.0,
    "score": 3.17,
    "score_month": "202610",
    "trend": null,
-   "tech": [
-    {
-     "flag": "volume",
-     "label": "量能放大",
-     "value": 3.04,
-     "value_label": "量比"
-    }
-   ],
+   "tech": [],
    "inst": {
     "trust": {
      "dir": "buy",
-     "days": 10,
-     "cum5": 6460,
-     "latest": 3702
+     "days": 11,
+     "cum5": 6058,
+     "latest": 1140
     },
     "foreign": {
      "dir": "sell",
-     "days": 6,
-     "cum5": -5346,
-     "latest": -3621
+     "days": 7,
+     "cum5": -5286,
+     "latest": -947
     }
    },
    "next_exdiv": null,

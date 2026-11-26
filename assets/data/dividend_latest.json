@@ -1,138 +1,18 @@
 {
- "asof": "2026-11-25",
- "price_asof": "2026-11-25",
- "extra_price_asof": "2026-11-25",
+ "asof": "2026-11-26",
+ "price_asof": "2026-11-26",
+ "extra_price_asof": "2026-11-26",
  "sources": {
   "twse": "TWT48U_ALL(openapi)",
   "tpex": "tpex_exright_prepost"
  },
  "counts": {
-  "twse": 23,
-  "tpex": 66,
-  "total": 89,
-  "with_yield": 70
+  "twse": 26,
+  "tpex": 57,
+  "total": 83,
+  "with_yield": 63
  },
  "rows": [
-  {
-   "date": "2026-11-16",
-   "code": "00844B",
-   "name": "台新15年IG金融債",
-   "market": "上櫃",
-   "type": "息",
-   "cash": 0.41,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": 0.0,
-   "yld": 1.33
-  },
-  {
-   "date": "2026-11-16",
-   "code": "00867B",
-   "name": "台新A-BBB電信債",
-   "market": "上櫃",
-   "type": "息",
-   "cash": 0.41,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": 0.0,
-   "yld": 1.39
-  },
-  {
-   "date": "2026-11-16",
-   "code": "00942B",
-   "name": "台新美A公司債20+",
-   "market": "上櫃",
-   "type": "息",
-   "cash": 0.062,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": 0.0,
-   "yld": 0.44
-  },
-  {
-   "date": "2026-11-16",
-   "code": "00970B",
-   "name": "台新BBB投等債20+",
-   "market": "上櫃",
-   "type": "息",
-   "cash": 0.05,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": 0.0,
-   "yld": 0.55
-  },
-  {
-   "date": "2026-11-16",
-   "code": "009806",
-   "name": "台新標普500",
-   "market": "上櫃",
-   "type": "息",
-   "cash": 0.4,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": 0.0,
-   "yld": 3.13
-  },
-  {
-   "date": "2026-11-16",
-   "code": "009807",
-   "name": "台新標普科技精選",
-   "market": "上櫃",
-   "type": "息",
-   "cash": 0.6,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": 0.0,
-   "yld": 4.29
-  },
-  {
-   "date": "2026-11-16",
-   "code": "00980B",
-   "name": "台新特選IG債10+",
-   "market": "上櫃",
-   "type": "息",
-   "cash": 0.047,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": 0.0,
-   "yld": 0.51
-  },
-  {
-   "date": "2026-11-16",
-   "code": "00988B",
-   "name": "玉山嚴選非投債",
-   "market": "上櫃",
-   "type": "息",
-   "cash": 0.148,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": 0.0,
-   "yld": 0.8
-  },
-  {
-   "date": "2026-11-16",
-   "code": "00989B",
-   "name": "台新美國非投等債",
-   "market": "上櫃",
-   "type": "息",
-   "cash": 0.066,
-   "stock_ratio": null,
-   "sub_ratio": null,
-   "sub_price": 0.0,
-   "yld": 0.67
-  },
-  {
-   "date": "2026-11-16",
-   "code": "5475",
-   "name": "德宏",
-   "market": "上櫃",
-   "type": "權",
-   "cash": 0.0,
-   "stock_ratio": null,
-   "sub_ratio": 0.09439378,
-   "sub_price": 140.0,
-   "yld": null
-  },
   {
    "date": "2026-11-17",
    "code": "00740B",
@@ -143,7 +23,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.5
+   "yld": 0.49
   },
   {
    "date": "2026-11-17",
@@ -179,7 +59,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.4
+   "yld": 1.39
   },
   {
    "date": "2026-11-17",
@@ -191,7 +71,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.73
+   "yld": 1.72
   },
   {
    "date": "2026-11-17",
@@ -215,7 +95,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.43
+   "yld": 0.42
   },
   {
    "date": "2026-11-17",
@@ -287,7 +167,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.38
+   "yld": 1.37
   },
   {
    "date": "2026-11-17",
@@ -311,7 +191,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.27
+   "yld": 1.26
   },
   {
    "date": "2026-11-17",
@@ -491,7 +371,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.21
+   "yld": 1.2
   },
   {
    "date": "2026-11-18",
@@ -551,7 +431,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 3.21
+   "yld": 3.06
   },
   {
    "date": "2026-11-20",
@@ -563,7 +443,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.06
+   "yld": 1.05
   },
   {
    "date": "2026-11-20",
@@ -599,7 +479,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.48
+   "yld": 0.47
   },
   {
    "date": "2026-11-20",
@@ -623,7 +503,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 24.86
+   "yld": 23.94
   },
   {
    "date": "2026-11-24",
@@ -635,7 +515,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 3.84
+   "yld": 3.7
   },
   {
    "date": "2026-11-24",
@@ -671,7 +551,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 1.92
+   "yld": 1.88
   },
   {
    "date": "2026-11-26",
@@ -683,7 +563,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 3.75
+   "yld": 3.91
   },
   {
    "date": "2026-11-26",
@@ -695,7 +575,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 4.41
+   "yld": 4.76
   },
   {
    "date": "2026-11-27",
@@ -767,7 +647,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.53
+   "yld": 1.52
   },
   {
    "date": "2026-12-02",
@@ -899,7 +779,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 2.18
+   "yld": 2.14
   },
   {
    "date": "2026-12-03",
@@ -935,7 +815,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 0.42
+   "yld": 0.38
   },
   {
    "date": "2026-12-04",
@@ -947,7 +827,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 0.78
+   "yld": 0.77
   },
   {
    "date": "2026-12-04",
@@ -999,6 +879,18 @@
   },
   {
    "date": "2026-12-08",
+   "code": "4912",
+   "name": "聯德控股-KY",
+   "market": "上市",
+   "type": "息",
+   "cash": 1.0,
+   "stock_ratio": null,
+   "sub_ratio": null,
+   "sub_price": null,
+   "yld": 1.28
+  },
+  {
+   "date": "2026-12-08",
    "code": "6277",
    "name": "宏正",
    "market": "上市",
@@ -1007,7 +899,43 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 3.52
+   "yld": 3.45
+  },
+  {
+   "date": "2026-12-10",
+   "code": "00940",
+   "name": "元大台灣價值高息",
+   "market": "上市",
+   "type": "息",
+   "cash": null,
+   "stock_ratio": null,
+   "sub_ratio": null,
+   "sub_price": null,
+   "yld": null
+  },
+  {
+   "date": "2026-12-10",
+   "code": "6438",
+   "name": "迅得",
+   "market": "上市",
+   "type": "息",
+   "cash": 3.0,
+   "stock_ratio": null,
+   "sub_ratio": null,
+   "sub_price": null,
+   "yld": 2.23
+  },
+  {
+   "date": "2026-12-10",
+   "code": "7715",
+   "name": "裕山",
+   "market": "上櫃",
+   "type": "權",
+   "cash": 0.0,
+   "stock_ratio": null,
+   "sub_ratio": 0.30391442,
+   "sub_price": null,
+   "yld": null
   },
   {
    "date": "2026-12-10",
@@ -1043,7 +971,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 4.57
+   "yld": 4.51
   },
   {
    "date": "2026-12-29",
@@ -1055,7 +983,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 1.26
+   "yld": 1.16
   },
   {
    "date": "2026-12-30",
@@ -1067,7 +995,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": null,
-   "yld": 2.52
+   "yld": 2.47
   },
   {
    "date": "2027-01-05",
@@ -1079,7 +1007,7 @@
    "stock_ratio": null,
    "sub_ratio": null,
    "sub_price": 0.0,
-   "yld": 2.1
+   "yld": 1.95
   }
  ]
 }
